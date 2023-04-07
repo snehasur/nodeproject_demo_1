@@ -1,0 +1,61 @@
+Path:
+cd C:\node\express-project\mycontacts-backend
+
+Url:
+http://localhost:5001/api/contacts
+http://localhost:5001/api/users/register
+
+Commands-:
+npm init
+npm install express
+npm i -D nodemon
+npm run dev
+npm i dotenv
+npm i express-async-handler
+npm i mongoose
+npm i bcrypt
+npm i jsonwebtoken
+
+
+
+
+
+
+
+
+
+git command-
+git init
+git add .
+
+
+
+
+
+
+{
+  "name":"Test",
+  "email":"test@test.com",
+  "phone":"0123456789" 
+}
+
+
+
+Credential:
+(username and password for your first database user in this project using your MongoDB Cloud registration information)
+snehasur
+JzPrdV2YOLxPs1Ui
+mongodb+srv://snehasur:JzPrdV2YOLxPs1Ui@snehacluster.mfdpq5b.mongodb.net/mycontacts-backend
+
+
+
+Problems:
+1.
+mongodb vs code not connected 38-39min
+Unable to connect: querySrv ETIMEOUT _mongodb._tcp.snehacluster.mfdpq5b.mongodb.net
+=>
+2.
+mongodb not connect with code 
+=>then solved with vpn
+3.delete not working 52-53
+=>
