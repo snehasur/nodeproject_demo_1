@@ -23,10 +23,24 @@ npm i jsonwebtoken
 
 
 
+install git
 
 git command-
 git init
 git add .
+git config --global user.email "snehasurece@gmail.com"
+git config --global user.name "Sneha Sur"
+git commit -m "Init"
+git remote add origin git@github.com:snehasur/nodeproject_demo_1.git (ssh from git account)
+
+ssh-keygen
+cat C:\Users\CODECLOUDS-SNEHA/.ssh/id_rsa
+=>'cat' is not recognized as an internal or external command,
+operable program or batch file.
+add the key in git account setting ssh key
+
+
+git push origin master --force
 
 
 
@@ -58,4 +72,6 @@ Unable to connect: querySrv ETIMEOUT _mongodb._tcp.snehacluster.mfdpq5b.mongodb.
 mongodb not connect with code 
 =>then solved with vpn
 3.delete not working 52-53
+=>
+4.current route Authorized 1.20
 =>
