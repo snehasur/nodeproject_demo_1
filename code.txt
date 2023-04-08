@@ -100,6 +100,7 @@ git config --global user.email "snehasurece@gmail.com"
 git config --global user.name "Sneha Sur"
 git commit -m "Init"
 git remote add origin git@github.com:snehasur/nodeproject_demo_1.git (ssh from git account)
+git add -A
 
 ssh-keygen
 cat C:\Users\CODECLOUDS-SNEHA/.ssh/id_rsa
