@@ -45,7 +45,6 @@ http://localhost:5001/api/contacts
   "name":"Test",
   "email":"contacttest@test.com",
   "phone":"0123456789",
-  "user_id":"643168164982e394101d2e9a"
 }   
 =>
 //@desc Delete contact
@@ -79,6 +78,7 @@ http://localhost:5001/api/contacts/ccscdscds
 http://localhost:5001/api/contacts/scscscc
 
 ======problem when another user try to update
+vise versa 
     
 =>
 //@desc Get all contacts
