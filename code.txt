@@ -2,8 +2,76 @@ Path:
 cd C:\node\express-project\mycontacts-backend
 
 Url:
+
+=>
+//@desc Delete contact
+//@route DELETE /api/contacts/:id
+//@access private
+http://localhost:5001/api/contacts/
+=>
+
+//@desc Update contact
+//@route Put /api/contacts/:id
+//@access private
+http://localhost:5001/api/contacts/
+
+=>
+
+//@desc Get contact
+//@route Get /api/contacts/:id
+//@access private
+http://localhost:5001/api/contacts/
+
+=>
+
+//@desc Create new contact
+//@route POST /api/contacts
+//@access private
 http://localhost:5001/api/contacts
+
+{
+  "name":"Test",
+  "email":"test@test.com",
+  "phone":"0123456789",
+  "user_id:""
+}       
+=>
+//@desc Get all contacts
+//@route Get /api/contacts
+//@access private
+http://localhost:5001/api/contacts
+
+   
+=>
+//@desc Register a user
+//@route POST /api/users/register
+//@access public
 http://localhost:5001/api/users/register
+
+{
+  "username":"Test",
+  "email":"test@test.com",
+  "password":"123456" 
+}
+
+
+=>
+//@desc Login user
+//@route POST /api/users/login
+//@access public
+http://localhost:5001/api/users/login
+
+{
+  "email":"test@test.com",
+  "password":"123456"
+}
+
+=>
+//@desc Current user info
+//@route GET /api/users/current
+//@access private
+http://localhost:5001/api/users/current
+
 
 Commands-:
 npm init
@@ -47,11 +115,6 @@ git push origin master --force
 
 
 
-{
-  "name":"Test",
-  "email":"test@test.com",
-  "phone":"0123456789" 
-}
 
 
 
