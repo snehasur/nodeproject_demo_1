@@ -3,44 +3,6 @@ cd C:\node\express-project\mycontacts-backend
 
 Url:
 
-=>
-//@desc Delete contact
-//@route DELETE /api/contacts/:id
-//@access private
-http://localhost:5001/api/contacts/
-=>
-
-//@desc Update contact
-//@route Put /api/contacts/:id
-//@access private
-http://localhost:5001/api/contacts/
-
-=>
-
-//@desc Get contact
-//@route Get /api/contacts/:id
-//@access private
-http://localhost:5001/api/contacts/
-
-=>
-
-//@desc Create new contact
-//@route POST /api/contacts
-//@access private
-http://localhost:5001/api/contacts
-
-{
-  "name":"Test",
-  "email":"test@test.com",
-  "phone":"0123456789",
-  "user_id:""
-}       
-=>
-//@desc Get all contacts
-//@route Get /api/contacts
-//@access private
-http://localhost:5001/api/contacts
-
    
 =>
 //@desc Register a user
@@ -65,12 +27,78 @@ http://localhost:5001/api/users/login
   "email":"test@test.com",
   "password":"123456"
 }
-
 =>
 //@desc Current user info
 //@route GET /api/users/current
 //@access private
 http://localhost:5001/api/users/current
+
+===========================================
+=>
+
+//@desc Create new contact
+//@route POST /api/contacts
+//@access private
+http://localhost:5001/api/contacts
+
+{
+  "name":"Test",
+  "email":"contacttest@test.com",
+  "phone":"0123456789",
+  "user_id":"643168164982e394101d2e9a"
+}   
+=>
+//@desc Delete contact
+//@route DELETE /api/contacts/:id
+//@access private
+http://localhost:5001/api/contacts/mbbbbbb
+
+======problem when another user try to update
+
+
+=>
+
+//@desc Update contact
+//@route Put /api/contacts/:id
+//@access private
+http://localhost:5001/api/contacts/ccscdscds
+
+{
+  "name":"Test Update",
+  "email":"contacttest@test.com",
+  "phone":"0123456789"
+}   
+======problem when another user try to update
+
+
+=>
+
+//@desc Get contact
+//@route Get /api/contacts/:id
+//@access private
+http://localhost:5001/api/contacts/scscscc
+
+======problem when another user try to update
+    
+=>
+//@desc Get all contacts
+//@route Get /api/contacts
+//@access private
+http://localhost:5001/api/contacts
+
+
+
+
+
+643166444982e394101d2e94
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlkIjoiNjQzMTY2NDQ0OTgyZTM5NDEwMWQyZTk0In0sImlhdCI6MTY4MDk2MzI0MSwiZXhwIjoxNjgwOTY2NzgxfQ.REccNG7vMzRkvlhus1GeKCVZQ5TkvT38REY4ltozuhQ
+1
+643168164982e394101d2e9a
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiVGVzdCIsImVtYWlsIjoidGVzdDFAdGVzdC5jb20iLCJpZCI6IjY0MzE2ODE2NDk4MmUzOTQxMDFkMmU5YSJ9LCJpYXQiOjE2ODA5NjI0NTIsImV4cCI6MTY4MDk2NTk5Mn0.pUVIlADitLPIv4X-3kcOn8trFVPPGdn9SDcA3Njinig
+
+
+
+
 
 
 Commands-:

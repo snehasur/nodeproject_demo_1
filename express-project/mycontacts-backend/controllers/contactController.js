@@ -23,7 +23,7 @@ const createtContact = asyncHandler (async (req,res)=>{
         name,
         email,
         phone,
-        user_id:req.user_id
+        user_id:req.user.id
     });
     //res.status(200).json({message:"Create contacts"});
     res.status(200).json(contact);
@@ -37,6 +37,7 @@ const getContact = asyncHandler (async (req,res)=>{
         res.status(404);
         throw new Error("Contact not found");
     }
+    
     //res.status(200).json({message:`Get contact for ${req.params.id}`});
     res.status(200).json(contact);
 });
