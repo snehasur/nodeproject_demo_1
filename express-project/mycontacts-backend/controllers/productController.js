@@ -99,7 +99,6 @@ const deleteProduct = asyncHandler( async (req,res)=>{
 //@route Get /api/products/getproductcount
 //@access private
 const getProductscount = asyncHandler (async (req,res)=>{ //not working
-    console.log("d");
     console.log(req.user);
     if(req.user.role!==1){
         console.log("User don't have permission.");

@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/userModel");
-
+ 
 //@desc Register a user
 //@route POST /api/users/register
 //@access public
@@ -105,6 +105,8 @@ const getUserscount = asyncHandler (async (req,res)=>{
 
     res.status(200).json({message:users});
 });
+
+
 module.exports = {
     registerUser,
     loginUser,

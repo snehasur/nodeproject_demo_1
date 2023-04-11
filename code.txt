@@ -1,7 +1,24 @@
 Path:
 cd C:\node\express-project\mycontacts-backend
 
-Url:
+Offer Url:
+
+Admin-
+http://localhost/nodefrontend/admin/orderlist.php
+http://localhost/nodefrontend/admin/product-add.php
+http://localhost/nodefrontend/admin/product-edit.php
+http://localhost/nodefrontend/admin/productlist.php
+http://localhost/nodefrontend/admin/userlist.php
+
+Frontend url:
+http://localhost/nodefrontend/add-to-cart.php
+http://localhost/nodefrontend/checkout-page.php
+http://localhost/nodefrontend/
+http://localhost/nodefrontend/login.php
+http://localhost/nodefrontend/product-details.php
+http://localhost/nodefrontend/register.php
+
+Api Url:
 
    
 =>
@@ -223,6 +240,7 @@ sidebar
   order
     =>listing
 navbar
+  profileshow
   adminprofileupdate
   logout
 frontend=>
@@ -240,6 +258,7 @@ navbar with login
   aboutus
   contactus
   products
+  profileshow
   profileupdate
   logout  
 pages
