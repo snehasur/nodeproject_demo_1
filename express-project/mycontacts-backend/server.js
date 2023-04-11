@@ -14,6 +14,7 @@ app.use(express.json());
 // });  //or
 
 app.use("/api/contacts",require("./routes/contactRoutes"));  
+app.use("/api/products",require("./routes/productRoutes"));  
 app.use("/api/users",require("./routes/userRoutes"));  
 
 app.use(errorHandler);

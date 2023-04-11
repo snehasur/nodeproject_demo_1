@@ -26,7 +26,8 @@ const registerUser = asyncHandler (async (req,res)=>{
     const user = await User.create({
         username,
         email,
-        password:hashedPassword
+        password:hashedPassword,
+        role:2
     });
     console.log(`User created ${user}`);
     if(user){
@@ -57,10 +58,12 @@ const loginUser = asyncHandler (async (req,res)=>{
                 username:user.username,
                 email:user.email,
                 id:user.id,
+                role:user.role,
                 },
+
             },
             process.env.ACCESS_TOKEN_SECERT,
-            {expiresIn:"59m"}
+            {expiresIn:"100d"}
         );
         res.status(200).json({accessToken});
     }else{
@@ -75,8 +78,14 @@ const loginUser = asyncHandler (async (req,res)=>{
 const currentUser = asyncHandler (async (req,res)=>{
     res.json(req.user);
 });
+const getUsers = asyncHandler (async (req,res)=>{
+    console.log(res.json(req.user));
+    const users =await User.find({role:2});
+    res.status(200).json({message:users});
+});
 module.exports = {
     registerUser,
     loginUser,
-    currentUser
+    currentUser,
+    getUsers
 };
