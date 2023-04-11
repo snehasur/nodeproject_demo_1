@@ -87,10 +87,33 @@ vise versa
 http://localhost:5001/api/contacts
 
 =>
+//@desc Get all users(customer)
+//@route Get /api/users
+//@access private
 http://localhost:5001/api/users/
+=>
+//@desc Get all users count(customer)
+//@route Get /api/getuserscount
+//@access private
+http://localhost:5001/api/users/getuserscount
 
+=>
+//@desc Get all products count
+//@route Get /api/products/getproductcount
+//@access private
+http://localhost:5001/api/products/getproductscount //not working
+=>
+//@desc Get all products
+//@route Get /api/products/allproducts
+//@access public 
+http://localhost:5001/api/products/allproducts
+=>
 
+//@desc Get product
+//@route Get /api/products/productdetails/:id
+//@access public
 
+http://localhost:5001/api/products/productdetails/64340d26b4dd0b688577b3bd
 
 
 
@@ -152,6 +175,7 @@ mongodb+srv://snehasur:JzPrdV2YOLxPs1Ui@snehacluster.mfdpq5b.mongodb.net/myconta
 
 
 Problems:
+not working tag
 1.
 mongodb vs code not connected 38-39min
 Unable to connect: querySrv ETIMEOUT _mongodb._tcp.snehacluster.mfdpq5b.mongodb.net
@@ -163,7 +187,72 @@ mongodb not connect with code
 =>
 4.current route Authorized 1.20
 =>
+5.without token no error showing processing
+6.if no permission  showing processing
+7.
 
 
 resource
 https://www.youtube.com/watch?reload=9&v=H9M02of22z4
+
+
+
+
+project flow
+fetures
+  =>image uplode
+  =>payment 
+
+role-> 
+  1 admin
+  2 customer
+
+admin=>
+sidebar
+  dashboard
+    =>user count
+    =>product count
+    =>order count
+  product
+    =>listing
+    =>add 
+    =>edit
+    =>delete
+  user
+    =>listing  
+  order
+    =>listing
+navbar
+  adminprofileupdate
+  logout
+frontend=>
+ 
+navbar  without login
+  home
+  aboutus
+  contactus
+  products
+  register
+  login      
+
+navbar with login
+  home
+  aboutus
+  contactus
+  products
+  profileupdate
+  logout  
+pages
+
+index productlisting without login
+product details page
+login
+register
+add-to-cart page
+checkout page
+
+payment page
+order sucess page
+
+*listing page serch+pagination
+footer

@@ -42,8 +42,9 @@ const getProduct = asyncHandler (async (req,res)=>{
 
         console.log(product.user_id.toString());
         console.log(req.user.id);
+        console.log("User don't have permission to update other user products");
         req.status(403);
-        throw new Error("User don't have permission to update other user products");
+        throw new Error("User don't have permission to update other user products");//not working
     }
     //res.status(200).json({message:`Get product for ${req.params.id}`});
     res.status(200).json(product);
@@ -62,7 +63,8 @@ const updateProduct = asyncHandler ( async (req,res)=>{
 
     if(product.user_id.toString() !==req.user.id){
         req.status(403);
-        throw new Error("User don't have permission to update other user products");
+        console.log("User don't have permission to update other user products");
+        throw new Error("User don't have permission to update other user products");//not working
     }
     const updateProduct =await Product.findByIdAndUpdate(
         req.params.id,
@@ -85,6 +87,7 @@ const deleteProduct = asyncHandler( async (req,res)=>{
     }
     if(product.user_id.toString() !==req.user.id){
         req.status(403);
+        console.log("User don't have permission to update other user products");
         throw new Error("User don't have permission to update other user products");
     }
     await Product.deleteOne({_id:req.params.id});
@@ -92,12 +95,52 @@ const deleteProduct = asyncHandler( async (req,res)=>{
     res.status(200).json(product);
 });
 
+//@desc Get all products count
+//@route Get /api/products/getproductcount
+//@access private
+const getProductscount = asyncHandler (async (req,res)=>{ //not working
+    console.log("d");
+    console.log(req.user);
+    if(req.user.role!==1){
+        console.log("User don't have permission.");
+        req.status(403);
+        throw new Error("User don't have permission.");//not working
+    }
+    const products =await Product.find().count();
 
+    res.status(200).json({message:products});
+});
+
+//@desc Get all products
+//@route Get /api/allproducts
+//@access public
+const getProductsFrontend = asyncHandler (async (req,res)=>{
+    const products =await Product.find();
+
+    //res.status(200).json({message:"Get all products"});
+    res.status(200).json({message:products});
+});
+
+//@desc Get product
+//@route Get /api/products/productdetails/:id
+//@access public
+const getProductdetailsFrontend = asyncHandler (async (req,res)=>{
+    console.log(req.params.id);
+    const product = await Product.findById(req.params.id);
+    if(!product){
+        res.status(404);
+        throw new Error("Product not found");
+    }
+    res.status(200).json(product);
+});
 
 module.exports = {
     getProducts,
     createProduct,
     getProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProductscount,
+    getProductsFrontend,
+    getProductdetailsFrontend
 };

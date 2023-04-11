@@ -78,14 +78,37 @@ const loginUser = asyncHandler (async (req,res)=>{
 const currentUser = asyncHandler (async (req,res)=>{
     res.json(req.user);
 });
+//@desc Get all users(customer)
+//@route Get /api/users
+//@access private
 const getUsers = asyncHandler (async (req,res)=>{
-    console.log(res.json(req.user));
+    console.log(req.user.role);
+    if(req.user.role!==1){
+        console.log("User don't have permission.");
+        req.status(403);
+        throw new Error("User don't have permission.");//not working
+    }
     const users =await User.find({role:2});
+    res.status(200).json({message:users});
+});
+//@desc Get all users count(customer)
+//@route Get /api/getuserscount
+//@access private
+const getUserscount = asyncHandler (async (req,res)=>{
+    console.log(req.user.role);
+    if(req.user.role!==1){
+        console.log("User don't have permission.");
+        req.status(403);
+        throw new Error("User don't have permission.");//not working
+    }
+    const users =await User.find({role:2}).count();
+
     res.status(200).json({message:users});
 });
 module.exports = {
     registerUser,
     loginUser,
     currentUser,
-    getUsers
+    getUsers,
+    getUserscount
 };
