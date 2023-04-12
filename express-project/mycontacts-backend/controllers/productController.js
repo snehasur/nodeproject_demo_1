@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Product = require("../models/productModel");
-//@desc Get all products
+//@desc Get all products for admin
 //@route Get /api/products
 //@access private
 const getProducts = asyncHandler (async (req,res)=>{
@@ -110,7 +110,7 @@ const getProductscount = asyncHandler (async (req,res)=>{ //not working
     res.status(200).json({message:products});
 });
 
-//@desc Get all products
+//@desc Get all products for frontend
 //@route Get /api/allproducts
 //@access public
 const getProductsFrontend = asyncHandler (async (req,res)=>{
@@ -120,7 +120,7 @@ const getProductsFrontend = asyncHandler (async (req,res)=>{
     res.status(200).json({message:products});
 });
 
-//@desc Get product
+//@desc Get product  details for frontend
 //@route Get /api/products/productdetails/:id
 //@access public
 const getProductdetailsFrontend = asyncHandler (async (req,res)=>{

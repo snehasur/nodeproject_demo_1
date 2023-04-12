@@ -203,6 +203,8 @@ button:hover {
                   setTimeout(function() { $("#successmsg").hide(); }, 5000);
 
                   $('#error').text(" ");
+                  window.location.href = "http://localhost/nodefrontend/login.php";
+
 
               },
               error: function(e) {

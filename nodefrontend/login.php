@@ -150,6 +150,19 @@ button:hover {
                   setTimeout(function() { $("#successmsg").hide(); }, 5000);
 
                   $('#error').text(" ");
+                  if(role==1){
+                     //redirect for admin
+                      window.location.href = "http://localhost/nodefrontend/admin/dashboard.php";
+                  }
+                  if(role==2){
+                    //redirect for customer
+                     window.location.href = "http://localhost/nodefrontend/";
+                     //history.back()
+
+
+                  }
+
+                  
 
               },
               error: function(e) {

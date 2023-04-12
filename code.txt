@@ -4,18 +4,19 @@ cd C:\node\express-project\mycontacts-backend
 Offer Url:
 
 Admin-
-http://localhost/nodefrontend/admin/orderlist.php
+http://localhost/nodefrontend/admin/dashboard.php
+http://localhost/nodefrontend/admin/userlist.php
+http://localhost/nodefrontend/admin/productlist.php
 http://localhost/nodefrontend/admin/product-add.php
 http://localhost/nodefrontend/admin/product-edit.php
-http://localhost/nodefrontend/admin/productlist.php
-http://localhost/nodefrontend/admin/userlist.php
+http://localhost/nodefrontend/admin/orderlist.php
 
 Frontend url:
+http://localhost/nodefrontend/
+http://localhost/nodefrontend/product-details.php
 http://localhost/nodefrontend/add-to-cart.php
 http://localhost/nodefrontend/checkout-page.php
-http://localhost/nodefrontend/
 http://localhost/nodefrontend/login.php
-http://localhost/nodefrontend/product-details.php
 http://localhost/nodefrontend/register.php
 
 Api Url:
@@ -50,7 +51,17 @@ http://localhost:5001/api/users/login
 //@access private
 http://localhost:5001/api/users/current
 
-===========================================
+=>
+//@desc Get all users(customer)
+//@route Get /api/users
+//@access private
+http://localhost:5001/api/users/
+=>
+//@desc Get all users count(customer)
+//@route Get /api/getuserscount
+//@access private
+http://localhost:5001/api/users/getuserscount
+====================================================================================================
 =>
 
 //@desc Create new contact
@@ -102,36 +113,64 @@ vise versa
 //@route Get /api/contacts
 //@access private
 http://localhost:5001/api/contacts
-
+====================================================================================================
 =>
-//@desc Get all users(customer)
-//@route Get /api/users
+//@desc Get all products for admin
+//@route Get /api/products
 //@access private
-http://localhost:5001/api/users/
+http://localhost:5001/api/products
 =>
-//@desc Get all users count(customer)
-//@route Get /api/getuserscount
+//@desc Create new product
+//@route POST /api/products
 //@access private
-http://localhost:5001/api/users/getuserscount
-
+http://localhost:5001/api/products
+{
+  "name": "fruits 1",
+  "price": "10",
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting",
+  "image":"file:///C:/xampp/htdocs/img/img.jpg"
+  
+}
+=>
+//@desc Get product
+//@route Get /api/products/:id
+//@access private
+http://localhost:5001/api/products/64340863b3ef5deb36e0704f
+=>
+//@desc Update product
+//@route Put /api/products/:id
+//@access private
+http://localhost:5001/api/products/64340863b3ef5deb36e0704f
+=>
+//@desc Delete product
+//@route DELETE /api/products/:id
+//@access private
+http://localhost:5001/api/products/64340863b3ef5deb36e0704f
 =>
 //@desc Get all products count
 //@route Get /api/products/getproductcount
 //@access private
 http://localhost:5001/api/products/getproductscount //not working
 =>
-//@desc Get all products
+//@desc Get all products for frontend
 //@route Get /api/products/allproducts
 //@access public 
 http://localhost:5001/api/products/allproducts
 =>
 
-//@desc Get product
+//@desc Get product  details for frontend
 //@route Get /api/products/productdetails/:id
 //@access public
-
 http://localhost:5001/api/products/productdetails/64340d26b4dd0b688577b3bd
-
+============================================================================================
+=>
+//@desc Add to cart product
+//@route Get /api/products/add-to-cart
+//@access public
+=>
+//@desc Get all Add to cart products
+//@route Get /api/products/add-to-cart
+//@access public
 
 
 
@@ -270,8 +309,10 @@ register
 add-to-cart page
 checkout page
 
+
 payment page
 order sucess page
 
 *listing page serch+pagination
 footer
+
