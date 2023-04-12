@@ -145,16 +145,24 @@ button:hover {
                       "password":password 
                     }),
               success:function(result){
-                  console.log(result.accessToken);
+                  console.log(result.email);
                   $("#successmsg").text("User Login Successfully");
                   setTimeout(function() { $("#successmsg").hide(); }, 5000);
 
                   $('#error').text(" ");
-                  if(role==1){
+                  localStorage.setItem("accessToken",result.accessToken)
+                  localStorage.setItem("email",result.email)
+                  localStorage.setItem("userid",result.id)
+                  localStorage.setItem("role",result.role)
+
+                  // localStorage.setItem(key,value);
+                  // localStorage.setItem(key,value);
+                  // localStorage.setItem(key,value);
+                  if(result.role==1){
                      //redirect for admin
                       window.location.href = "http://localhost/nodefrontend/admin/dashboard.php";
                   }
-                  if(role==2){
+                  if(result.role==2){
                     //redirect for customer
                      window.location.href = "http://localhost/nodefrontend/";
                      //history.back()

@@ -65,7 +65,8 @@ const loginUser = asyncHandler (async (req,res)=>{
             process.env.ACCESS_TOKEN_SECERT,
             {expiresIn:"100d"}
         );
-        res.status(200).json({accessToken});
+        
+        res.status(200).json({accessToken,email,id:user.id,role:user.role});
     }else{
         res.status(401);
         throw new Error("email or password is not valid");
@@ -82,6 +83,7 @@ const currentUser = asyncHandler (async (req,res)=>{
 //@route Get /api/users
 //@access private
 const getUsers = asyncHandler (async (req,res)=>{
+    
     console.log(req.user.role);
     if(req.user.role!==1){
         console.log("User don't have permission.");

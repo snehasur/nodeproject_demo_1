@@ -4,6 +4,7 @@ const connectDb = require("./config/dbConnection");
 const errorHandler = require("./middleware/errorHandler");
 const dotnet = require("dotenv").config();
 connectDb(); 
+var cors = require('cors');
 
 const app =express();
 const port = process.env.PORT || 5000;
@@ -12,6 +13,8 @@ app.use(express.json());
 //     //res.send("Get all contacts");
 //     res.status(200).json({message:"Get all contacts"});
 // });  //or
+// use it before all route definitions
+app.use(cors({origin: 'http://localhost/'}));
 
 app.use("/api/contacts",require("./routes/contactRoutes"));  
 app.use("/api/products",require("./routes/productRoutes"));  
