@@ -65,7 +65,6 @@ const loginUser = asyncHandler (async (req,res)=>{
             process.env.ACCESS_TOKEN_SECERT,
             {expiresIn:"100d"}
         );
-        
         res.status(200).json({accessToken,email,id:user.id,role:user.role});
     }else{
         res.status(401);
@@ -85,9 +84,10 @@ const currentUser = asyncHandler (async (req,res)=>{
 const getUsers = asyncHandler (async (req,res)=>{
     
     console.log(req.user.role);
-    if(req.user.role!==1){
+    if(req.user.role==1){
         console.log("User don't have permission.");
-        req.status(403);
+        //req.status(403);
+        res.status(403).json({message:"User don't have permission."});   
         throw new Error("User don't have permission.");//not working
     }
     const users =await User.find({role:2});
@@ -100,12 +100,16 @@ const getUserscount = asyncHandler (async (req,res)=>{
     console.log(req.user.role);
     if(req.user.role!==1){
         console.log("User don't have permission.");
-        req.status(403);
+        res.status(403).json({message:"User don't have permission."});
+        //req.status(403);
         throw new Error("User don't have permission.");//not working
+    }else{
+        const users =await User.find({role:2}).count();
+    
+        res.status(200).json({data:users});     
     }
-    const users =await User.find({role:2}).count();
+  
 
-    res.status(200).json({message:users});
 });
 
 

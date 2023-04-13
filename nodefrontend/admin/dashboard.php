@@ -142,26 +142,46 @@ body {
 $(window).on('load', function () {
    console.log("window loaded");
    var accessToken =localStorage.getItem("accessToken");
-   if(accessToken!==" "){
-    $.ajax({
-
-        url:"http://localhost:5001/api/users/getuserscount",    //the page containing php script
-        type: "get",    //request type,
-        dataType: 'json',
-        contentType: "application/json",
-        headers: {"Authorization": accessToken},
-        success:function(result){
-          console.log(result);
-        },
-        error: function(e) {
-          console.log(e);
-        }
-
-        });
-   }else{
+   if(accessToken==" "){
     window.location.href = "http://localhost/nodefrontend/login.php";
+   }else{
+    console.log("1hghghghygjj");
+    var accessToken =localStorage.getItem("accessToken");
+    //usercount
+    var settings = {
+      "url": "http://localhost:5001/api/users/getuserscount",
+      "method": "GET",
+      "timeout": 0,//{"Authorization": accessToken},
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwiaWQiOiI2NDM0MTEwNjU4ZjNmN2Q1YjFlYzc3MDEiLCJyb2xlIjoxfSwiaWF0IjoxNjgxMzk2MjUzLCJleHAiOjE2OTAwMzYyNTN9.1TsP_stFaKNKNHmzPDF5Djye8UTRjN4mUpHcH8Uj8pI"
+      },
+    };
+
+    $.ajax(settings).done(function (response) {
+      console.log(response.data);
+      
+      $("#usercount").text(response.data);
+    });
+    var settings1 = {
+      "url": "http://localhost:5001/api/products/getproductscount",
+      "method": "GET",
+      "timeout": 0,//{"Authorization": accessToken},
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwiaWQiOiI2NDM0MTEwNjU4ZjNmN2Q1YjFlYzc3MDEiLCJyb2xlIjoxfSwiaWF0IjoxNjgxMzk2MjUzLCJleHAiOjE2OTAwMzYyNTN9.1TsP_stFaKNKNHmzPDF5Djye8UTRjN4mUpHcH8Uj8pI"
+      },
+    };
+
+    $.ajax(settings1).done(function (response) {
+      console.log(response.data);
+      
+      $("#productcount").text(response.data);
+    });
+
+
    }
   });
+ 
+      
   </script>
 
 </html>

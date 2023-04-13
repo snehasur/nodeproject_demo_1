@@ -43,7 +43,8 @@ const getProduct = asyncHandler (async (req,res)=>{
         console.log(product.user_id.toString());
         console.log(req.user.id);
         console.log("User don't have permission to update other user products");
-        req.status(403);
+        // req.status(403);
+        res.status(403).json({message:"User don't have permission."});
         throw new Error("User don't have permission to update other user products");//not working
     }
     //res.status(200).json({message:`Get product for ${req.params.id}`});
@@ -62,8 +63,9 @@ const updateProduct = asyncHandler ( async (req,res)=>{
     }
 
     if(product.user_id.toString() !==req.user.id){
-        req.status(403);
+        // req.status(403);
         console.log("User don't have permission to update other user products");
+        res.status(403).json({message:"User don't have permission."});
         throw new Error("User don't have permission to update other user products");//not working
     }
     const updateProduct =await Product.findByIdAndUpdate(
@@ -102,12 +104,15 @@ const getProductscount = asyncHandler (async (req,res)=>{ //not working
     console.log(req.user);
     if(req.user.role!==1){
         console.log("User don't have permission.");
-        req.status(403);
+        // req.status(403);
+        res.status(403).json({message:"User don't have permission."});
         throw new Error("User don't have permission.");//not working
+    }else{
+          const products =await Product.find().count();
+        console.log(products);
+          res.status(200).json({data:products});
     }
-    const products =await Product.find().count();
-
-    res.status(200).json({message:products});
+  
 });
 
 //@desc Get all products for frontend
