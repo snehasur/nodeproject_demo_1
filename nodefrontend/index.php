@@ -113,6 +113,7 @@ body {
 
 /* product list end*/
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body>
 
@@ -121,11 +122,18 @@ body {
   <a href="#about">About</a>
   <a href="#contact">Contact</a> -->
   <div class="login-container">
-    <form action="/action_page.php">
+  <div id="notlogin">
     <button type="submit"> <a href="http://localhost/nodefrontend/login.php" > Login</a></button> 
     <button type="submit"><a href="http://localhost/nodefrontend/register.php" >Register </a></button>
-
-    </form>
+  </div>
+  <div id="login">
+  <a class="active" href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#productlisting">Product</a>
+  <a href="http://localhost/nodefrontend/orders.php">Orders</a>
+  <a href="http://localhost/nodefrontend/profile.php">My Account</a>
+  <a href="javascript:void(0);" onclick="logout()">Logout</a>
+  </div>
   </div>
 </div>
 <!-- 
@@ -244,81 +252,77 @@ body {
 
 </div> -->
 <div id="productlisting">
-<h2 style="text-align:center">Product Card</h2>
 <div class="row">
 <div class="col-md-12">
 
-<div class="col-md-6">
+<div class="col-md-6 productlist">
 
 <div class="card">
   <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
+  <h1 id="name">Tailored Jeans</h1>
   <p class="price">$19.99</p>
-  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-  <p><button>Add to Cart</button></p>
-  <p><button>Product details</button></p>
-</div>
-
-<div class="card">
-  <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
-  <p class="price">$19.99</p>
-  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-  <p><button>Add to Cart</button></p>
-  <p><button>Product details</button></p>
-</div>
-
-
-<div class="card">
-  <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
-  <p class="price">$19.99</p>
-  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-  <p><button>Add to Cart</button></p>
-  <p><button>Product details</button></p>
-</div>
-
-<div class="card">
-  <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
-  <p class="price">$19.99</p>
-  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-  <p><button>Add to Cart</button></p>
-  <p><button>Product details</button></p>
-</div>
-
-
-<div class="card">
-  <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
-  <p class="price">$19.99</p>
-  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-  <p><button>Add to Cart</button></p>
-  <p><button>Product details</button></p>
-</div>
-
-<div class="card">
-  <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
-  <p class="price">$19.99</p>
-  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-  <p><button>Add to Cart</button></p>
-  <p><button>Product details</button></p>
-</div>
-
-
-<div class="card">
-  <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
-  <p class="price">$19.99</p>
-  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-  <p><button>Add to Cart</button></p>
-  <p><button>Product details</button></p>
-</div>
-</div> 
-</div> 
+  <p id="description">Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+  <p><button id="pid">Add to Cart</button></p>
+  <p><button id="64340c63b4dd0b688577b3b2">
+    <a href="http://localhost/nodefrontend/product-details.php?id=64340c63b4dd0b688577b3b2">
+  Product details </a></button></p>
 </div>
 
 </div>
+</div>
+</div>
+</div>
+<script>
+         $(window).on('load', function () {  
+          var accessToken ="";
+           accessToken=localStorage.getItem("accessToken");
+           if(accessToken=="" || accessToken == null){
+            //not login
+            $('#notlogin').show();
+            $('#login').hide();
+
+
+           }else{    
+             //login
+             $('#notlogin').hide();
+             $('#login').show();
+           }
+            //productlist
+            var settings = {
+              "url": "http://localhost:5001/api/products/allproducts",
+              "method": "GET",
+              "timeout": 0,             
+            };
+         
+            $.ajax(settings).done(function (response) {
+               if(response.data!=""){
+                  console.log(response.data);
+                  $.each(response.data, function(key, val) {
+                  var data;
+                  data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php"+val._id+"'>Product details</a></button></p></div>";
+
+                  //data +="<tr><td>"+(key+1)+"</td><td>"+val.name+".</td><td>"+val.image+".</td><td>"+val.price+"</td><td><a href='http://localhost/nodefrontend/admin/product-edit.php?id="+val._id+"'><i class='fas fa-edit' data-attr='"+val._id+"' cl></i></a><i class='fas fa-trash delete' data_id='"+val._id+"' ></i></td></tr>";
+                  $('.productlist').append(data);
+
+
+
+                  return data;
+                  });
+               }else{
+                  $("#errormsg").text("Something went wrong please try again after sometime....");
+               }
+         
+                
+              });
+               
+
+          });
+          
+          function logout() {
+            localStorage.clear();
+            window.location.href = "http://localhost/nodefrontend/login.php";
+          }
+          
+      </script>
 </body>
 </html>

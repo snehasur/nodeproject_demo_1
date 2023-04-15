@@ -22,7 +22,7 @@ const validateToken =require("../middleware/validateTokenHandler");
 router.use(validateToken);
 router.route("/").get(getProducts).post(createProduct);
 router.route("/:id").get(getProduct).put(updateProduct).delete(deleteProduct);
-router.route("/:id").get(getProduct).put(updateProduct).delete(deleteProduct);
+// router.route("/:id").get(getProduct).put(updateProduct).delete(deleteProduct);
 router.route("/getproductscount").get(getProductscount);
 
 module.exports = router;

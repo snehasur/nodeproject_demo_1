@@ -366,22 +366,23 @@ section {
          </div>
          <div class="col-md-6">
             <div class="_product-detail-content">
-               <p class="_p-name"> Milton Bottle </p>
+               <p class="_p-name" id="name"> Milton Bottle </p>
                <div class="_p-price-box">
                   <div class="p-list">
-                     <span> M.R.P. : <i class="fa fa-inr"></i> <del> 1399  </del>   </span>
-                     <span class="price"> Rs. 699 </span>
+                     <span> M.R.P. : <i class="fa fa-inr"></i> <del id="delprice" > 1399  </del>   </span>
+                     <span class="price" id="price"> Rs. 699 </span>
                   </div>
-                  <div class="_p-add-cart">
+                  <!-- <div class="_p-add-cart">
                      <div class="_p-qty">
                         <span>Add Quantity</span>
                         <div class="value-button decrease_" id="" value="Decrease Value">-</div>
                         <input type="number" name="qty" id="number" value="1" />
                         <div class="value-button increase_" id="" value="Increase Value">+</div>
                      </div>
-                  </div>
+                  </div> -->
                   <div class="_p-features">
-                     <span> Description About this product:- </span>
+                     <span > Description About this product:- </span>
+                     <span id="description">
                      Solid color polyester/linen full blackout thick sunscreen floor curtain
                      Type: General Pleat
                      Applicable Window Type: Flat Window
@@ -400,13 +401,14 @@ section {
                      Place of Origin: India
                      Name: Curtain
                      Usage: Window Decoration
-                     Keywords: Ready Made Blackout Curtain                        
+                     Keywords: Ready Made Blackout Curtain
+                  </span>                        
                   </div>
                   <form action="" method="post" accept-charset="utf-8">
                      <ul class="spe_ul"></ul>
                      <div class="_p-qty-and-cart">
                         <div class="_p-add-cart">
-                           <button class="btn-theme btn buy-btn" tabindex="0">
+                           <button class="btn-theme btn buy-btn" tabindex="0" data_id="" id="buynow">
                            <i class="fa fa-shopping-cart"></i> Buy Now
                            </button>
                            <button class="btn-theme btn btn-success" tabindex="0">
@@ -418,6 +420,9 @@ section {
                         </div>
                      </div>
                   </form>
+
+               <span id="successmsg"></span>
+               <span id="error"></span>
                </div>
             </div>
          </div>
@@ -701,6 +706,109 @@ $(document).ready(function () {
     });
 
 </script>    
+<script>
+         $(window).on('load', function () {
+           
+            //product details
+            var urlParams = new URLSearchParams(window.location.search);
+            var id=urlParams.get('id');
+            
+            var settings = {
+              "url": "http://localhost:5001/api/products/productdetails/"+id,
+              "method": "GET",
+              "timeout": 0,
+              
+            };
+         
+            $.ajax(settings).done(function (response) {
+              console.log(response.data.name);
+              if(response.data!=""){
+                $("#name").text(response.data.name);
+                $("#description").text(response.data.description);
+                $("#price").text(response.data.price);
+                $("#delprice").text((response.data.price+10));
+                
+                var img=response.data.image;
+                $(".my_img").attr('src',img );
+                $("#buynow").attr('data_id',response.data._id );
+              }
+              if(response.message!="" && response.status=="error"){
+                $("#errormsg").text(response.message);
+              }
+              // else{
+              //   $("#errormsg").text("Something went wrong please try again after sometime....");
+              // }
+                   
+                
+              });
+         
+              $(document).ready(function() {  
+                
+                $(document).on("click","#buynow",function() {
+                var accessToken =userid=pid="";
+                accessToken=localStorage.getItem("accessToken");
+               
+                var accessTokenBearer ="Bearer "+accessToken;
+                var pid=$(this).attr("data_id");
+                userid=localStorage.getItem("userid");
+                console.log(pid+"pid");
+                console.log(userid+"userid");
+                if(accessToken=="" || accessToken == null){
+                    window.location.href = "http://localhost/nodefrontend/login.php";
+                }else{    
+                
+              
+                  
+                  var settings1 = {
+                  "url": "http://localhost:5001/api/orders/",
+                  "method": "POST",
+                  "timeout": 0,
+                  "headers": {
+                     "Authorization": accessTokenBearer
+                  },
+                  "dataType": "json",
+                  "contentType": "application/json",
+                  "data": JSON.stringify({
+                              "productid":pid,
+                              "userid":userid
+                             
+                            }),
+                  };
+               
+                  $.ajax(settings1).done(function (response) {
+                    alert("R");
+                     if(response.data!=""){
+                        
+                        console.log(response.data);
+                        $("#successmsg").text("Ordered Successfully...");
+                        setTimeout(function() { 
+                        $("#successmsg").hide();               
+                       window.location.href = "http://localhost/nodefrontend/thank-you.php/"+response.data._id;
+                        },
+                        5000);
+                     }else{
+                        $("#errormsg").text("Something went wrong please try again after sometime....");
+                     }
+         
+                
+              });
 
+
+
+
+            }
+                });
+
+
+
+           }); 
+         
+       
+
+          });
+         //order
+              
+          
+      </script>
 </body>
 </html>

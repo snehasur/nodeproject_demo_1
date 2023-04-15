@@ -101,10 +101,10 @@ body {
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="#section1">Dashboard</a></li>
         <li><a href="http://localhost/nodefrontend/admin/productlist.php">Product List</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/orderlist.php">Order List</a></li>
+        <li><a href="http://localhost/nodefrontend/admin/orders.php">Order List</a></li>
         <li><a href="http://localhost/nodefrontend/admin/userlist.php">User List</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/orderlist.php">User Profile</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/userlist.php">Logout</a></li>
+        <li><a href="http://localhost/nodefrontend/profile.php">My ACcount</a></li>
+        <li onclick="logout()">Logout</a></li>
       </ul><br>
     </div>
     <br>
@@ -126,7 +126,7 @@ body {
         </div>
         <div class="col-sm-4">
           <div class="well">
-            <h4>OrderSessions</h4>
+            <h4>Orders</h4>
             <p id="order"></p> 
           </div>
         </div>
@@ -139,49 +139,60 @@ body {
 </body>
 <script>
 
-$(window).on('load', function () {
+ $(window).on('load', function () {
    console.log("window loaded");
    var accessToken =localStorage.getItem("accessToken");
-   if(accessToken==" "){
+   if(accessToken=="" || accessToken == null){
     window.location.href = "http://localhost/nodefrontend/login.php";
    }else{
-    console.log("1hghghghygjj");
     var accessToken =localStorage.getItem("accessToken");
+    var accessTokenBearer ="Bearer "+accessToken;
     //usercount
     var settings = {
       "url": "http://localhost:5001/api/users/getuserscount",
       "method": "GET",
       "timeout": 0,//{"Authorization": accessToken},
       "headers": {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwiaWQiOiI2NDM0MTEwNjU4ZjNmN2Q1YjFlYzc3MDEiLCJyb2xlIjoxfSwiaWF0IjoxNjgxMzk2MjUzLCJleHAiOjE2OTAwMzYyNTN9.1TsP_stFaKNKNHmzPDF5Djye8UTRjN4mUpHcH8Uj8pI"
+        "Authorization": accessTokenBearer
       },
     };
 
     $.ajax(settings).done(function (response) {
-      console.log(response.data);
+      console.log(response.data);     
       
-      $("#usercount").text(response.data);
+      if(response.data!=""){
+        $("#usercount").text(response.data);
+      }else{
+        $("#usercount").text("0");
+      }
     });
     var settings1 = {
-      "url": "http://localhost:5001/api/products/getproductscount",
+      "url": "http://localhost:5001/api/products/getproductscount", //not working
       "method": "GET",
       "timeout": 0,//{"Authorization": accessToken},
       "headers": {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwiaWQiOiI2NDM0MTEwNjU4ZjNmN2Q1YjFlYzc3MDEiLCJyb2xlIjoxfSwiaWF0IjoxNjgxMzk2MjUzLCJleHAiOjE2OTAwMzYyNTN9.1TsP_stFaKNKNHmzPDF5Djye8UTRjN4mUpHcH8Uj8pI"
+      "Authorization": accessTokenBearer  
       },
     };
 
     $.ajax(settings1).done(function (response) {
       console.log(response.data);
-      
-      $("#productcount").text(response.data);
+      if(response.data!=""){
+        $("#productcount").text(response.data);
+      }else{
+        $("#productcount").text("0");
+      }
+     
     });
 
 
    }
   });
+  function logout() {
+    localStorage.clear();
+    window.location.href = "http://localhost/nodefrontend/login.php";
+  }
  
-      
   </script>
 
 </html>

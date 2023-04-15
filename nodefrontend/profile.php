@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Product Edit</title>
+      <title>Profile Edit</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -12,45 +12,29 @@
       <div class="container">
          <section class="panel panel-default">
             <div class="panel-heading">
-               <h3 class="panel-title">Product Edit</h3>
+               <h3 class="panel-title">Profile Edit</h3>
             </div>
             <br><span id="errormsg"></span><br>
             <div class="panel-body">
                <form action="designer-finish.html" class="form-horizontal" role="form">
                   <input type="hidden" value="" id="pid">
                   <div class="form-group">
-                     <label for="name" class="col-sm-3 control-label">Name</label>
+                     <label for="username" class="col-sm-3 control-label">User Name</label>
                      <div class="col-sm-9">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="">
-                        <br><span id="nameerror"></span><br>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="" >
+                        <br><span id="usernameerror"></span><br>
                      </div>
                   </div>
                   <!-- form-group // -->
                   <div class="form-group">
-                     <label for="price" class="col-sm-3 control-label">Price</label>
+                     <label for="email" class="col-sm-3 control-label">Email</label>
                      <div class="col-sm-9">
-                        <input type="tel" class="form-control" name="price" id="price" placeholder="" onKeyUp="javascript: this.value = this.value.replace(/[^0-9]/g,'');"
+                        <input type="email" class="form-control" name="email" id="email" placeholder="" readonly onKeyUp="javascript: this.value = this.value.replace(/[^0-9]/g,'');"
                            >
-                        <br><span id="priceerror"></span><br>
+                        <br><span id="emailerror"></span><br>
                      </div>
                   </div>
-                  <!-- form-group // -->
-                  <div class="form-group">
-                     <label for="about" class="col-sm-3 control-label">Description</label>
-                     <div class="col-sm-9">
-                        <textarea class="form-control description" id="description"  ></textarea>
-                        <br><span id="descriptionerror"></span><br>
-                     </div>
-                  </div>
-                  <!-- form-group // -->
-                  <div class="form-group">
-                     <label for="name" class="col-sm-3 control-label">Image</label>
-                     <div class="col-sm-3">
-                        <label class="control-label small" for="file_img"></label> 
-                        <input type="file" name="file_img">
-                        <img src="" id="showimg" width="500" height="600">
-                     </div>
-                  </div>
+                  
                   <!-- form-group // -->
                   <hr>
                   <div class="form-group">
@@ -71,33 +55,34 @@
       <!-- container// -->
       <script>
          $(window).on('load', function () {
-           var accessToken ="";
+           var accessToken =_id="";
            accessToken=localStorage.getItem("accessToken");
+           _id=localStorage.getItem("userid");
+
            if(accessToken=="" || accessToken == null){
             window.location.href = "http://localhost/nodefrontend/login.php";
            }else{
-            //productedit
-            var urlParams = new URLSearchParams(window.location.search);
-            var id=urlParams.get('id');
+            //profileedit
+
             var accessTokenBearer ="Bearer "+accessToken;
             var settings = {
-              "url": "http://localhost:5001/api/products/"+id,
+              "url": "http://localhost:5001/api/users/profile",
               "method": "GET",
               "timeout": 0,//{"Authorization": accessToken},
               "headers": {
                 "Authorization": accessTokenBearer
               },
+              "data": JSON.stringify({                             
+                              "_id":_id
+                            }),
             };
          
             $.ajax(settings).done(function (response) {
-              console.log(response.data);
+              console.log(response.data[0]);
               if(response.data!=""){
-                 $("#name").val(response.data.name);
-                $("#price").val(response.data.price);
-                $("textarea#description").val(response.data.description);
-                var img=response.data.image;
-                $("#showimg").attr('src',img );
-                $("#pid").val(response.data._id);     
+                $("#username").val(response.data[0].username);
+                $("#email").val(response.data[0].email);
+                  
               }
               if(response.message!="" && response.status=="error"){
                 $("#errormsg").text(response.message);
@@ -112,40 +97,21 @@
               
          
            }
+           //profileupdate
            $(document).on('click','#btnSubmit',function(){
-             var name=price=description=_id=image="";
-             var name= $("#name").val();
-             var price= $("#price").val();
-             var description= $("textarea#description").val();
-             var image= $("#showimg").attr('src');
-             var _id= $("#pid").val();
-         
-                     
-                     name=$('#name').val();
-                     if(name==''){
-                       $('#nameerror').text("Please give name.");
+             var username="";
+             var username= $("#username").val();
+             username=$('#username').val();
+                     if(username==''){
+                       $('#usernameerror').text("Please give username.");
                        return false;
                      }else{
-                       $('#nameerror').text(" ");
+                       $('#usernameerror').text(" ");
                      }
                     
-                     price=$('#price').val();
-                     if(price==''){
-                       $('#priceerror').text("Please give price.");
-                       return false;
-                     }else{
-                       $('#priceerror').text(" ");
-                     }
                      
-                     description=$("textarea#description").val().length;
-                     if(description==0){
-                       $('#descriptionerror').text("Please give description.");
-                       return false;
-                     }else{
-                       $('#descriptionerror').text(" ");
-                     }
          var settings1 = {
-          "url": "http://localhost:5001/api/products/"+id,
+          "url": "http://localhost:5001/api/users/profile/",
           "type": "PUT",
           "timeout": 0,
           "headers": {
@@ -154,10 +120,7 @@
           "dataType": "json",
           "contentType": "application/json",
           "data": JSON.stringify({
-                              "name":name,
-                              "price":price,
-                              "description":description,
-                              "image":image,
+                              "username":username,
                               "_id":_id
                             }),
          };
@@ -165,10 +128,10 @@
          $.ajax(settings1).done(function (response) {
           console.log(response);
           if(response.data!=""){
-            $("#successmsg").text("Product Update Successfully...");
+            $("#successmsg").text("Profile Update Successfully...");
             setTimeout(function() { 
               $("#successmsg").hide();               
-              window.location.href = "http://localhost/nodefrontend/admin/productlist.php";
+              //window.location.href = "http://localhost/nodefrontend/profile.php";
             },
             5000);
           }

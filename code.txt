@@ -4,20 +4,31 @@ cd C:\node\express-project\mycontacts-backend
 Offer Url:
 
 Admin-
-http://localhost/nodefrontend/admin/dashboard.php
-http://localhost/nodefrontend/admin/userlist.php
-http://localhost/nodefrontend/admin/productlist.php
-http://localhost/nodefrontend/admin/product-add.php
-http://localhost/nodefrontend/admin/product-edit.php
-http://localhost/nodefrontend/admin/orderlist.php
+header footer navbar in every page //not working
+if something error from api and show in frontend //not working
+if no response come //not working
+data take from jwt token //not working
+if routing not avalable //404 page
+http://localhost/nodefrontend/admin/dashboard.php productcount api error ,logout msg not give//not working
+http://localhost/nodefrontend/admin/userlist.php ph no img show //not working
+http://localhost/nodefrontend/admin/productlist.php (table not proper)//not working
+http://localhost/nodefrontend/admin/product-add.php api //not working
+http://localhost/nodefrontend/admin/product-edit.php Image show,update //not working
+http://localhost/nodefrontend/orders.php
 
-Frontend url:
-http://localhost/nodefrontend/
-http://localhost/nodefrontend/product-details.php
-http://localhost/nodefrontend/add-to-cart.php
-http://localhost/nodefrontend/checkout-page.php
+
 http://localhost/nodefrontend/login.php
 http://localhost/nodefrontend/register.php
+http://localhost/nodefrontend/profile.php //not working image,ph no,gender,address
+
+
+
+Frontend url:
+http://localhost/nodefrontend/ //not working api ,show
+http://localhost/nodefrontend/product-details.php //image show ,buy now redirection//buy now auth not working
+http://localhost/nodefrontend/add-to-cart.php
+http://localhost/nodefrontend/checkout-page.php
+
 
 Api Url:
 
@@ -173,6 +184,40 @@ http://localhost:5001/api/products/productdetails/64340d26b4dd0b688577b3bd
 //@access public
 
 
+=>
+//@desc Post users details show
+//@route Post /api/users/profile
+//@access private
+http://localhost:5001/api/users/profile
+{
+  "id":" x x ",
+}
+=>
+//@desc Put users details show
+//@route Put /api/users/profile
+//@access private
+http://localhost:5001/api/users/profile
+
+{
+  "username":"Test",
+}
+
+
+=>
+//@desc Create new order
+//@route POST /api/orders
+//@access private
+http://localhost:5001/api/orders //not working need number not string
+
+{
+  "productid": "643973f142fac18596046e51",
+  "userid": "64340c63b4dd0b688577b3b2"
+}
+
+
+
+
+
 
 
 
@@ -258,6 +303,7 @@ project flow
 fetures
   =>image uplode
   =>payment 
+  =>addtocart
 
 role-> 
   1 admin
@@ -297,6 +343,7 @@ navbar with login
   aboutus
   contactus
   products
+  orders
   profileshow
   profileupdate
   logout  
@@ -304,6 +351,8 @@ pages
 
 index productlisting without login
 product details page
+=>buynow
+=>addtocart
 login
 register
 add-to-cart page
