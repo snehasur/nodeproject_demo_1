@@ -3,7 +3,7 @@
 <head>
 
  
-  <title>Bootstrap Example</title>
+  <title>Admin</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -25,69 +25,69 @@
     }
   </style>
   <style>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-}
+    .navbar {
+      overflow: hidden;
+      background-color: #333;
+    }
 
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
+    .navbar a {
+      float: left;
+      font-size: 16px;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
 
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
+    .dropdown {
+      float: left;
+      overflow: hidden;
+    }
 
-.dropdown .dropbtn {
-  font-size: 16px;  
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-}
+    .dropdown .dropbtn {
+      font-size: 16px;  
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+    }
 
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
+    .navbar a:hover, .dropdown:hover .dropbtn {
+      background-color: red;
+    }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
 
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
 
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
 </style>
 </head>
 <body>
@@ -97,14 +97,14 @@ body {
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h2>Logo</h2>
+      <h2>Admin</h2>
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="#section1">Dashboard</a></li>
         <li><a href="http://localhost/nodefrontend/admin/productlist.php">Product List</a></li>
         <li><a href="http://localhost/nodefrontend/admin/orders.php">Order List</a></li>
         <li><a href="http://localhost/nodefrontend/admin/userlist.php">User List</a></li>
-        <li><a href="http://localhost/nodefrontend/profile.php">My ACcount</a></li>
-        <li onclick="logout()">Logout</a></li>
+        <li><a href="http://localhost/nodefrontend/admin/profile.php">My Account</a></li>
+        <li onclick="logout()"><a href="javascript:void(0);">Logout</a></li>
       </ul><br>
     </div>
     <br>
@@ -127,7 +127,7 @@ body {
         <div class="col-sm-4">
           <div class="well">
             <h4>Orders</h4>
-            <p id="order"></p> 
+            <p id="orderscount"></p> 
           </div>
         </div>
 
@@ -184,7 +184,24 @@ body {
       }
      
     });
+    var settings2 = {
+      "url": "http://localhost:5001/api/orders/getorderscount", //not working
+      "method": "GET",
+      "timeout": 0,//{"Authorization": accessToken},
+      "headers": {
+      "Authorization": accessTokenBearer  
+      },
+    };
 
+    $.ajax(settings2).done(function (response) {
+      console.log(response.data);
+      if(response.data!=""){
+        $("#orderscount").text(response.data);
+      }else{
+        $("#orderscount").text("0");
+      }
+     
+    });
 
    }
   });

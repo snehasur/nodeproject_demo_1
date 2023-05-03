@@ -112,6 +112,14 @@ body {
 }
 
 /* product list end*/
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+    margin: 0 10px;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
@@ -255,9 +263,9 @@ body {
 <div class="row">
 <div class="col-md-12">
 
-<div class="col-md-6 productlist">
+<div class="col-md-6 productlist" style="display: flex;flex-wrap: wrap;">
 
-<div class="card">
+<!-- <div class="card">
   <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
   <h1 id="name">Tailored Jeans</h1>
   <p class="price">$19.99</p>
@@ -266,7 +274,7 @@ body {
   <p><button id="64340c63b4dd0b688577b3b2">
     <a href="http://localhost/nodefrontend/product-details.php?id=64340c63b4dd0b688577b3b2">
   Product details </a></button></p>
-</div>
+</div> -->
 
 </div>
 </div>
@@ -299,9 +307,8 @@ body {
                   console.log(response.data);
                   $.each(response.data, function(key, val) {
                   var data;
-                  data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php"+val._id+"'>Product details</a></button></p></div>";
+                  data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php/"+val._id+"'>Product details</a></button></p></div>";
 
-                  //data +="<tr><td>"+(key+1)+"</td><td>"+val.name+".</td><td>"+val.image+".</td><td>"+val.price+"</td><td><a href='http://localhost/nodefrontend/admin/product-edit.php?id="+val._id+"'><i class='fas fa-edit' data-attr='"+val._id+"' cl></i></a><i class='fas fa-trash delete' data_id='"+val._id+"' ></i></td></tr>";
                   $('.productlist').append(data);
 
 

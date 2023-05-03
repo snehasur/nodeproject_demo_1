@@ -848,5 +848,49 @@ $(function() {
 // yasser.mas2@gmail.com
 
 </script>    
+
+<script>
+         $(window).on('load', function () {  
+           var accessToken ="";
+           accessToken=localStorage.getItem("accessToken");
+           if(accessToken=="" || accessToken == null){
+            window.location.href = "http://localhost/nodefrontend/login.php";
+           }else{    
+            //productlist
+            var accessTokenBearer ="Bearer "+accessToken;
+            var settings = {
+              "url": "http://localhost:5001/api/orders",
+              "method": "GET",
+              "timeout": 0,
+              "headers": {
+                "Authorization": accessTokenBearer
+              },
+            };
+         
+            $.ajax(settings).done(function (response) {
+               if(response.data!=""){
+                  console.log(response.data);
+                //   $.each(response.data, function(key, val) {
+                //   var data;
+                //   data +="<tr><td>"+(key+1)+"</td><td>"+val.name+".</td><td>"+val.image+".</td><td>"+val.price+"</td><td><a href='http://localhost/nodefrontend/admin/product-edit.php?id="+val._id+"'><i class='fas fa-edit' data-attr='"+val._id+"' cl></i></a><i class='fas fa-trash delete' data_id='"+val._id+"' ></i></td></tr>";
+                //   $('#tbody').append(data);
+                //   return data;
+                //   });
+               }else{
+                  $("#errormsg").text("Something went wrong please try again after sometime....");
+               }
+         
+                
+              });
+           }          
+
+          });
+          
+          function logout() {
+    localStorage.clear();
+    window.location.href = "http://localhost/nodefrontend/login.php";
+  }
+          
+      </script>
 </body>
 </html>

@@ -14,7 +14,7 @@ http://localhost/nodefrontend/admin/userlist.php ph no img show //not working
 http://localhost/nodefrontend/admin/productlist.php (table not proper)//not working
 http://localhost/nodefrontend/admin/product-add.php api //not working
 http://localhost/nodefrontend/admin/product-edit.php Image show,update //not working
-http://localhost/nodefrontend/orders.php
+http://localhost/nodefrontend/orders.php 
 
 
 http://localhost/nodefrontend/login.php
@@ -290,7 +290,7 @@ mongodb not connect with code
 =>
 5.without token no error showing processing
 6.if no permission  showing processing
-7.
+7.how to get data data from jwt
 
 
 resource

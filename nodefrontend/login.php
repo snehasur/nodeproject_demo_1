@@ -158,7 +158,7 @@ button:hover {
                   // localStorage.setItem(key,value);
                   // localStorage.setItem(key,value);
                   // localStorage.setItem(key,value);
-                  if(result.role==1){
+                 if(result.role==1){
                      //redirect for admin
                       window.location.href = "http://localhost/nodefrontend/admin/dashboard.php";
                   }
