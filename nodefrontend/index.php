@@ -138,6 +138,7 @@ body {
   <a class="active" href="#home">Home</a>
   <a href="#about">About</a>
   <a href="#productlisting">Product</a>
+  <a href="javascript:void(0);"><i class="fa fa-shopping-cart" aria-hidden="true" id="cartproductcount"></i></a>
   <a href="http://localhost/nodefrontend/orders.php">Orders</a>
   <a href="http://localhost/nodefrontend/profile.php">My Account</a>
   <a href="javascript:void(0);" onclick="logout()">Logout</a>
@@ -294,6 +295,29 @@ body {
              //login
              $('#notlogin').hide();
              $('#login').show();
+             var accessToken =userid="";
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;
+            userid=localStorage.getItem("userid");
+             var settings1 = {
+              "url": "http://localhost:5001/api/cart/add-to-cart-count",
+              "method": "POST",
+              "timeout": 0,
+              "headers": {
+                "Content-Type": "application/json",
+                "Authorization": accessTokenBearer      
+                         },
+              "data": JSON.stringify({
+                "userid":userid
+              }),
+            };
+
+            $.ajax(settings1).done(function (response) {
+              console.log(response);
+              $("#cartproductcount").text(response.cartproductcount);
+            });
+
            }
             //productlist
             var settings = {
@@ -307,7 +331,8 @@ body {
                   console.log(response.data);
                   $.each(response.data, function(key, val) {
                   var data;
-                  data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php/"+val._id+"'>Product details</a></button></p></div>";
+                  
+                  data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='addtocart' data-id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php/?id="+val._id+"'>Product details</a></button></p></div>";
 
                   $('.productlist').append(data);
 
@@ -329,7 +354,77 @@ body {
             localStorage.clear();
             window.location.href = "http://localhost/nodefrontend/login.php";
           }
+          $(document).on("click","#addtocart",function() {
+            var accessToken =userid=pid="";
+            accessToken=localStorage.getItem("accessToken");
           
+            var accessTokenBearer ="Bearer "+accessToken;
+            var pid=$(this).attr("data-id");
+            userid=localStorage.getItem("userid");
+            
+            if(accessToken=="" || accessToken == null){
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{   
+              console.log(pid+"pid");
+            console.log(userid+"userid");
+
+
+
+                var settings = {
+                  "url": "http://localhost:5001/api/cart/add-to-cart",
+                  "method": "POST",
+                  "timeout": 0,
+                  "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": accessTokenBearer                },
+                  "data": JSON.stringify({
+                            "productid":pid,
+                            "userid":userid
+                  }),
+                };
+
+                $.ajax(settings).done(function (response) {
+                  console.log(response);
+                  
+                  $("#cartproductcount").text(response.cartproductcount);
+
+                });
+                }
+          });
+          
+          $(document).on("click","#cartproductcount",function() {
+            var accessToken =userid="";
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;
+            userid=localStorage.getItem("userid");
+            
+            if(accessToken=="" || accessToken == null){
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{   
+            console.log(userid+"userid");
+
+              window.location.href = "http://localhost/nodefrontend/add-to-cart.php";
+
+                // var settings = {
+                //   "url": "http://localhost:5001/api/cart/all-add-to-cart",
+                //   "method": "POST",
+                //   "timeout": 0,
+                //   "headers": {
+                //     "Content-Type": "application/json",
+                //     "Authorization": accessTokenBearer                },
+                //   "data": JSON.stringify({
+                //             "userid":userid
+                //   }),
+                // };
+
+                // $.ajax(settings).done(function (response) {
+                //   console.log(response);
+                  
+
+                // });
+                }
+          });
       </script>
 </body>
 </html>

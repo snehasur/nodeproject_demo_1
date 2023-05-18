@@ -1,426 +1,237 @@
 <!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-<style>
-@import "compass/css3";
-
-/*
-I wanted to go with a mobile first approach, but it actually lead to more verbose CSS in this case, so I've gone web first. Can't always force things...
-
-Side note: I know that this style of nesting in SASS doesn't result in the most performance efficient CSS code... but on the OCD/organizational side, I like it. So for CodePen purposes, CSS selector performance be damned.
-*/
-
-/* Global settings */
-$color-border: #eee;
-$color-label: #aaa;
-$font-default: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$font-bold: 'HelveticaNeue-Medium', 'Helvetica Neue Medium';
-
-
-/* Global "table" column settings */
-.product-image { float: left; width: 20%; }
-.product-details { float: left; width: 37%; }
-.product-price { float: left; width: 12%; }
-.product-quantity { float: left; width: 10%; }
-.product-removal { float: left; width: 9%; }
-.product-line-price { float: left; width: 12%; text-align: right; }
-
-
-/* This is used as the traditional .clearfix class */
-.group:before,
-.group:after {
-    content: '';
-    display: table;
-} 
-.group:after {
-    clear: both;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+    margin-top:20px;
+    background:#eee;
 }
-.group {
-    zoom: 1;
+.ui-w-40 {
+    width: 40px !important;
+    height: auto;
 }
 
-
-/* Apply clearfix in a few places */
-.shopping-cart, .column-labels, .product, .totals-item {
-  @extend .group;
+.card{
+    box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);    
 }
 
-
-/* Apply dollar signs */
-.product .product-price:before, .product .product-line-price:before, .totals-value:before {
-  content: '$';
+.ui-product-color {
+    display: inline-block;
+    overflow: hidden;
+    margin: .144em;
+    width: .875rem;
+    height: .875rem;
+    border-radius: 10rem;
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    vertical-align: middle;
 }
+    </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-
-/* Body/Header stuff */
-body {
-  padding: 0px 30px 30px 20px;
-  font-family: $font-default;
-  font-weight: 100;
-}
-
-h1 {
-  font-weight: 100;
-}
-
-label {
-  color: $color-label;
-}
-
-.shopping-cart {
-  margin-top: -45px;
-}
-
-
-/* Column headers */
-.column-labels {
-  label {
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid $color-border;
-  }
-  
-  .product-image, .product-details, .product-removal {
-    text-indent: -9999px;
-  }
-}
-
-
-/* Product entries */
-.product {
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid $color-border;
-  
-  .product-image {
-    text-align: center;
-    img {
-      width: 100px;
-    }
-  }
-  
-  .product-details {
-    .product-title {
-      margin-right: 20px;
-      font-family: $font-bold;
-    }
-    .product-description {
-      margin: 5px 20px 5px 0;
-      line-height: 1.4em;
-    }
-  }
-  
-  .product-quantity {
-    input {
-      width: 40px;
-      
-    }
-  }
-  
-  .remove-product {
-    border: 0;
-    padding: 4px 8px;
-    background-color: #c66;
-    color: #fff;
-    font-family: $font-bold;
-    font-size: 12px;
-    border-radius: 3px;
-  }
-  
-  .remove-product:hover {
-    background-color: #a44;
-  }
-}
-
-
-/* Totals section */
-.totals {
-  .totals-item {
-    float: right;
-    clear: both;
-    width: 100%;
-    margin-bottom: 10px;
-    
-    label {
-      float: left;
-      clear: both;
-      width: 79%;
-      text-align: right;
-    }
-    
-    .totals-value {
-      float: right;
-      width: 21%;
-      text-align: right;
-    }
-  }
-  
-  .totals-item-total {
-    font-family: $font-bold;
-  }
-}
-
-.checkout {
-  float: right;
-  border: 0;
-  margin-top: 20px;
-  padding: 6px 25px;
-  background-color: #6b6;
-  color: #fff;
-  font-size: 25px;
-  border-radius: 3px;
-}
-
-.checkout:hover {
-  background-color: #494;
-}
-
-/* Make adjustments for tablet */
-@media screen and (max-width: 650px) {
-  
-  .shopping-cart {
-    margin: 0;
-    padding-top: 20px;
-    border-top: 1px solid $color-border;
-  }
-  
-  .column-labels {
-    display: none;
-  }
-  
-  .product-image {
-    float: right;
-    width: auto;
-    img {
-      margin: 0 0 10px 10px;
-    }
-  }
-  
-  .product-details {
-    float: none;
-    margin-bottom: 10px;
-    width: auto;
-  }
-  
-  .product-price {
-    clear: both;
-    width: 70px;
-  }
-  
-  .product-quantity {
-    width: 100px;
-    input {
-      margin-left: 20px;
-    }
-  }
-  
-  .product-quantity:before {
-    content: 'x';
-  }
-  
-  .product-removal {
-    width: auto;
-  }
-  
-  .product-line-price {
-    float: right;
-    width: 70px;
-  }
-  
-}
-
-
-/* Make more adjustments for phone */
-@media screen and (max-width: 350px) {
-  
-  .product-removal {
-    float: right;
-  }
-  
-  .product-line-price {
-    float: right;
-    clear: left;
-    width: auto;
-    margin-top: 10px;
-  }
-  
-  .product .product-line-price:before {
-    content: 'Item Total: $';
-  }
-  
-  .totals {
-    .totals-item {
-      label {
-        width: 60%;
-      }
-      
-      .totals-value {
-        width: 40%;
-      }
-    }
-  }
-}
-</style>
+</head>
 <body>
+<div class="container px-3 my-5 clearfix">
+    <!-- Shopping cart table -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Shopping Cart</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered m-0">
+                <thead>
+                  <tr>
+                    <!-- Set columns width -->
+                    <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details</th>
+                    <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
+                    <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
+                    <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
+                    <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+                  </tr>
+                </thead>
+                <tbody class="productlist">
+        
 
-
-
-<h1>Shopping Cart</h1>
-
-<div class="shopping-cart">
-
-  <div class="column-labels">
-    <label class="product-image">Image</label>
-    <label class="product-details">Product</label>
-    <label class="product-price">Price</label>
-    <label class="product-quantity">Quantity</label>
-    <label class="product-removal">Remove</label>
-    <label class="product-line-price">Total</label>
+        
+                </tbody>
+              </table>
+            </div>
+            <!-- / Shopping cart table -->
+        
+            <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
+              <!-- <div class="mt-4">
+                <label class="text-muted font-weight-normal">Promocode</label>
+                <input type="text" placeholder="ABC" class="form-control">
+              </div> -->
+              <div class="d-flex">                
+                <div class="text-right mt-4">
+                  <label class="text-muted font-weight-normal m-0">Total price</label>
+                  <div class="text-large"><strong id="totalprice" ></strong></div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="float-right">
+            <a style="text-decoration" href="http://localhost/nodefrontend/">  <button type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</button> </a>
+              <button type="button" class="btn btn-lg btn-primary mt-2 checkout">Checkout</button>
+            </div>
+        
+          </div>
+      </div>
   </div>
-
-  <div class="product">
-    <div class="product-image">
-      <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
-    </div>
-    <div class="product-details">
-      <div class="product-title">Dingo Dog Bones</div>
-      <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be begging for these things! I got curious once and ate one myself. I'm a fan.</p>
-    </div>
-    <div class="product-price">12.99</div>
-    <div class="product-quantity">
-      <input type="number" value="2" min="1">
-    </div>
-    <div class="product-removal">
-      <button class="remove-product">
-        Remove
-      </button>
-    </div>
-    <div class="product-line-price">25.98</div>
-  </div>
-
-  <div class="product">
-    <div class="product-image">
-      <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
-    </div>
-    <div class="product-details">
-      <div class="product-title">Nutro™ Adult Lamb and Rice Dog Food</div>
-      <p class="product-description">Who doesn't like lamb and rice? We've all hit the halal cart at 3am while quasi-blackout after a night of binge drinking in Manhattan. Now it's your dog's turn!</p>
-    </div>
-    <div class="product-price">45.99</div>
-    <div class="product-quantity">
-      <input type="number" value="1" min="1">
-    </div>
-    <div class="product-removal">
-      <button class="remove-product">
-        Remove
-      </button>
-    </div>
-    <div class="product-line-price">45.99</div>
-  </div>
-
-  <div class="totals">
-    <div class="totals-item">
-      <label>Subtotal</label>
-      <div class="totals-value" id="cart-subtotal">71.97</div>
-    </div>
-    <div class="totals-item">
-      <label>Tax (5%)</label>
-      <div class="totals-value" id="cart-tax">3.60</div>
-    </div>
-    <div class="totals-item">
-      <label>Shipping</label>
-      <div class="totals-value" id="cart-shipping">15.00</div>
-    </div>
-    <div class="totals-item totals-item-total">
-      <label>Grand Total</label>
-      <div class="totals-value" id="cart-total">90.57</div>
-    </div>
-  </div>
-      
-      <button class="checkout">Checkout</button>
-
-</div>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
- <script>
-    /* Set rates + misc */
-var taxRate = 0.05;
-var shippingRate = 15.00; 
-var fadeTime = 300;
+  <script>
+    $(window).on('load', function () {
+      var accessToken =userid="";
+      var alltotalprice=0;
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;
+            userid=localStorage.getItem("userid");
+            
+            if(accessToken=="" || accessToken == null){
+              //alert("1");
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{   
+             // alert("3");
+            console.log(userid+"userid");
 
 
-/* Assign actions */
-$('.product-quantity input').change( function() {
-  updateQuantity(this);
-});
+                var settings = {
+                  "url": "http://localhost:5001/api/cart/all-add-to-cart",
+                  "method": "POST",
+                  "timeout": 0,
+                  "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": accessTokenBearer                },
+                  "data": JSON.stringify({
+                            "userid":userid
+                  }),
+                };
 
-$('.product-removal button').click( function() {
-  removeItem(this);
-});
-
-
-/* Recalculate cart */
-function recalculateCart()
-{
-  var subtotal = 0;
-  
-  /* Sum up row totals */
-  $('.product').each(function () {
-    subtotal += parseFloat($(this).children('.product-line-price').text());
-  });
-  
-  /* Calculate totals */
-  var tax = subtotal * taxRate;
-  var shipping = (subtotal > 0 ? shippingRate : 0);
-  var total = subtotal + tax + shipping;
-  
-  /* Update totals display */
-  $('.totals-value').fadeOut(fadeTime, function() {
-    $('#cart-subtotal').html(subtotal.toFixed(2));
-    $('#cart-tax').html(tax.toFixed(2));
-    $('#cart-shipping').html(shipping.toFixed(2));
-    $('#cart-total').html(total.toFixed(2));
-    if(total == 0){
-      $('.checkout').fadeOut(fadeTime);
-    }else{
-      $('.checkout').fadeIn(fadeTime);
-    }
-    $('.totals-value').fadeIn(fadeTime);
-  });
-}
+                $.ajax(settings).done(function (response) {
+                  console.log(response);
+                  var totalprice=0;
+                  if(response.data!=""){
+                  console.log(response.data);
+                  $.each(response.data, function(key, val) {
+                  var data;
+                  var Tprice;
+                  Tprice=val.Pprice*val.Pcount;
+                  
+                  //data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='addtocart' data-id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php/?id="+val._id+"'>Product details</a></button></p></div>";
+                  data +='<tr><td class="p-4"><div class="media align-items-center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-40 ui-bordered mr-4" alt=""><div class="media-body">'+val.Pname+'</div></div></td><td class="text-right font-weight-semibold align-middle p-4">$'+val.Pprice+'</td><td class="align-middle p-4">'+val.Pcount+'</td><td class="text-right font-weight-semibold align-middle p-4">$'+Tprice+'</td><td class="text-center align-middle px-0"><a href="javascript:void(0);" class="shop-tooltip close float-none text-danger removecartone" title="" data-original-title="Remove" pid="'+val.Pid+'" pprice="'+Tprice+'" cartid="'+val.cartid+'" userid="'+val.userid+'">×</a></td></tr>';
+                  $('.productlist').append(data);
+                  
+                   alltotalprice = alltotalprice + Tprice;
+                  
+                  
 
 
-/* Update quantity */
-function updateQuantity(quantityInput)
-{
-  /* Calculate line price */
-  var productRow = $(quantityInput).parent().parent();
-  var price = parseFloat(productRow.children('.product-price').text());
-  var quantity = $(quantityInput).val();
-  var linePrice = price * quantity;
-  
-  /* Update line price display and recalc cart totals */
-  productRow.children('.product-line-price').each(function () {
-    $(this).fadeOut(fadeTime, function() {
-      $(this).text(linePrice.toFixed(2));
-      recalculateCart();
-      $(this).fadeIn(fadeTime);
-    });
-  });  
-}
+
+                  return data;
+
+                }); 
+                $('#totalprice').text(alltotalprice);
+                $('#totalprice').attr('totalprice',alltotalprice);
+                }else{
+                  $("#errormsg").text("Something went wrong please try again after sometime....");
+               }
+         
+                
+              });
+            }  
+            var settings1 = {
+              "url": "http://localhost:5001/api/cart/add-to-cart-count",
+              "method": "POST",
+              "timeout": 0,
+              "headers": {
+                "Content-Type": "application/json",
+                "Authorization": accessTokenBearer      
+                         },
+              "data": JSON.stringify({
+                "userid":userid
+              }),
+            };
+
+            $.ajax(settings1).done(function (response) {
+              console.log(response);
+              if(response.cartproductcount==0){               
+                $(".checkout").prop('disabled', true);
+                } else {
+                  $(".checkout").removeAttr("disabled"); 
+                }             
+            });
 
 
-/* Remove item from cart */
-function removeItem(removeButton)
-{
-  /* Remove row from DOM and recalc cart total */
-  var productRow = $(removeButton).parent().parent();
-  productRow.slideUp(fadeTime, function() {
-    productRow.remove();
-    recalculateCart();
-  });
-}
- </script>
+
+
+          });
+          $(document).on("click",".checkout",function() {
+            var accessToken ="";
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;        
+           
+            
+            if(accessToken=="" || accessToken == null){
+                window.location.href = "http://localhost/nodefrontend/login.php";
+              }else{
+                window.location.href = "http://localhost/nodefrontend/checkout.php";
+              }
+          }); 
+          $(document).on("click",".removecartone",function() {
+
+            var _this =this;//$(this).parents('tr').remove();
+            var accessToken =userid=cartid="";
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;
+            var pid=$(this).attr("data-id");
+            userid=localStorage.getItem("userid");
+            
+            if(accessToken=="" || accessToken == null){
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{  
+              pid=$(this).attr("pid");
+              cartid=$(this).attr("cartid");
+              //console.log(pid);
+             // console.log(cartid);
+              var settings = {
+                "url": "http://localhost:5001/api/cart/deleteone-add-to-cart",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                  "Content-Type": "application/json",
+                  "Authorization": accessTokenBearer                 },
+                "data": JSON.stringify({               
+                  "cartid":cartid,
+                  "pid":pid
+                }),
+              };
+
+              $.ajax(settings).done(function (response) {
+                console.log(response);
+                console.log($(this));
+                
+                var oldprice=$('#totalprice').text();
+                var currentprice=$(_this).attr('pprice');
+                var newprice=oldprice-currentprice;
+                $('#totalprice').text(newprice);
+                $(_this).parents('tr').remove();
+                if(newprice==0){
+                  $(".checkout").prop('disabled', true);
+                }
+
+
+              });
+            }
+          });
+  </script>
+
 </body>
 </html>

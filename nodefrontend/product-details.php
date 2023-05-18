@@ -2,6 +2,86 @@
 <html>
 <head>
 <style>
+  /* Navbar */
+* {box-sizing: border-box;}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #e9e9e9;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #2196F3;
+  color: white;
+}
+
+.topnav .login-container {
+  float: right;
+}
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  width:120px;
+}
+
+.topnav .login-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background-color: #555;
+  color: white;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .login-container button:hover {
+  background-color: green;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav .login-container {
+    float: none;
+  }
+  .topnav a, .topnav input[type=text], .topnav .login-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  .topnav input[type=text] {
+    border: 1px solid #ccc;  
+  }
+}
+/* Navbar end*/
+</style>
+<style>
 .picZoomer{
 	position: relative;
     /*margin-left: 40px;
@@ -345,6 +425,25 @@ section {
 </style>
 </head>
 <body>
+<div class="topnav">
+  <!-- <a class="active" href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a> -->
+  <div class="login-container">
+  <div id="notlogin">
+    <button type="submit"> <a href="http://localhost/nodefrontend/login.php" > Login</a></button> 
+    <button type="submit"><a href="http://localhost/nodefrontend/register.php" >Register </a></button>
+  </div>
+  <div id="login">
+  <a class="active" href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="http://localhost/nodefrontend/">Product</a>
+  <a href="http://localhost/nodefrontend/orders.php">Orders</a>
+  <a href="http://localhost/nodefrontend/profile.php">My Account</a>
+  <a href="javascript:void(0);" onclick="logout()">Logout</a>
+  </div>
+  </div>
+</div>
 <section id="services" class="services section-bg">
    <div class="container-fluid">
      
@@ -404,11 +503,11 @@ section {
                      Keywords: Ready Made Blackout Curtain
                   </span>                        
                   </div>
-                  <form action="" method="post" accept-charset="utf-8">
+                  <form method="post" accept-charset="utf-8">
                      <ul class="spe_ul"></ul>
                      <div class="_p-qty-and-cart">
                         <div class="_p-add-cart">
-                           <button class="btn-theme btn buy-btn" tabindex="0" data_id="" id="buynow">
+                           <button class="btn-theme btn buy-btn" tabindex="0" data_id="" id="buynow" type="button">
                            <i class="fa fa-shopping-cart"></i> Buy Now
                            </button>
                            <button class="btn-theme btn btn-success" tabindex="0">
@@ -586,7 +685,7 @@ section {
 </section> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script>
+<!-- <script>
     /*!     
         jquery.picZoomer.js
         v 1.0
@@ -705,14 +804,27 @@ $(document).ready(function () {
         }
     });
 
-</script>    
+</script>     -->
 <script>
          $(window).on('load', function () {
+            var accessToken ="";
+           accessToken=localStorage.getItem("accessToken");
+           if(accessToken=="" || accessToken == null){
+            //not login
+            $('#notlogin').show();
+            $('#login').hide();
+
+
+           }else{    
+             //login
+             $('#notlogin').hide();
+             $('#login').show();
+           }
            
             //product details
             var urlParams = new URLSearchParams(window.location.search);
             var id=urlParams.get('id');
-            
+           // console.log(id);
             var settings = {
               "url": "http://localhost:5001/api/products/productdetails/"+id,
               "method": "GET",
@@ -721,7 +833,7 @@ $(document).ready(function () {
             };
          
             $.ajax(settings).done(function (response) {
-              console.log(response.data.name);
+             // console.log(response.data.name);
               if(response.data!=""){
                 $("#name").text(response.data.name);
                 $("#description").text(response.data.description);
@@ -742,22 +854,37 @@ $(document).ready(function () {
                 
               });
          
-              $(document).ready(function() {  
-                
-                $(document).on("click","#buynow",function() {
+
+         
+       
+
+          });
+         //order
+              
+         function logout() {
+            localStorage.clear();
+            window.location.href = "http://localhost/nodefrontend/login.php";
+          }
+         
+
+        //  $(document).ready(function() {  
+               // $('#buynow').submit(function(){
+                    //console.log("11111111111");
+
+               $(document).on("click","#buynow",function() {
                 var accessToken =userid=pid="";
                 accessToken=localStorage.getItem("accessToken");
                
                 var accessTokenBearer ="Bearer "+accessToken;
                 var pid=$(this).attr("data_id");
                 userid=localStorage.getItem("userid");
-                console.log(pid+"pid");
-                console.log(userid+"userid");
+                //console.log(pid+"pid");
+                //console.log(userid+"userid");
                 if(accessToken=="" || accessToken == null){
                     window.location.href = "http://localhost/nodefrontend/login.php";
                 }else{    
                 
-              
+            
                   
                   var settings1 = {
                   "url": "http://localhost:5001/api/orders/",
@@ -776,6 +903,7 @@ $(document).ready(function () {
                   };
                
                   $.ajax(settings1).done(function (response) {
+                    console.log(response);
                     alert("R");
                      if(response.data!=""){
                         
@@ -783,7 +911,7 @@ $(document).ready(function () {
                         $("#successmsg").text("Ordered Successfully...");
                         setTimeout(function() { 
                         $("#successmsg").hide();               
-                       window.location.href = "http://localhost/nodefrontend/thank-you.php/"+response.data._id;
+                       window.location.href = "http://localhost/nodefrontend/thank-you.php/?orderid="+response.data._id;
                         },
                         5000);
                      }else{
@@ -797,18 +925,12 @@ $(document).ready(function () {
 
 
             }
+            //return false;
                 });
 
 
 
-           }); 
-         
-       
-
-          });
-         //order
-              
-          
+        //   }); 
       </script>
 </body>
 </html>

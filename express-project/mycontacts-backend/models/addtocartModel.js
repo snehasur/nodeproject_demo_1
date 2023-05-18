@@ -1,26 +1,17 @@
 const mongoose = require("mongoose");
 
 const addtocartSchema = mongoose.Schema({
-    productid: {
+    
+    User: {
         type: String,
-        required: [true,"Please add the product id"],
+        ref: "User",
+        required: [true,"Need user id"],
     },
-    name: {
-        type: Number,
-        required: [true,"Please add the name"],
-    },
-    price: {
-        type: Number,
-        required: [true,"Please add the price"],
-    },
-    description: {
+    product: {
         type: String,
-        required: [true,"Please add the description"],
-    },
-    image: {
-        type: String,
-        required: [true,"Please add the image"],
-    },
+        ref: "product",
+        required: [true,"Need product id"],
+    }
     
 
 },{

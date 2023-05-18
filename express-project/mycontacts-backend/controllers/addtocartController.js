@@ -1,37 +1,169 @@
 const asyncHandler = require("express-async-handler");
 const Addtocart = require("../models/addtocartModel");
+const Product = require("../models/productModel");
 
 //@desc Add to cart product
-//@route Get /api/products/add-to-cart
-//@access public
-const Addtocartproduct = asyncHandler (async (req,res)=>{
-    console.log("hi");
-    console.log("The request body is",req.body);
-    const {productid,name,price,description,image}=req.body;
-    if(!productid ||!name || !price || !description){
-        res.status(400);
-        throw new Error("All fields are mandetory")
+//@route post /api/cart/add-to-cart
+//@access privte
+const addtocartproduct = asyncHandler (async (req,res)=>{
+    const {userid,productid}=req.body;
+
+    const hasuser =await Addtocart.find({User:userid,});
+    if(hasuser.length <= 0){
+
+        const products = await Addtocart.create({
+            User: userid,
+            product: productid
+        });
+        res.status(200).json({data:products,message:"success",status:"success"});
+        res.end();
+    }else{
+        const prevproduct=hasuser[0].product;
+        console.log(prevproduct,'prevproduct');
+        if(prevproduct!=""){
+           var newproduct= prevproduct.concat("-",productid );
+        }else{
+          var newproduct= productid;
+        }
+        //console.log(newproduct,'newproduct');
+        const filter = { User: userid};
+        const update = { product: newproduct };
+        
+       
+        const products = await Addtocart.findOneAndUpdate(filter, update, {
+          new: true
+        });
+        //console.log(products.product);
+        const cartproductcount=products.product.split("-").length;    
+           
+        res.status(200).json({data:products,cartproductcount:cartproductcount,message:"success",status:"success"});
+        res.end();
+      
+       
     }
-    const product = await Addtocart.create({
-        productid,
-        name,
-        price,
-        description,
-        image
-    });
-    res.status(200).json(product);
+    
 });
 
 //@desc Get all Add to cart products
-//@route Get /api/products/add-to-cart
-//@access public
-const AddtocartProducts = asyncHandler (async (req,res)=>{
-    const products =await Addtocart.find();
+//@route post /api/cart/add-to-cart
+//@access privte
+const addtocartProducts = asyncHandler (async (req,res)=>{
+    const {userid}=req.body;
+    var cartdataall = [];
 
-    //res.status(200).json({message:"Get all products"});
-    res.status(200).json({message:products});
+    const products =await Addtocart.find({User:userid});
+    const cartproduct=products[0].product.split("-");
+    console.log(cartproduct);
+
+
+    const counts = {};
+    cartproduct.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+    console.log(counts);
+
+
+
+    var cartdata=[];
+
+
+    for (const [key, value] of Object.entries(counts)) {
+      console.log(key, value);
+      const productall = await Product.findById(key);
+      cartdata ={
+        cartid:products[0]._id.toString(),
+        userid:products[0].User,
+        Pid:key,
+        Pname: productall.name,
+        Pprice: productall.price,
+        Pdescription: productall.description,
+        Pimage: productall.image,
+        Pcount:value
+      }
+      cartdataall.push(cartdata);  
+    }
+
+    console.log(cartdataall);  
+
+    res.status(200).json({data:cartdataall});
 });
+
+//@desc Add to cart product count
+//@route post /api/cart/add-to-cart-count
+//@access privte
+const addtocartproductcount = asyncHandler (async (req,res)=>{
+        const {userid}=req.body;
+        const products =await Addtocart.find({User:userid});  
+        if(products[0].product!=""){
+          var cartproductcount=products[0].product.split("-").length;   
+        }else{
+          var cartproductcount=0;
+        }
+         
+        console.log(cartproductcount,"cartcount");   
+        res.status(200).json({cartproductcount:cartproductcount,message:"success",status:"success"});
+        res.end();
+       
+    
+    
+});
+
+
+
+
+//@desc Delete from cart product
+//@route post /api/cart/deleteone-add-to-cart
+//@access privte
+const deleteonefromcartProducts = asyncHandler (async (req,res)=>{
+    const {cartid,pid}=req.body;
+    //console.log(pid,'pid');
+    var cartdataall= [];
+    const products =await Addtocart.findById(cartid);  
+    //console.log(products.product,'oldproduct');
+
+
+    const cartproduct=products.product.split("-");
+    //console.log(cartproduct,'split oldproduct');
+
+
+    const counts = {};
+    cartproduct.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+   // console.log(counts);
+
+   
+   var updatedcart= delete counts[pid]; 
+   var newkey=[];
+   //console.log(counts,'after delete');
+
+  var str = "";
+
+    for (var key in counts) {
+       
+        let i=0;
+        for (i=0;i<counts[key];i++)
+            {
+                str += key+"-";
+            }
+   }
+   var updatedcartproduct=str.substring(0, str.length-1);
+  // var updatedcartproducts = updatedcartproduct[0].substring(1);
+  // console.log(updatedcartproduct[0],'delete -');
+
+   const filter = { _id: cartid};
+   const update = { product: updatedcartproduct };
+   const cart = await Addtocart.findOneAndUpdate(filter, update, {
+          new: true
+        });
+   console.log(updatedcartproduct,'-delete');
+       
+    res.status(200).json({data:cart,message:"success",status:"success"});
+    res.end();
+   
+
+
+});
+
 module.exports = {
-    Addtocartproduct,
-    AddtocartProducts
+    addtocartproduct,
+    addtocartProducts,
+    addtocartproductcount,
+    deleteonefromcartProducts
 };

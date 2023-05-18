@@ -19,7 +19,8 @@ app.use(cors({origin: 'http://localhost/'}));
 app.use("/api/contacts",require("./routes/contactRoutes"));  
 app.use("/api/products",require("./routes/productRoutes"));  
 app.use("/api/users",require("./routes/userRoutes"));  
-//app.use("/api/products",require("./routes/addtocartRoutes"));  
+app.use("/api/cart",require("./routes/addtocartRoutes"));  
+app.use("/api/checkout",require("./routes/checkoutRoutes"));  
 app.use("/api/orders",require("./routes/orderRoutes"));  
 app.use(errorHandler);
 app.listen(port,()=>{

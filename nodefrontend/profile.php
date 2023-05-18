@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
        <!-- nav -->
    <style>
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -90,22 +91,111 @@
    }
    </style>
       <!-- nav -->
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  /* Navbar */
+* {box-sizing: border-box;}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #e9e9e9;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #2196F3;
+  color: white;
+}
+
+.topnav .login-container {
+  float: right;
+}
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  width:120px;
+}
+
+.topnav .login-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background-color: #555;
+  color: white;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .login-container button:hover {
+  background-color: green;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav .login-container {
+    float: none;
+  }
+  .topnav a, .topnav input[type=text], .topnav .login-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  .topnav input[type=text] {
+    border: 1px solid #ccc;  
+  }
+}
+/* Navbar end*/
+</style>    
    </head>
    <body>
+   <div class="topnav">
+  <!-- <a class="active" href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a> -->
+  <div class="login-container">
+  <!-- <div id="notlogin">
+    <button type="submit"> <a href="http://localhost/nodefrontend/login.php" > Login</a></button> 
+    <button type="submit"><a href="http://localhost/nodefrontend/register.php" >Register </a></button>
+  </div> -->
+  <div id="login">
+  <a class="active" href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="http://localhost/nodefrontend/">Product</a>
+  <a href="http://localhost/nodefrontend/orders.php">Orders</a>
+  <a href="javascript:void(0);">My Account</a>
+  <a href="javascript:void(0);" onclick="logout()">Logout</a>
+  </div>
+  </div>
+</div>
 <div class="container-fluid">
-  <div class="row content">
-    <div class="col-sm-3 sidenav hidden-xs">
-      <h2>Admin</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#section1">Dashboard</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/productlist.php">Product List</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/orders.php">Order List</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/userlist.php">User List</a></li>
-        <li><a href="http://localhost/nodefrontend/profile.php">My Account</a></li>
-        <li onclick="logout()"><a href="javascript:void(0);">Logout</a></li>
-      </ul><br>
-    </div>
-    <br>
+
     
     <div class="col-sm-9">
 

@@ -52,7 +52,7 @@ const getordersnew = asyncHandler (async (req,res,next)=>{
 //@desc Create new order
 //@route POST /api/orders
 //@access private
-const createorder = asyncHandler (async (req,res)=>{
+const createorder = asyncHandler (async (req,res,next)=>{
     console.log("The request body is",req.body);
     const {userid,productid}=req.body;
     // if(!name || !price || !description){
@@ -63,8 +63,11 @@ const createorder = asyncHandler (async (req,res)=>{
         User: userid,
         product: productid
     });
+    console.log(order);
     //res.status(200).json({message:"Create orders"});
     res.status(200).json({data:order,message:"success",status:"success"});
+    res.end();
+   
 });
 //@desc Get order
 //@route Get /api/orders/:id
@@ -157,13 +160,14 @@ const getorderscount = asyncHandler (async (req,res,next)=>{ //not working
 });
 
 //@desc Get all orders for frontend
-//@route Get /api/allorders
-//@access public
+//@route GET /api/orders/myorders
+//@access private
 const getordersFrontend = asyncHandler (async (req,res)=>{
-    const orders =await order.find();
-
+   
+    const orders =await Order.find({User:req.user.id}).populate('User').populate('product');
     //res.status(200).json({message:"Get all orders"});
-    res.status(200).json({data:order,message:"success"});
+    res.status(200).json({data:orders,message:"success"});
+    res.end();
 });
 
 //@desc Get order  details for frontend
