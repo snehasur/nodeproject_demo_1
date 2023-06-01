@@ -25,7 +25,14 @@
       <link href="https://cdn.jsdelivr.net/gh/coliff/bootstrap-ie8/css/bootstrap-ie8.min.css" rel="stylesheet">
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <style>
+        .singleprev{
+           
+            background: #e1e0e0;
+            padding: 8px;
 
+        }
+    </style>
 </head>
 
 <body>
@@ -72,6 +79,14 @@
     <main id="main" role="main">
         <section id="checkout-container">
             <div class="container">
+                <div class="prevdata">
+                   
+                   
+                    
+                </div>
+                <input type="checkbox" id="addnew" name="addnew" value="addnew">
+      <label for="addnew"> Add new details</label><br>
+                <div class="checkoutform" style="display:none;">
                 <div class="py-5 text-center">
                     <i class="fa fa-credit-card fa-3x text-primary"></i>
                     <h2 class="my-3">Checkout form</h2>
@@ -128,10 +143,9 @@
                         </form>
                     </div> -->
                     <div class="table-responsive ">
-              <table class="table table-bordered m-0">
+              <!-- <table class="table table-bordered m-0">
                 <thead>
                   <tr>
-                    <!-- Set columns width -->
                     <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details</th>
                     <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
                     <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
@@ -144,7 +158,7 @@
 
         
                 </tbody>
-              </table>
+              </table> -->
             </div>
             <!-- / Shopping cart table -->
         
@@ -153,12 +167,12 @@
                 <label class="text-muted font-weight-normal">Promocode</label>
                 <input type="text" placeholder="ABC" class="form-control">
               </div> -->
-              <div class="d-flex">                
+              <!-- <div class="d-flex">                
                 <div class="text-right mt-4">
                   <label class="text-muted font-weight-normal m-0">Total price</label>
                   <div class="text-large"><strong id="totalprice" ></strong></div>
                 </div>
-              </div>
+              </div> -->
             </div>
             </div>
                     <div class="col-md-8 order-md-1">
@@ -221,12 +235,20 @@
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="zip">Zip</label>
-                                    <input type="text" class="form-control" id="zip" placeholder="" >
+                                    <input type="text" class="form-control" id="zip" placeholder=""  minlength="5" maxlength="5" >
                                     <div class="invalid-feedback">
                                     <span id="ziperror"></span><br>
                                     </div>
                                 </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="phoneno">Phoneno</label>
+                                    <input type="text" class="form-control" id="phoneno" placeholder="" minlength="10" maxlength="10" >
+                                    <div class="invalid-feedback">
+                                    <span id="phonenoerror"></span><br>
+                                    </div>
+                                </div>
                             </div>
+                            
                             <!-- <hr class="mb-4"> -->
                             <!-- <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="same-address">
@@ -240,16 +262,22 @@
 
 
                             <hr class="mb-4">
-                            <button class="btn btn-primary btn-lg btn-block checkout" type="button">Continue to checkout</button>
+                            <button class="btn btn-primary btn-lg btn-block " id="checkout" type="button">Add</button>
                         </form>
                     </div>
+      </div>
+      
                 </div>
-
+    <span class="success"></span>
             <a href="#" class="btn btn-primary scrollUp">
                 <i class="fa fa-arrow-circle-o-up"></i>
             </a>
         </section>
+        <a href="http://localhost/nodefrontend/payment.php" class="paymentbtn" id="paymentbtn"><button type="button" >Go to payment</button></a>
+
     </main>
+    <img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+
     <!-- Footer -->
     <footer id="footer">
         <p class="copyright">Made with
@@ -265,6 +293,17 @@
     <script src="dist/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/main.min.js"></script>
     <script>
+     
+      $(document).on('click','#addnew',function(){
+        if ($(this).is(":checked")) {
+          $('.checkoutform').show();
+          $('.paymentbtn').hide();
+          
+        } else {
+          $('.checkoutform').hide();
+          $('.paymentbtn').show();
+        }
+    });
     $(window).on('load', function () {
       var accessToken =userid="";
             accessToken=localStorage.getItem("accessToken");
@@ -275,13 +314,73 @@
             if(accessToken=="" || accessToken == null){
 
                 window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{
+              var accessToken =userid="";
+              accessToken=localStorage.getItem("accessToken");
+              var accessTokenBearer ="Bearer "+accessToken;
+              userid=localStorage.getItem("userid");
+            //   ////console.log(firstname+lastname+address+address2+country+state+zip);
+                var settings = {
+                  "url": "http://localhost:5001/api/checkout/getcheckout",
+                  "method": "POST",
+                  "timeout": 0,
+                  "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": accessTokenBearer               
+                 },
+                  "data": JSON.stringify({
+                            "userid":userid
+                  }),
+                };
+
+                $.ajax(settings).done(function (response) {
+                  //console.log(response.data,"add");
+ 
+                  if(response.data!=""){
+                  ////console.log(response.data);
+                  
+                  var data="";
+                  $.each(response.data, function(key, val) {
+                   
+                  data +='<div class="singleprev"><input type="radio" class="isdefault" id="'+val._id+'" name="default" value="'+val._id+'" '+(val.status==0 ? "": "checked")+' /><span>Name:</span><span>'+val.firstname+' '+val.lastname+'</span><br><span>Address:</span><span>'+val.address+' '+val.country+'  '+val.state+' '+val.zip+'</span><br><span>Address2:</span><span>'+val.address2+' '+val.country+'  '+val.state+' '+val.zip+'</span><br><span>Phone No:</span><span>'+val.phoneno+'</span></div><hr>';
+
+                
+
+
+                  return data;
+                  });
+                 
+                 
+
+                    $('.prevdata').append(data);
+
+                }else{
+                  $('.paymentbtn').hide();
+                  
+                  $("#errormsg").text("Something went wrong please try again after sometime....");
+               }
+         
+                
+              });
             }
 
           });
-          $(document).on("click",".checkout",function() {
+          $(document).on("click","#checkout",function() {
+            $("#loader").show(); 
+          document.getElementById("checkout").disabled = true;
+            var accessToken =userid="";
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;
+            userid=localStorage.getItem("userid");
+            
+            if(accessToken=="" || accessToken == null){
+
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{
             var firstname=lastname=address=address2=country=state=zip="";
             firstname=$('#firstname').val();
-             alert(firstname);
+             //alert(firstname);
               if(firstname==''){
                 $('#firstnameerror').text("Please give firstname.");
                 return false;
@@ -289,7 +388,7 @@
                 $('#firstnameerror').text(" ");
               }
               lastname=$('#lastname').val();
-             // alert(name);
+             // //alert(name);
               if(lastname==''){
                 $('#lastnameerror').text("Please give lastname.");
                 return false;
@@ -327,11 +426,31 @@
               }else{
                 $('#ziperror').text(" ");
               }
+              if(zip.length != 5)   {
+                $('#ziperror').text("Please give zip.");
+                return false;
+              }else{
+                $('#ziperror').text(" ");
+              }
+              phoneno=$('#phoneno').val();
+              if(phoneno==''){
+                $('#phonenoerror').text("Please give phoneno.");
+                return false;
+              }else{
+                $('#phonenoerror').text(" ");
+              }
+              if(phoneno.length != 10)   {
+                $('#phonenoerror').text("Please give propper phoneno.");
+                return false;
+              }else{
+                $('#phonenoerror').text(" ");
+              }
+              
               var accessToken =userid="";
               accessToken=localStorage.getItem("accessToken");
               var accessTokenBearer ="Bearer "+accessToken;
               userid=localStorage.getItem("userid");
-            //   console.log(firstname+lastname+address+address2+country+state+zip);
+            //   ////console.log(firstname+lastname+address+address2+country+state+zip);
                 var settings = {
                   "url": "http://localhost:5001/api/checkout/checkout",
                   "method": "POST",
@@ -348,15 +467,72 @@
                             "address2":address2,
                             "country":country,
                             "state":state,
-                            "zip":zip
+                            "zip":zip,
+                            "phoneno":phoneno
                   }),
                 };
 
                 $.ajax(settings).done(function (response) {
-                  console.log(response);
+                  ////console.log(response);
  
                   if(response.data!=""){
-                  console.log(response.data);
+                  ////console.log(response.data);
+                  
+                 
+                  
+                    $('.success').text("Added Successfully...");
+                    setTimeout(function() { 
+                    $(".success").hide();   
+                    window.location.href = "http://localhost/nodefrontend/payment.php";            
+                    },
+                    5000);
+                }else{
+                  $("#errormsg").text("Something went wrong please try again after sometime....");
+               }
+         
+                
+              });
+            }
+         });
+         $(document).on("click",".isdefault",function() {
+          var accessToken =userid="";
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;
+            userid=localStorage.getItem("userid");
+            
+            if(accessToken=="" || accessToken == null){
+
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{
+          var id=$(this).val();
+          ////console.log(id);
+          var accessToken =userid="";
+              accessToken=localStorage.getItem("accessToken");
+              var accessTokenBearer ="Bearer "+accessToken;
+              userid=localStorage.getItem("userid");
+              
+            //   ////console.log(firstname+lastname+address+address2+country+state+zip);
+                var settings = {
+                  "url": "http://localhost:5001/api/checkout/defaultcheckout",
+                  "method": "POST",
+                  "timeout": 0,
+                  "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": accessTokenBearer               
+                 },
+                  "data": JSON.stringify({
+                            "id":id,
+                            "userid":userid
+                  }),
+                };
+
+                $.ajax(settings).done(function (response) {
+                  ////console.log(response);
+ 
+                  if(response.data!=""){
+                  ////console.log(response.data);
+                 
 
                 }else{
                   $("#errormsg").text("Something went wrong please try again after sometime....");
@@ -364,7 +540,8 @@
          
                 
               });
-         });
+            }
+        });
           </script>    
 </body>
 

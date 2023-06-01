@@ -11,6 +11,9 @@ const addtocartSchema = mongoose.Schema({
         type: String,
         ref: "product",
         required: [true,"Need product id"],
+    },
+    status: {
+        type: Number
     }
     
 

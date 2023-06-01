@@ -275,7 +275,7 @@ body {
             };
          
             $.ajax(settings).done(function (response) {
-              console.log(response.data[0]);
+              //console.log(response.data[0]);
               if(response.data!=""){
                 $("#username").val(response.data[0].username);
                 $("#email").val(response.data[0].email);
@@ -323,7 +323,7 @@ body {
          };
          
          $.ajax(settings1).done(function (response) {
-          console.log(response);
+          //console.log(response);
           if(response.data!=""){
             $("#successmsg").text("Profile Update Successfully...");
             setTimeout(function() { 

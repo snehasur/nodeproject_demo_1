@@ -138,20 +138,72 @@ body {
                     getDate(0);
 
                 </script>
-<!-- <div id="shipping">
-<p class="info">Name:</p>
+<div id="shipping">
+<div class="card">
+        <div class="card-header">
+            <h2>Products</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered m-0">
+                <thead>
+                  <tr>
+                    <!-- Set columns width -->
+                    <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details</th>
+                    <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
+                    <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
+                    <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
+                    <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+                  </tr>
+                </thead>
+                <tbody class="productlist">
+        
 
-<p class="info">Email:</p>
+        
+                </tbody>
+              </table>
+            </div>
+            <!-- / Shopping cart table -->
+        
 
-<p class="info">ShippingAddress1:</p>
+        
+            
+        
+          </div>
+      </div>
+      <div>
+        <h2>Shipping Details</h2>
+      <div class="prevdata">
+      <span>Name:</span><span id="fullname"></span><br>
+      <span>Email:</span><span id="email"></span><br>
+      <span >Address</span><span id="address" >   </span><br>
+      <span>Address2:</span><span id="address2">    </span><br>
+      <span >Phone No:</span><span id="phno"></span>                     
+                    
+      </div>
+      
+         
 
-<p class="info">ShippingState: 
-    ShippingCity: 
-    ShippingZip:
-</p>
 
-<p class='info'>Phone No:</p>
-</div> -->
+
+
+      <div>
+        <h2>Payment Details</h2>
+      <div class="prevdatapayment">
+
+                   
+                   
+                
+      </div>
+      <div class="d-flex">                
+      <div class="text-right mt-4">
+        <label class="text-muted font-weight-normal m-0">Total price</label>
+        <div class="text-large"><strong id="totalprice" ></strong></div>
+      </div>
+    </div>
+</div>
+  </div>
+</div>
 <div class="footer">
 
 <p class="copyright">
@@ -169,7 +221,92 @@ function logout() {
             localStorage.clear();
             window.location.href = "http://localhost/nodefrontend/login.php";
           }
+    $(window).on('load', function () {
+      var accessToken ="";
+      var alltotalprice=0;
+            accessToken=localStorage.getItem("accessToken");
           
+            var accessTokenBearer ="Bearer "+accessToken;
+            
+            if(accessToken=="" || accessToken == null){
+              ////alert("1");
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{   
+
+            const orderid =  new URLSearchParams(window.location.search).get('orderid');
+
+                var settings = {
+                  "url": "http://localhost:5001/api/orders/getorderrecent",
+                  "method": "POST",
+                  "timeout": 0,
+                  "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": accessTokenBearer                
+                  },
+                  "data": JSON.stringify({
+                            "orderid":orderid
+                  }),
+                };
+
+                $.ajax(settings).done(function (response) {
+                 
+                  if(response.data){        
+                    //console.log(response.data[0]);
+                    if(response.data[0].paymentdata[0].type=="cod")  {     
+                      $(".prevdatapayment").text("Cash On Delivery");
+                      
+                      } 
+                       $("#email").text(response.data[0].User[0].email);
+                       $("#fullname").text(response.data[0].checkoutdata[0].firstname+ ' '+response.data[0].checkoutdata[0].lastname);
+                       $("#address").text(response.data[0].checkoutdata[0].address+' '+response.data[0].checkoutdata[0].country+' '+response.data[0].checkoutdata[0].state+' '+' '+response.data[0].checkoutdata[0].zip);
+                       $("#address2").text(response.data[0].checkoutdata[0].address2);
+                       $("#phno").text(response.data[0].checkoutdata[0].phoneno);
+
+                     //console.log(response.data[0].checkoutdata[0].firstname,'response.data[0].checkoutdata[0]');
+
+                    var i=1;
+                  ////console.log(response.data);
+                  $.each(response.data[0].products, function(key, val) {
+                  var data;
+                  var Tprice; 
+                  
+                  Tprice=val.Pprice*val.Pcount;
+                  
+                  //data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='addtocart' data-id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php/?id="+val._id+"'>Product details</a></button></p></div>";
+                  data +='<tr><input type="hidden" class="products" name="products['+i+']" value="'+val.Pname+'_'+val.Pprice+'_'+val.Pcount+'"><td class="p-4"><div class="media align-items-center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-40 ui-bordered mr-4" alt=""><div class="media-body">'+val.Pname+'</div></div></td><td class="text-right font-weight-semibold align-middle p-4">$'+val.Pprice+'</td><td class="align-middle p-4">'+val.Pcount+'</td><td class="text-right font-weight-semibold align-middle p-4">$'+Tprice+'</td><td class="text-center align-middle px-0"></td></tr>';
+                  $('.productlist').append(data);
+                  
+                   alltotalprice = alltotalprice + Tprice;
+                   i++;
+                  
+                  
+
+
+
+                  return data;
+
+                }); 
+                $('#totalprice').text(alltotalprice);
+
+
+
+
+                
+                  }else{
+                  $("#errormsg").text("Something went wrong please try again after sometime....");
+                  }             
+
+
+
+                });
+
+
+             
+           
+              }
+                
+              });
+                      
       </script>
 </body>
 </html>

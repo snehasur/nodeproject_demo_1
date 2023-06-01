@@ -10,7 +10,9 @@ const {
     getordersFrontend,
     getorderdetailsFrontend,
     getneworder,
-    getordersnew
+    getordersnew,
+    createordernew,
+    getorderrecent
       } = require("../controllers/orderController");
 
 
@@ -39,4 +41,8 @@ router.route("/getneworder").get(getneworder);
 //             res.end();
 //       //}
 //     });
+router.route("/createordernew").post(createordernew);
+router.route("/getorderrecent").post(getorderrecent);
+
+
 module.exports = router;

@@ -92,14 +92,7 @@ button:hover {
     <input type="password" placeholder="Repeat Password" name="psw-repeat" id="rpassword" >
     <span id="rpassworderror"></span><br>
 
-    <!-- <label>
-      <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-    </label>
-     -->
-    <!-- <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-
-    <div class="clearfix">
-      <button type="button" class="cancelbtn">Cancel</button> -->
+    
       <button type="button" class="signupbtn" onclick="create()">Sign Up</button>
       <br>
       <span id="successmsg"></span>
@@ -122,7 +115,6 @@ button:hover {
         function create () {
           var username=password=email=phno=rpassword="";
               username=$('#username').val();
-             // alert(name);
               if(username==''){
                 $('#usernameerror').text("Please give username.");
                 return false;
@@ -130,7 +122,6 @@ button:hover {
                 $('#usernameerror').text(" ");
               }
               email=$('#email').val();
-             // alert(email);
               if(email==''){
                 $('#emailerror').text("Please give email.");
                 return false;
@@ -145,7 +136,6 @@ button:hover {
               }
          
               password=$('#password').val();
-             // alert(password);
               if(password==''){
                 $('#passworderror').text("Please give password.");
                 return false;
@@ -153,7 +143,6 @@ button:hover {
                 $('#passworderror').text(" ");
               }
               rpassword=$('#rpassword').val();
-             // alert(password);
               if(rpassword==''){
                 $('#rpassworderror').text("Please give repeat password.");
                 return false;
@@ -167,26 +156,8 @@ button:hover {
               else{
                 $('#rpassworderror').text(" ");
               }
-            //   phno=$('#phno').val();
-            //   //alert(phno);
-            //   if(phno==''){
-            //     $('#phnoerror').text("Please give phone no.");
-            //     return false;
-            //   }else{
-            //     $('#phnoerror').text(" ");
-            //   }
-            // var phone_pattern = /([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})/; 
-            // if(!p./hone_pattern.test( phno )) {
-            //  // alert('1');
-            //    $('#phnoerror').text("Please give valid phone no.");
-            //     return false;
-            //   }else{
-            //     //alert('2');
-            //     $('#phnoerror').text(" ");
-                
-            //   }
+       
 
-          alert("1");
           $.ajax({
               url:"http://localhost:5001/api/users/register",    //the page containing php script
               type: "post",    //request type,
@@ -198,19 +169,21 @@ button:hover {
                       "password":password 
                     }),
               success:function(result){
-                  console.log(result);
                   $("#successmsg").text("User created");
-                  setTimeout(function() { $("#successmsg").hide(); }, 5000);
+                  setTimeout(function() { 
+                   
+                    window.location.href = " http://localhost/nodefrontend/login.php";
+
+                    $("#successmsg").hide(); }, 5000);
 
                   $('#error').text(" ");
 
               },
               error: function(e) {
-                console.log(e.status);
                 if(e.status==400){
 
                   $('#error').text("All fields are mandetory");
-                  console.log("All fields are mandetory");
+                  //console.log("All fields are mandetory");
                   return false;              
                 }
                 else{
@@ -219,7 +192,7 @@ button:hover {
                 if(e.status==404){
 
                   $('#error').text("User already registrated");
-                  console.log("User already registrated");
+                  //console.log("User already registrated");
                   return false;              
                   }
                   else{

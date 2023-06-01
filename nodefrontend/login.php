@@ -112,7 +112,6 @@ button:hover {
           var password=email="";
              
               email=$('#email').val();
-             // alert(email);
               if(email==''){
                 $('#emailerror').text("Please give email.");
                 return false;
@@ -134,7 +133,6 @@ button:hover {
                 $('#passworderror').text(" ");
               }
             
-          alert("1");
           $.ajax({
               url:"http://localhost:5001/api/users/login",    //the page containing php script
               type: "post",    //request type,
@@ -145,7 +143,7 @@ button:hover {
                       "password":password 
                     }),
               success:function(result){
-                  console.log(result.email);
+                  //console.log(result.email);
                   $("#successmsg").text("User Login Successfully");
                   setTimeout(function() { $("#successmsg").hide(); }, 5000);
 
@@ -155,9 +153,7 @@ button:hover {
                   localStorage.setItem("userid",result.id)
                   localStorage.setItem("role",result.role)
 
-                  // localStorage.setItem(key,value);
-                  // localStorage.setItem(key,value);
-                  // localStorage.setItem(key,value);
+
                  if(result.role==1){
                      //redirect for admin
                       window.location.href = "http://localhost/nodefrontend/admin/dashboard.php";
@@ -174,11 +170,11 @@ button:hover {
 
               },
               error: function(e) {
-                console.log(e.status);
+                //console.log(e.status);
                 if(e.status==400){
 
                   $('#error').text("All fields are mandetory");
-                  console.log("All fields are mandetory");
+                  //console.log("All fields are mandetory");
                   return false;              
                 }
                 else{

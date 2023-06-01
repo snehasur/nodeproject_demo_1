@@ -13,7 +13,7 @@ const getContacts = asyncHandler (async (req,res)=>{
 //@route POST /api/contacts
 //@access private
 const createtContact = asyncHandler (async (req,res)=>{
-    console.log("The request body is",req.body);
+    //console.log("The request body is",req.body);
     const {name,email,phone}=req.body;
     if(!name || !email || !phone){
         res.status(400);
@@ -39,8 +39,8 @@ const getContact = asyncHandler (async (req,res)=>{
     }
     if(contact.user_id.toString() !==req.user.id){
 
-        console.log(contact.user_id.toString());
-        console.log(req.user.id);
+        //console.log(contact.user_id.toString());
+        //console.log(req.user.id);
         req.status(403);
         throw new Error("User don't have permission to update other user contacts");
     }

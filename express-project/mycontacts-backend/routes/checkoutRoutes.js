@@ -1,13 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const {
-  create
+  create,
+  getcheckout,
+  defaultcheckout,
+  getdefaultcheckout
 
       } = require("../controllers/checkoutController");
 
 
 
 router.route("/checkout").post(create);
+router.route("/getcheckout").post(getcheckout);
+router.route("/defaultcheckout").post(defaultcheckout);
+router.route("/getdefaultcheckout").post(getdefaultcheckout);
+
 
 
 

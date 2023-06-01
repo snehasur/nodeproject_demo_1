@@ -9,10 +9,7 @@ var cors = require('cors');
 const app =express();
 const port = process.env.PORT || 5000;
 app.use(express.json());
-// app.get("/api/contacts",(req,res)=>{
-//     //res.send("Get all contacts");
-//     res.status(200).json({message:"Get all/ contacts"});
-// });  //or
+
 // use it before all route definitions
 app.use(cors({origin: 'http://localhost/'}));
 
@@ -22,6 +19,7 @@ app.use("/api/users",require("./routes/userRoutes"));
 app.use("/api/cart",require("./routes/addtocartRoutes"));  
 app.use("/api/checkout",require("./routes/checkoutRoutes"));  
 app.use("/api/orders",require("./routes/orderRoutes"));  
+app.use("/api/payment",require("./routes/paymentRoutesjs"));  
 app.use(errorHandler);
 app.listen(port,()=>{
     console.log(`server running on port ${port}`);

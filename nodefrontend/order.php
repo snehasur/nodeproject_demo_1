@@ -35,6 +35,7 @@
 
 </head>
 <body>
+<form>
 <div class="container px-3 my-5 clearfix">
     <!-- Shopping cart table -->
     <div class="card">
@@ -76,16 +77,35 @@
               </div>
             </div>
         
-            <div class="float-right">
-            <a style="text-decoration" href="http://localhost/nodefrontend/">  <button type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</button> </a>
-              <button type="button" class="btn btn-lg btn-primary mt-2 " id="checkout">Checkout</button>
-            </div>
+            
         
           </div>
       </div>
-  </div>
-  <img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+      <div>
+        <h2>Shipping Details</h2>
+      <div class="prevdata">
+                   
+                   
+                    
+      </div>
+      
+         
 
+
+
+
+      <div>
+        <h2>Payment Details</h2>
+      <div class="prevdatapayment">
+
+                   
+                   
+                
+      </div>
+</div>
+  </div>
+  <button id="ordernow" type="button">Order Now</button>
+</form>
   <script>
     $(window).on('load', function () {
       var accessToken =userid="";
@@ -100,7 +120,7 @@
                 window.location.href = "http://localhost/nodefrontend/login.php";
             }else{   
              // //alert("3");
-            //console.log(userid+"userid");
+            ////console.log(userid+"userid");
 
 
                 var settings = {
@@ -116,20 +136,23 @@
                 };
 
                 $.ajax(settings).done(function (response) {
-                  //console.log(response);
+                 // //console.log(response);
                   var totalprice=0;
                   if(response.data!=""){
-                  //console.log(response.data);
+                  var i=1;
+                  ////console.log(response.data);
                   $.each(response.data, function(key, val) {
                   var data;
                   var Tprice;
+                  
                   Tprice=val.Pprice*val.Pcount;
                   
                   //data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='addtocart' data-id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php/?id="+val._id+"'>Product details</a></button></p></div>";
-                  data +='<tr><td class="p-4"><div class="media align-items-center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-40 ui-bordered mr-4" alt=""><div class="media-body">'+val.Pname+'</div></div></td><td class="text-right font-weight-semibold align-middle p-4">$'+val.Pprice+'</td><td class="align-middle p-4">'+val.Pcount+'</td><td class="text-right font-weight-semibold align-middle p-4">$'+Tprice+'</td><td class="text-center align-middle px-0"><a href="javascript:void(0);" class="shop-tooltip close float-none text-danger removecartone" title="" data-original-title="Remove" pid="'+val.Pid+'" pprice="'+Tprice+'" cartid="'+val.cartid+'" userid="'+val.userid+'">×</a></td></tr>';
+                  data +='<tr><input type="hidden" class="products" name="products['+i+']" value="'+val.Pname+'_'+val.Pprice+'_'+val.Pcount+'"><td class="p-4"><div class="media align-items-center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-40 ui-bordered mr-4" alt=""><div class="media-body">'+val.Pname+'</div></div></td><td class="text-right font-weight-semibold align-middle p-4">$'+val.Pprice+'</td><td class="align-middle p-4">'+val.Pcount+'</td><td class="text-right font-weight-semibold align-middle p-4">$'+Tprice+'</td><td class="text-center align-middle px-0"><a href="javascript:void(0);" class="shop-tooltip close float-none text-danger removecartone" title="" data-original-title="Remove" pid="'+val.Pid+'" pprice="'+Tprice+'" cartid="'+val.cartid+'" userid="'+val.userid+'">×</a></td></tr>';
                   $('.productlist').append(data);
                   
                    alltotalprice = alltotalprice + Tprice;
+                   i++;
                   
                   
 
@@ -140,6 +163,7 @@
                 }); 
                 $('#totalprice').text(alltotalprice);
                 $('#totalprice').attr('totalprice',alltotalprice);
+              
                 }else{
                   $("#errormsg").text("Something went wrong please try again after sometime....");
                }
@@ -161,21 +185,87 @@
             };
 
             $.ajax(settings1).done(function (response) {
-              //console.log(response);
+             /// //console.log(response);
               if(response.cartproductcount==0){               
-                $("#checkout").prop('disabled', true);
+                $(".checkout").prop('disabled', true);
                 } else {
-                  $("#checkout").removeAttr("disabled"); 
+                  $(".checkout").removeAttr("disabled"); 
                 }             
             });
+            var settings2 = {
+              "url": "http://localhost:5001/api/payment/get",
+              "method": "POST",
+              "timeout": 0,
+              "headers": {
+                "Content-Type": "application/json",
+                "Authorization": accessTokenBearer      
+                         },
+              "data": JSON.stringify({
+                "userid":userid
+              }),
+            };
+
+            $.ajax(settings2).done(function (response) {
+             // //console.log(response.data[0].type);
+              if(response.data){        
+                if(response.data[0].type=="cod")       
+                $(".prevdatapayment").text("Cash On Delivery");
+                
+                }         
+            });
+
+            var accessToken =userid="";
+              accessToken=localStorage.getItem("accessToken");
+              var accessTokenBearer ="Bearer "+accessToken;
+              userid=localStorage.getItem("userid");
+            //   //console.log(firstname+lastname+address+address2+country+state+zip);
+                var settings = {
+                  "url": "http://localhost:5001/api/checkout/getdefaultcheckout",
+                  "method": "POST",
+                  "timeout": 0,
+                  "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": accessTokenBearer               
+                 },
+                  "data": JSON.stringify({
+                            "userid":userid
+                  }),
+                };
+
+                $.ajax(settings).done(function (response) {
+                  ////console.log(response);
+ 
+                  if(response.data!=""){
+                 //console.log(response.data);
+                  
+                  var data="";
+                  $.each(response.data, function(key, val) {
+                   
+                  data +='<div class="singleprev"><span>Name:</span><span>'+val.firstname+' '+val.lastname+'</span><br><span>Address:</span><span>'+val.address+' '+val.country+'  '+val.state+' '+val.zip+'</span><br><span>Address2:</span><span>'+val.address2+' '+val.country+'  '+val.state+' '+val.zip+'</span><br><span>Phone No:</span><span>'+val.phoneno+'</span></div>';
+
+                
 
 
+                  return data;
+                  });
+                 
+                 
+
+                    $('.prevdata').append(data);
+                    
+
+                    
+
+                }else{
+                  $("#errormsg").text("Something went wrong please try again after sometime....");
+               }
+         
+                
+              });
 
 
           });
-          $(document).on("click","#checkout",function() {
-            $("#loader").show(); 
-           document.getElementById("checkout").disabled = true;
+          $(document).on("click",".checkout",function() {
             var accessToken ="";
             accessToken=localStorage.getItem("accessToken");
           
@@ -219,8 +309,8 @@
               };
 
               $.ajax(settings).done(function (response) {
-                //console.log(response);
-                //console.log($(this));
+                ////console.log(response);
+                ////console.log($(this));
                 
                 var oldprice=$('#totalprice').text();
                 var currentprice=$(_this).attr('pprice');
@@ -228,12 +318,46 @@
                 $('#totalprice').text(newprice);
                 $(_this).parents('tr').remove();
                 if(newprice==0){
-                  $("#checkout").prop('disabled', true);
+                  $(".checkout").prop('disabled', true);
                 }
 
 
               });
             }
+          });
+
+          
+          $(document).on("click","#ordernow",function() {
+            var accessToken =userid=cartid="";
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;
+            userid=localStorage.getItem("userid");
+            
+            if(accessToken=="" || accessToken == null){
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{  
+              
+              var settings = {
+                "url": "http://localhost:5001/api/orders/createordernew",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                  "Content-Type": "application/json",
+                  "Authorization": accessTokenBearer                 },
+                "data": JSON.stringify({               
+                  "userid":userid                 
+                }),
+              };
+
+              $.ajax(settings).done(function (response) {   
+                //console.log('orderpage',response.data);      
+                if(response.data!=""){
+                  window.location.href = "http://localhost/nodefrontend/thank-you.php/?orderid="+response.data._id;
+                }
+              });
+            }
+
           });
   </script>
 

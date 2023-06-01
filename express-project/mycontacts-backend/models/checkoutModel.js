@@ -34,6 +34,14 @@ const checkoutSchema = mongoose.Schema({
     zip: {
         type: String,        
         required: [true,"Need zip"],
+    },
+    phoneno: {
+        type: String,        
+        required: [true,"Need phoneno"],
+    },
+    status: {
+        type: Number,        
+        required: [true,"Need status"],
     }
     
 

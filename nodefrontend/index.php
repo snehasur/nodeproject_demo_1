@@ -314,7 +314,7 @@ body {
             };
 
             $.ajax(settings1).done(function (response) {
-              console.log(response);
+              //console.log(response);
               $("#cartproductcount").text(response.cartproductcount);
             });
 
@@ -328,18 +328,20 @@ body {
          
             $.ajax(settings).done(function (response) {
                if(response.data!=""){
-                  console.log(response.data);
+                  //console.log(response.data);
+                  var data="";
                   $.each(response.data, function(key, val) {
-                  var data;
+                  
                   
                   data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='addtocart' data-id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php/?id="+val._id+"'>Product details</a></button></p></div>";
 
-                  $('.productlist').append(data);
+                  
 
 
 
                   return data;
                   });
+                  $('.productlist').append(data);
                }else{
                   $("#errormsg").text("Something went wrong please try again after sometime....");
                }
@@ -365,8 +367,8 @@ body {
             if(accessToken=="" || accessToken == null){
                 window.location.href = "http://localhost/nodefrontend/login.php";
             }else{   
-              console.log(pid+"pid");
-            console.log(userid+"userid");
+              //console.log(pid+"pid");
+            //console.log(userid+"userid");
 
 
 
@@ -384,7 +386,7 @@ body {
                 };
 
                 $.ajax(settings).done(function (response) {
-                  console.log(response);
+                 // console.log(response);
                   
                   $("#cartproductcount").text(response.cartproductcount);
 
@@ -402,7 +404,7 @@ body {
             if(accessToken=="" || accessToken == null){
                 window.location.href = "http://localhost/nodefrontend/login.php";
             }else{   
-            console.log(userid+"userid");
+            //console.log(userid+"userid");
 
               window.location.href = "http://localhost/nodefrontend/add-to-cart.php";
 
@@ -419,7 +421,7 @@ body {
                 // };
 
                 // $.ajax(settings).done(function (response) {
-                //   console.log(response);
+                //   //console.log(response);
                   
 
                 // });

@@ -4,7 +4,7 @@ const Product = require("../models/productModel");
 //@route Get /api/products
 //@access private
 const getProducts = asyncHandler (async (req,res,next)=>{
-    console.log(req.user);
+    //console.log(req.user);
     const products =await Product.find({user_id:req.user.id});
     if(products!=""){
         res.status(200).json({data:products,message:"success",status:"success"});
@@ -20,7 +20,7 @@ const getProducts = asyncHandler (async (req,res,next)=>{
 //@route POST /api/products
 //@access private
 const createProduct = asyncHandler (async (req,res)=>{
-    console.log("The request body is",req.body);
+    //console.log("The request body is",req.body);
     const {name,price,description,image}=req.body;
     // if(!name || !price || !description){
     //     res.status(400).json({message:"All fields are mandetory",status:"error"});
@@ -41,9 +41,9 @@ const createProduct = asyncHandler (async (req,res)=>{
 //@route Get /api/products/:id
 //@access private
 const getProduct = asyncHandler (async (req,res,next)=>{
-    console.log(req.params.id);
+    //console.log(req.params.id);
     const product = await Product.findById(req.params.id);
-    console.log(product);
+    //console.log(product);
     if(!product){
         res.status(404).json({message:"Product not found",status:"error"});
         throw new Error("Product not found");
@@ -51,9 +51,9 @@ const getProduct = asyncHandler (async (req,res,next)=>{
     }
     if(product.user_id.toString() !==req.user.id){
 
-        console.log(product.user_id.toString());
-        console.log(req.user.id);
-        console.log("User don't have permission to update other user products");
+        //console.log(product.user_id.toString());
+        //console.log(req.user.id);
+        //console.log("User don't have permission to update other user products");
         // res.status(403);
         res.status(403).json({message:"User don't have permission.",status:"error"});
         throw new Error("User don't have permission to update other user products");//not working
@@ -70,7 +70,7 @@ const getProduct = asyncHandler (async (req,res,next)=>{
 //@route Put /api/products/:id
 //@access private
 const updateProduct = asyncHandler ( async (req,res,next)=>{
-    console.log(req.body);
+    //console.log(req.body);
     const product = await Product.findById(req.params.id);
     if(!product){
         res.status(404).json({message:"Product not found",status:"error"});
@@ -80,7 +80,7 @@ const updateProduct = asyncHandler ( async (req,res,next)=>{
 
     if(product.user_id.toString() !==req.user.id){
         // res.status(403);
-        console.log("User don't have permission to update other user products");
+        //console.log("User don't have permission to update other user products");
         res.status(403).json({message:"User don't have permission.",status:"error"});
         throw new Error("User don't have permission to update other user products");//not working
         res.end();
@@ -107,7 +107,7 @@ const deleteProduct = asyncHandler( async (req,res,next)=>{
     }
     if(product.user_id.toString() !==req.user.id){
         res.status(403).json({message:"User don't have permission to update other user products.",status:"error"});
-        console.log("User don't have permission to update other user products");
+        //console.log("User don't have permission to update other user products");
         throw new Error("User don't have permission to update other user products");
         res.end();
     }
@@ -123,20 +123,20 @@ const deleteProduct = asyncHandler( async (req,res,next)=>{
 const getProductscount = asyncHandler (async (req,res,next)=>{ //not working
     
     // res.status(200).json({data:"products"});
-    // console.log("req.user");
+    // //console.log("req.user");
     if(req.user.role!==1){
-        console.log("User don't have permission.");
+        //console.log("User don't have permission.");
         // res.status(403);
         res.status(403).json({message:"User don't have permission to update other user products.",status:"error"});
         throw new Error("User don't have permission.");//not working
         res.end();
     }else{
         //   const products =await Product.find().count();
-        //   console.log(products);
+        //   //console.log(products);
         //   res.status(200).json({data:product,message:"success"});
         //   res.end();
         const products =await Product.find().count();
-        console.log(products);
+        //console.log(products);
         // res.setHeader('Content-Type', 'application/json');
         //res.send(JSON.stringify({key:products}));
         res.status(200).json({data:products,message:"success"});
@@ -160,7 +160,7 @@ const getProductsFrontend = asyncHandler (async (req,res,next)=>{
 //@route Get /api/products/productdetails/:id
 //@access public
 const getProductdetailsFrontend = asyncHandler (async (req,res,next)=>{
-    console.log(req.params.id);
+    //console.log(req.params.id);
     const product = await Product.findById(req.params.id);
     if(!product){
         res.status(404);

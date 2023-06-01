@@ -824,7 +824,7 @@ $(document).ready(function () {
             //product details
             var urlParams = new URLSearchParams(window.location.search);
             var id=urlParams.get('id');
-           // console.log(id);
+           // //console.log(id);
             var settings = {
               "url": "http://localhost:5001/api/products/productdetails/"+id,
               "method": "GET",
@@ -833,7 +833,7 @@ $(document).ready(function () {
             };
          
             $.ajax(settings).done(function (response) {
-             // console.log(response.data.name);
+             // //console.log(response.data.name);
               if(response.data!=""){
                 $("#name").text(response.data.name);
                 $("#description").text(response.data.description);
@@ -869,7 +869,7 @@ $(document).ready(function () {
 
         //  $(document).ready(function() {  
                // $('#buynow').submit(function(){
-                    //console.log("11111111111");
+                    ////console.log("11111111111");
 
                $(document).on("click","#buynow",function() {
                 var accessToken =userid=pid="";
@@ -878,8 +878,8 @@ $(document).ready(function () {
                 var accessTokenBearer ="Bearer "+accessToken;
                 var pid=$(this).attr("data_id");
                 userid=localStorage.getItem("userid");
-                //console.log(pid+"pid");
-                //console.log(userid+"userid");
+                ////console.log(pid+"pid");
+                ////console.log(userid+"userid");
                 if(accessToken=="" || accessToken == null){
                     window.location.href = "http://localhost/nodefrontend/login.php";
                 }else{    
@@ -903,11 +903,11 @@ $(document).ready(function () {
                   };
                
                   $.ajax(settings1).done(function (response) {
-                    console.log(response);
-                    alert("R");
+                    //console.log(response);
+                    //alert("R");
                      if(response.data!=""){
                         
-                        console.log(response.data);
+                        //console.log(response.data);
                         $("#successmsg").text("Ordered Successfully...");
                         setTimeout(function() { 
                         $("#successmsg").hide();               

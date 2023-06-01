@@ -271,7 +271,7 @@ var table = $('#example').DataTable();
             window.location.href = "http://localhost/nodefrontend/login.php";
            }else{    
             //orderlist
-            alert("1");
+            //alert("1");
             var accessTokenBearer ="Bearer "+accessToken;
             var settings = {
               "url": "http://localhost:5001/api/orders/myorders",
@@ -284,7 +284,7 @@ var table = $('#example').DataTable();
          
             $.ajax(settings).done(function (response) {
                if(response.data!=""){
-                  console.log(response.data);
+                  //console.log(response.data);
                   $.each(response.data, function(key, val) {
                     // table.row.add([
                     //     (key+1)
