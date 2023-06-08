@@ -95,12 +95,13 @@ const addtocartProducts = asyncHandler (async (req,res)=>{
 //@access privte
 const addtocartproductcount = asyncHandler (async (req,res)=>{
         const {userid}=req.body;
+        var cartproductcount=0
         const products =await Addtocart.find({User:userid,status:1}); 
         //console.log("products[0].product",products[0].product); 
-        if(products[0].product!=""){
-          var cartproductcount=products[0].product.split("-").length;   
+        if(products){
+          cartproductcount=products[0].product.split("-").length;   
         }else{
-          var cartproductcount=0;
+          cartproductcount=0;
         }
          
         //console.log(cartproductcount,"cartcount");   

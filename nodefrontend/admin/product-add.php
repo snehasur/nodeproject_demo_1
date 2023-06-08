@@ -98,11 +98,12 @@
     <div class="col-sm-3 sidenav hidden-xs">
       <h2>Admin</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#section1">Dashboard</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/productlist.php">Product List</a></li>
+        <li ><a href="http://localhost/nodefrontend/admin/dashboard.php">Dashboard</a></li>
+        <li class="active"><a href="http://localhost/nodefrontend/admin/productlist.php">Product List</a></li>
+        <li class=""><a href="http://localhost/nodefrontend/">Offer</a></li>
         <li><a href="http://localhost/nodefrontend/admin/orders.php">Order List</a></li>
         <li><a href="http://localhost/nodefrontend/admin/userlist.php">User List</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/profile.php">My Account</a></li>
+        <!-- <li><a href="http://localhost/nodefrontend/admin/profile.php">My Account</a></li> -->
         <li onclick="logout()"><a href="javascript:void(0);">Logout</a></li>
       </ul><br>
     </div>
@@ -145,12 +146,15 @@
       <br><span id="descriptionerror"></span><br>
     </div>
   </div> <!-- form-group // -->
-  <!-- <div class="form-group">
-    <label for="name" class="col-sm-3 control-label">Image</label>
-    <div class="col-sm-3">
-      <label class="control-label small" for="file_img"></label> <input type="file" name="file_img" id="image">
+  <div class="form-group">
+    <label for="image" class="col-sm-3 control-label">Image</label>
+    <div class="col-sm-9">
+      <label class="control-label small" for="file_img"></label> 
+      <!-- <input type="file" name="file_img" id="image"> -->      
+      <input type="text" name="file_img" id="image" class="form-control">
+      
     </div>
-	</div> -->
+	</div>
    <!-- form-group // -->
   <hr>
   <div class="form-group">
@@ -170,6 +174,8 @@
 </div>
   
 </div> <!-- container// -->
+<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+
       <script>
          $(window).on('load', function () {
            var accessToken=userid ="";
@@ -183,11 +189,16 @@
            }
           
           $(document).on('click','#btnSubmit',function(){
+           
              var name=price=description=_id=image="";
              var name= $("#name").val();
              var price= $("#price").val();
              var description= $("textarea#description").val();
-             var image= $("#image").attr('src');
+             //var image= $("#image").attr('src');
+             var image =$("#image").val();
+             if(image==""){
+              image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOr3gxkV28SyZjiJT_s4yI9YXS7fGMQqtuELKb7m_0g&s";
+             }
              
          
                      
@@ -214,6 +225,7 @@
                      }else{
                        $('#descriptionerror').text(" ");
                      }
+                     $("#loader").show(); 
          var settings1 = {
           "url": "http://localhost:5001/api/products/",
           "type": "POST",
@@ -230,7 +242,7 @@
                               "name":name,
                               "price":price,
                               "description":description,
-                              "image":"image",
+                              "image":image,
                               "userid":userid
                              
                             }),
@@ -241,7 +253,7 @@
           if(response.data!=""){
             $("#successmsg").text("Product Added Successfully...");
             setTimeout(function() { 
-              $("#successmsg").hide();               
+              $("#loader").hide();               
               window.location.href = "http://localhost/nodefrontend/admin/productlist.php";
             },
             5000);

@@ -3,7 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/userModel");
- 
+const Checkout = require("../models/checkoutModel");
+
 //@desc Register a user
 //@route POST /api/users/register
 //@access public
@@ -115,10 +116,10 @@ const getUserscount = asyncHandler (async (req,res)=>{
 //@route Get /api/getusersdetails
 //@access private
 const getUserdetails= asyncHandler (async (req,res)=>{
-  
+       const {_id}=req.body;
         const users =await User.find({email:req.user.email});  
-        
-        res.status(200).json({data:users,message:"success"});
+        const checkout = await Checkout.find({User:_id,status:1});  
+        res.status(200).json({data:users,others:checkout,message:"success"});
   
 
 });
@@ -126,11 +127,32 @@ const getUserdetails= asyncHandler (async (req,res)=>{
 //@route Put /api/updateUserdetails
 //@access private
 const updateUserdetails= asyncHandler (async (req,res)=>{
+    const {_id,firstname,lastname,address,address2,country,state,zip,phoneno}=req.body;
+
     //console.log(req.user.id);
     const updateUserdetails =await User.findByIdAndUpdate(
         req.user.id,
         req.body,{new:true}
     );
+    const filter = { User:_id,status: 1};
+    const update = {
+                    firstname: firstname,
+                    lastname:lastname,
+                    address:address,
+                    address2:address2,
+                    country:country,
+                    state:state,
+                    zip:zip,
+                    phoneno:phoneno
+                  };
+    
+    
+    
+    const updatedata = await Checkout.findOneAndUpdate(filter, update, {
+        new: true
+    });
+    console.log(filter,"filter");
+    console.log(update,"update");
     res.status(200).json({data:updateUserdetails,message:"success",status:"success"});
 
 });

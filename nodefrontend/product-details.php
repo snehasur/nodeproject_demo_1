@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
   /* Navbar */
 * {box-sizing: border-box;}
@@ -435,9 +437,10 @@ section {
     <button type="submit"><a href="http://localhost/nodefrontend/register.php" >Register </a></button>
   </div>
   <div id="login">
-  <a class="active" href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="http://localhost/nodefrontend/">Product</a>
+  <a class="active" href="http://localhost/nodefrontend">Home</a>
+  <a href="http://localhost/nodefrontend#about">About</a>
+  <a href="http://localhost/nodefrontend#productlisting">Product</a>
+  <a href="javascript:void(0);"><i class="fa fa-shopping-cart" aria-hidden="true" id="cartproductcount">0</i></a>
   <a href="http://localhost/nodefrontend/orders.php">Orders</a>
   <a href="http://localhost/nodefrontend/profile.php">My Account</a>
   <a href="javascript:void(0);" onclick="logout()">Logout</a>
@@ -510,12 +513,10 @@ section {
                            <button class="btn-theme btn buy-btn" tabindex="0" data_id="" id="buynow" type="button">
                            <i class="fa fa-shopping-cart"></i> Buy Now
                            </button>
-                           <button class="btn-theme btn btn-success" tabindex="0">
-                           <i class="fa fa-shopping-cart"></i> Add to Cart
+                           <button class="btn-theme btn btn-success" type="button" tabindex="0" id="addtocart" data-id="" >
+                            Add to Cart
                            </button>
-                           <input type="hidden" name="pid" value="18" />
-                           <input type="hidden" name="price" value="850" />
-                           <input type="hidden" name="url" value="" />    
+                           
                         </div>
                      </div>
                   </form>
@@ -528,283 +529,11 @@ section {
       </div>
    </div>
 </section>
-<!-- <section class="sec bg-light">
-   <div class="container">
-      <div class="row">
-         <div class="col-sm-12 title_bx">
-            <h3 class="title"> Recent Post   </h3>
-         </div>
-      </div>
-      <div class="row">
-         <div class="col-md-12 list-slider mt-4">
-            <div class="owl-carousel common_wd  owl-theme" id="recent_post">
-               <div class="item">
-                  <div class="sq_box shadow">
-                     <div class="pdis_img"> 
-                        <span class="wishlist">
-                        <a alt="Add to Wish List" title="Add to Wish List" href="javascript:void(0);"> <i class="fa fa-heart"></i></a>
-                        </span>
-                        <a href="#">
-                        <img src="https://ucarecdn.com/05f649bf-b70b-4cf8-90f7-2588ce404a08/-/resize/680x/"> 
-                        </a>
-                     </div>
-                     <h4 class="mb-1"> <a href="details.php"> Milton Bottle </a> </h4>
-                     <div class="price-box mb-2">
-                        <span class="price"> Price <i class="fa fa-inr"></i> 200 </span>
-                        <span class="offer-price"> Offer Price <i class="fa fa-inr"></i> 120 </span>
-                     </div>
-                     <div class="btn-box text-center">
-                        <a class="btn btn-sm" href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Add to Cart </a>
-                     </div>
-                  </div>
-               </div>
-               <div class="item">
-                  <div class="sq_box shadow">
-                     <div class="pdis_img"> 
-                        <span class="wishlist">
-                        <a alt="Add to Wish List" title="Add to Wish List" href="javascript:void(0);"> <i class="fa fa-heart"></i></a>
-                        </span>
-                        <a href="#">
-                        <img src="https://ucarecdn.com/05f649bf-b70b-4cf8-90f7-2588ce404a08/-/resize/680x/"> 
-                        </a>
-                     </div>
-                     <h4 class="mb-1"> <a href="details.php"> Milton Bottle </a> </h4>
-                     <div class="price-box mb-2">
-                        <span class="price"> Price <i class="fa fa-inr"></i> 200 </span>
-                        <span class="offer-price"> Offer Price <i class="fa fa-inr"></i> 120 </span>
-                     </div>
-                     <div class="btn-box text-center">
-                        <a class="btn btn-sm" href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Add to Cart </a>
-                     </div>
-                  </div>
-               </div>
-               <div class="item">
-                  <div class="sq_box shadow">
-                     <div class="pdis_img"> 
-                        <span class="wishlist">
-                        <a alt="Add to Wish List" title="Add to Wish List" href="javascript:void(0);"> <i class="fa fa-heart"></i></a>
-                        </span>
-                        <a href="#">
-                        <img src="https://ucarecdn.com/05f649bf-b70b-4cf8-90f7-2588ce404a08/-/resize/680x/"> 
-                        </a>
-                     </div>
-                     <h4 class="mb-1"> <a href="#"> Milton Bottle </a> </h4>
-                     <div class="price-box mb-2">
-                        <span class="price"> Price <i class="fa fa-inr"></i> 200 </span>
-                        <span class="offer-price"> Offer Price <i class="fa fa-inr"></i> 120 </span>
-                     </div>
-                     <div class="btn-box text-center">
-                        <a class="btn btn-sm" href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Add to Cart </a>
-                     </div>
-                  </div>
-               </div>
-               <div class="item">
-                  <div class="sq_box shadow">
-                     <div class="pdis_img"> 
-                        <span class="wishlist">
-                        <a alt="Add to Wish List" title="Add to Wish List" href="javascript:void(0);"> <i class="fa fa-heart"></i></a>
-                        </span>
-                        <a href="#">
-                        <img src="https://ucarecdn.com/05f649bf-b70b-4cf8-90f7-2588ce404a08/-/resize/680x/"> 
-                        </a>
-                     </div>
-                     <h4 class="mb-1"> <a href="#"> Milton Bottle </a> </h4>
-                     <div class="price-box mb-2">
-                        <span class="price"> Price <i class="fa fa-inr"></i> 200 </span>
-                        <span class="offer-price"> Offer Price <i class="fa fa-inr"></i> 120 </span>
-                     </div>
-                     <div class="btn-box text-center">
-                        <a class="btn btn-sm" href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Add to Cart </a>
-                     </div>
-                  </div>
-               </div>
-               <div class="item">
-                  <div class="sq_box shadow">
-                     <div class="pdis_img"> 
-                        <span class="wishlist">
-                        <a alt="Add to Wish List" title="Add to Wish List" href="javascript:void(0);"> <i class="fa fa-heart"></i></a>
-                        </span>
-                        <a href="#">
-                        <img src="https://ucarecdn.com/05f649bf-b70b-4cf8-90f7-2588ce404a08/-/resize/680x/"> 
-                        </a>
-                     </div>
-                     <h4 class="mb-1"> <a href="details.php"> Milton Bottle </a> </h4>
-                     <div class="price-box mb-2">
-                        <span class="price"> Price <i class="fa fa-inr"></i> 200 </span>
-                        <span class="offer-price"> Offer Price <i class="fa fa-inr"></i> 120 </span>
-                     </div>
-                     <div class="btn-box text-center">
-                        <a class="btn btn-sm" href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Add to Cart </a>
-                     </div>
-                  </div>
-               </div>
-               <div class="item">
-                  <div class="sq_box shadow">
-                     <div class="pdis_img"> 
-                        <span class="wishlist">
-                        <a alt="Add to Wish List" title="Add to Wish List" href="javascript:void(0);"> <i class="fa fa-heart"></i></a>
-                        </span>
-                        <a href="#">
-                        <img src="https://ucarecdn.com/05f649bf-b70b-4cf8-90f7-2588ce404a08/-/resize/680x/"> 
-                        </a>
-                     </div>
-                     <h4 class="mb-1"> <a href="details.php"> Milton Bottle </a> </h4>
-                     <div class="price-box mb-2">
-                        <span class="price"> Price <i class="fa fa-inr"></i> 200 </span>
-                        <span class="offer-price"> Offer Price <i class="fa fa-inr"></i> 120 </span>
-                     </div>
-                     <div class="btn-box text-center">
-                        <a class="btn btn-sm" href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Add to Cart </a>
-                     </div>
-                  </div>
-               </div>
-               <div class="item">
-                  <div class="sq_box shadow">
-                     <div class="pdis_img"> 
-                        <span class="wishlist">
-                        <a alt="Add to Wish List" title="Add to Wish List" href="javascript:void(0);"> <i class="fa fa-heart"></i></a>
-                        </span>
-                        <a href="#">
-                        <img src="https://ucarecdn.com/05f649bf-b70b-4cf8-90f7-2588ce404a08/-/resize/680x/"> 
-                        </a>
-                     </div>
-                     <h4 class="mb-1"> <a href="details.php"> Milton Bottle </a> </h4>
-                     <div class="price-box mb-2">
-                        <span class="price"> Price <i class="fa fa-inr"></i> 200 </span>
-                        <span class="offer-price"> Offer Price <i class="fa fa-inr"></i> 120 </span>
-                     </div>
-                     <div class="btn-box text-center">
-                        <a class="btn btn-sm" href="javascript:void(0);"> <i class="fa fa-shopping-cart"></i> Add to Cart </a>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</section> -->
+<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<!-- <script>
-    /*!     
-        jquery.picZoomer.js
-        v 1.0
-        David
-        http://www.CodingSerf.com
-*/
 
-//放大镜控件
-;(function($){
-	$.fn.picZoomer = function(options){
-		var opts = $.extend({}, $.fn.picZoomer.defaults, options), 
-			$this = this,
-			$picBD = $('<div class="picZoomer-pic-wp"></div>').css({'width':opts.picWidth+'px', 'height':opts.picHeight+'px'}).appendTo($this),
-			$pic = $this.children('img').addClass('picZoomer-pic').appendTo($picBD),
-			$cursor = $('<div class="picZoomer-cursor"><i class="f-is picZoomCursor-ico"></i></div>').appendTo($picBD),
-			cursorSizeHalf = {w:$cursor.width()/2 ,h:$cursor.height()/2},
-			$zoomWP = $('<div class="picZoomer-zoom-wp"><img src="" alt="" class="picZoomer-zoom-pic"></div>').appendTo($this),
-			$zoomPic = $zoomWP.find('.picZoomer-zoom-pic'),
-			picBDOffset = {x:$picBD.offset().left,y:$picBD.offset().top};
-
-		
-		opts.zoomWidth = opts.zoomWidth||opts.picWidth;
-		opts.zoomHeight = opts.zoomHeight||opts.picHeight;
-		var zoomWPSizeHalf = {w:opts.zoomWidth/2 ,h:opts.zoomHeight/2};
-
-		//初始化zoom容器大小
-		$zoomWP.css({'width':opts.zoomWidth+'px', 'height':opts.zoomHeight+'px'});
-		$zoomWP.css(opts.zoomerPosition || {top: 0, left: opts.picWidth+30+'px'});
-		//初始化zoom图片大小
-		$zoomPic.css({'width':opts.picWidth*opts.scale+'px', 'height':opts.picHeight*opts.scale+'px'});
-
-		//初始化事件
-		$picBD.on('mouseenter',function(event){
-			$cursor.show();
-			$zoomWP.show();
-			$zoomPic.attr('src',$pic.attr('src'))
-		}).on('mouseleave',function(event){
-			$cursor.hide();
-			$zoomWP.hide();
-		}).on('mousemove', function(event){
-			var x = event.pageX-picBDOffset.x,
-				y = event.pageY-picBDOffset.y;
-
-			$cursor.css({'left':x-cursorSizeHalf.w+'px', 'top':y-cursorSizeHalf.h+'px'});
-			$zoomPic.css({'left':-(x*opts.scale-zoomWPSizeHalf.w)+'px', 'top':-(y*opts.scale-zoomWPSizeHalf.h)+'px'});
-
-		});
-		return $this;
-
-	};
-	$.fn.picZoomer.defaults = {
-        picHeight: 460,
-		scale: 2.5,
-		zoomerPosition: {top: '0', left: '380px'},
-
-		zoomWidth: 400,
-		zoomHeight: 460
-	};
-})(jQuery); 
-
-
-
-$(document).ready(function () {
-     $('.picZoomer').picZoomer();
-    $('.piclist li').on('click', function (event) {
-        var $pic = $(this).find('img');
-        $('.picZoomer-pic').attr('src', $pic.attr('src'));
-    });
-   
-  var owl = $('#recent_post');
-              owl.owlCarousel({
-                margin:20,
-                dots:false,
-                nav: true,
-                navText: [
-                  "<i class='fa fa-chevron-left'></i>",
-                  "<i class='fa fa-chevron-right'></i>"
-                ],
-                autoplay: true,
-                autoplayHoverPause: true,
-                responsive: {
-                  0: {
-                    items: 2
-                  },
-                  600: {
-                    items:3
-                  },
-                  1000: {
-                    items:5
-                  },
-                  1200: {
-                    items:4
-                  }
-                }
-  });    
-  
-        $('.decrease_').click(function () {
-            decreaseValue(this);
-        });
-        $('.increase_').click(function () {
-            increaseValue(this);
-        });
-        function increaseValue(_this) {
-            var value = parseInt($(_this).siblings('input#number').val(), 10);
-            value = isNaN(value) ? 0 : value;
-            value++;
-            $(_this).siblings('input#number').val(value);
-        }
-
-        function decreaseValue(_this) {
-            var value = parseInt($(_this).siblings('input#number').val(), 10);
-            value = isNaN(value) ? 0 : value;
-            value < 1 ? value = 1 : '';
-            value--;
-            $(_this).siblings('input#number').val(value);
-        }
-    });
-
-</script>     -->
 <script>
          $(window).on('load', function () {
             var accessToken ="";
@@ -843,6 +572,7 @@ $(document).ready(function () {
                 var img=response.data.image;
                 $(".my_img").attr('src',img );
                 $("#buynow").attr('data_id',response.data._id );
+                $("#addtocart").attr('data-id',response.data._id );
               }
               if(response.message!="" && response.status=="error"){
                 $("#errormsg").text(response.message);
@@ -853,8 +583,31 @@ $(document).ready(function () {
                    
                 
               });
-         
+              //add to cart count
+                var accessToken =userid="";
+                accessToken=localStorage.getItem("accessToken");
 
+                var accessTokenBearer ="Bearer "+accessToken;
+                userid=localStorage.getItem("userid");
+              var settings1 = {
+              "url": "http://localhost:5001/api/cart/add-to-cart-count",
+              "method": "POST",
+              "timeout": 0,
+              "headers": {
+                "Content-Type": "application/json",
+                "Authorization": accessTokenBearer      
+                         },
+              "data": JSON.stringify({
+                "userid":userid
+              }),
+            };
+
+            $.ajax(settings1).done(function (response) {
+              //console.log(response);
+              $("#cartproductcount").text(response.cartproductcount);
+            });
+
+           
          
        
 
@@ -872,6 +625,8 @@ $(document).ready(function () {
                     ////console.log("11111111111");
 
                $(document).on("click","#buynow",function() {
+                $("#loader").show(); 
+                document.getElementById("buynow").disabled = true;
                 var accessToken =userid=pid="";
                 accessToken=localStorage.getItem("accessToken");
                
@@ -885,43 +640,56 @@ $(document).ready(function () {
                 }else{    
                 
             
-                  
-                  var settings1 = {
-                  "url": "http://localhost:5001/api/orders/",
+                /*previous single buy*/ 
+                //   var settings1 = {
+                //     "url": "http://localhost:5001/api/orders/",
+                //     "method": "POST",
+                //     "timeout": 0,
+                //     "headers": {
+                //         "Authorization": accessTokenBearer
+                //     },
+                //     "dataType": "json",
+                //     "contentType": "application/json",
+                //     "data": JSON.stringify({
+                //               "productid":pid,
+                //               "userid":userid
+                             
+                //             }),
+                //   };
+               
+                //   $.ajax(settings1).done(function (response) {
+
+                //      if(response.data!=""){                        
+                //         $("#successmsg").text("Ordered Successfully...");
+                //         setTimeout(function() { 
+                //         $("#successmsg").hide();               
+                //        window.location.href = "http://localhost/nodefrontend/thank-you.php/?orderid="+response.data._id;
+                //         },
+                //         5000);
+                //      }else{
+                //         $("#errormsg").text("Something went wrong please try again after sometime....");
+                //      }        
+                
+                //   });
+                /*previous single buy*/ 
+                var settings = {
+                  "url": "http://localhost:5001/api/cart/add-to-cart",
                   "method": "POST",
                   "timeout": 0,
                   "headers": {
-                     "Authorization": accessTokenBearer
-                  },
-                  "dataType": "json",
-                  "contentType": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": accessTokenBearer                },
                   "data": JSON.stringify({
-                              "productid":pid,
-                              "userid":userid
-                             
-                            }),
-                  };
-               
-                  $.ajax(settings1).done(function (response) {
-                    //console.log(response);
-                    //alert("R");
-                     if(response.data!=""){
-                        
-                        //console.log(response.data);
-                        $("#successmsg").text("Ordered Successfully...");
-                        setTimeout(function() { 
-                        $("#successmsg").hide();               
-                       window.location.href = "http://localhost/nodefrontend/thank-you.php/?orderid="+response.data._id;
-                        },
-                        5000);
-                     }else{
-                        $("#errormsg").text("Something went wrong please try again after sometime....");
-                     }
-         
-                
-              });
+                            "productid":pid,
+                            "userid":userid
+                  }),
+                };
 
+                $.ajax(settings).done(function (response) {
+                    window.location.href = "http://localhost/nodefrontend/add-to-cart.php";
+                    $("#loader").hide();
 
+                });  
 
 
             }
@@ -931,6 +699,58 @@ $(document).ready(function () {
 
 
         //   }); 
+        $(document).on("click","#cartproductcount",function() {
+            var accessToken =userid="";
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;
+            userid=localStorage.getItem("userid");
+            
+            if(accessToken=="" || accessToken == null){
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{   
+
+              window.location.href = "http://localhost/nodefrontend/add-to-cart.php";
+
+              
+                }
+          });
+          $(document).on("click","#addtocart",function() {
+            $("#loader").show();
+            document.getElementById("addtocart").disabled = true;
+
+            var accessToken =userid=pid="";
+            accessToken=localStorage.getItem("accessToken");
+          
+            var accessTokenBearer ="Bearer "+accessToken;
+            var pid=$(this).attr("data-id");
+            userid=localStorage.getItem("userid");
+            
+            if(accessToken=="" || accessToken == null){
+                window.location.href = "http://localhost/nodefrontend/login.php";
+            }else{  
+                var settings = {
+                  "url": "http://localhost:5001/api/cart/add-to-cart",
+                  "method": "POST",
+                  "timeout": 0,
+                  "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": accessTokenBearer                },
+                  "data": JSON.stringify({
+                            "productid":pid,
+                            "userid":userid
+                  }),
+                };
+
+                $.ajax(settings).done(function (response) {                  
+                  $("#cartproductcount").text(response.cartproductcount);
+                  $("#loader").hide();
+                  document.getElementById("addtocart").disabled = false;
+
+
+                });
+                }
+          });
       </script>
 </body>
 </html>

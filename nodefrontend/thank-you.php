@@ -119,9 +119,9 @@ body {
     <button type="submit"><a href="http://localhost/nodefrontend/register.php" >Register </a></button>
   </div> -->
   <div id="login">
-  <a class="active" href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="http://localhost/nodefrontend/">Product</a>
+  <a class="active" href="http://localhost/nodefrontend/">Home</a>
+  <a href="http://localhost/nodefrontend#about">About</a>
+  <a href="http://localhost/nodefrontend#productlisting">Product</a>
   <a href="http://localhost/nodefrontend/orders.php">Orders</a>
   <a href="http://localhost/nodefrontend/profile.php">My Account</a>
   <a href="javascript:void(0);" onclick="logout()">Logout</a>

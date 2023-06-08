@@ -19,7 +19,7 @@ const create = asyncHandler (async (req,res,next)=>{
             const payment = await Payment.create({
                 User: userid,
                 type: type,
-                status:0
+                status:1
             });
             //console.log(payment);
             res.status(200).json({data:payment,message:"success",status:"success"});

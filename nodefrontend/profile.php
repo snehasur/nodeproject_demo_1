@@ -185,11 +185,11 @@ body {
     <button type="submit"><a href="http://localhost/nodefrontend/register.php" >Register </a></button>
   </div> -->
   <div id="login">
-  <a class="active" href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="http://localhost/nodefrontend/">Product</a>
+  <a  href="http://localhost/nodefrontend">Home</a>
+  <a href="http://localhost/nodefrontend#about">About</a>
+  <a href="http://localhost/nodefrontend#productlisting">Product</a>
   <a href="http://localhost/nodefrontend/orders.php">Orders</a>
-  <a href="javascript:void(0);">My Account</a>
+  <a href="javascript:void(0);" class="active">My Account</a>
   <a href="javascript:void(0);" onclick="logout()">Logout</a>
   </div>
   </div>
@@ -225,7 +225,77 @@ body {
                           <br><span id="emailerror"></span><br>
                       </div>
                     </div>
-                    
+                    <div class="form-group">
+                      <label for="firstname" class="col-sm-3 control-label">First name</label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" name="firstname" id="firstname" placeholder="" >
+                          <br><span id="firstnameerror"></span><br>
+                      </div>
+                    </div>
+                    <!-- form-group // -->
+
+                    <div class="form-group">
+                      <label for="lastName" class="col-sm-3 control-label">Last name</label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" name="lastName" id="lastname" placeholder="" >
+                          <br><span id="lastnameerror"></span><br>
+                      </div>
+                    </div>
+                    <!-- form-group // -->
+                    <div class="form-group">
+                      <label for="address" class="col-sm-3 control-label">Address </label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" name="address" id="address" placeholder="" >
+                          <br><span id="addresserror"></span><br>
+                      </div>
+                    </div>
+                    <!-- form-group // -->
+                    <div class="form-group">
+                      <label for="address2" class="col-sm-3 control-label">Address 2</label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" name="address2" id="address2" placeholder="" >
+                          <br><span id="address2error"></span><br>
+                      </div>
+                    </div>
+                    <!-- form-group // -->
+                    <div class="form-group">                                  
+                      <label for="country" class="col-sm-3 control-label">Country</label>
+                      <div class="col-sm-9">
+                      <select class="custom-select d-block w-100 form-control" id="country" >
+                        <option value="">Choose...</option>
+                        <option>India</option>
+                      </select>
+                      <br><span id="countryerror"></span><br>
+                      </div>
+                    </div>
+                    <!-- form-group // -->
+                    <div class="form-group">                                  
+                      <label for="state" class="col-sm-3 control-label">State</label>
+                      <div class="col-sm-9">
+                      <select class="custom-select d-block w-100 form-control" id="state" >
+                        <option value="">Choose...</option>
+                        <option>Kolkata</option>
+                        <option>Mumbai</option>
+                      </select>
+                      <br><span id="stateerror"></span><br>
+                      </div>
+                    </div>
+                    <!-- form-group // -->
+                    <div class="form-group">
+                      <label for="zip" class="col-sm-3 control-label">Zip</label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" minlength="5" maxlength="5" name="zip" id="zip" placeholder="" >
+                          <br><span id="ziperror"></span><br>
+                      </div>
+                    </div>
+                    <!-- form-group // -->
+                    <div class="form-group">
+                      <label for="phoneno" class="col-sm-3 control-label">Phoneno</label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" minlength="10" maxlength="10" name="phoneno" id="phoneno" placeholder="" >
+                          <br><span id="phonenoerror"></span><br>
+                      </div>
+                    </div>
                     <!-- form-group // -->
                     <hr>
                     <div class="form-group">
@@ -250,6 +320,8 @@ body {
     </div>
 
 </div>
+<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+
       <script>
          $(window).on('load', function () {
            var accessToken =_id="";
@@ -264,11 +336,13 @@ body {
             var accessTokenBearer ="Bearer "+accessToken;
             var settings = {
               "url": "http://localhost:5001/api/users/profile",
-              "method": "GET",
+              "type": "POST",
               "timeout": 0,//{"Authorization": accessToken},
               "headers": {
                 "Authorization": accessTokenBearer
               },
+              "dataType": "json",
+              "contentType": "application/json",
               "data": JSON.stringify({                             
                               "_id":_id
                             }),
@@ -279,6 +353,15 @@ body {
               if(response.data!=""){
                 $("#username").val(response.data[0].username);
                 $("#email").val(response.data[0].email);
+                $("#firstname").val(response.others[0].firstname);
+                $("#lastname").val(response.others[0].lastname);
+                $("#address").val(response.others[0].address);
+                $("#country").val(response.others[0].country);
+                $("#state").val(response.others[0].state);
+                $("#zip").val(response.others[0].zip);
+                $("#phoneno").val(response.others[0].phoneno);
+
+                
                   
               }
               if(response.message!="" && response.status=="error"){
@@ -296,8 +379,8 @@ body {
            }
            //profileupdate
            $(document).on('click','#btnSubmit',function(){
-             var username="";
-             var username= $("#username").val();
+            $("#loader").show(); 
+             var username=firstname=lastname=address=address2=country=state=zip=phoneno="";
              username=$('#username').val();
                      if(username==''){
                        $('#usernameerror').text("Please give username.");
@@ -305,8 +388,75 @@ body {
                      }else{
                        $('#usernameerror').text(" ");
                      }
-                    
-                     
+            firstname=$('#firstname').val();
+                     if(firstname==''){
+                       $('#firstnameerror').text("Please give firstname.");
+                       return false;
+                     }else{
+                       $('#firstnameerror').text(" ");
+                     }
+            lastname=$('#lastname').val();
+              if(lastname==''){
+                $('#lastnameerror').text("Please give lastname.");
+                return false;
+              }else{
+                $('#lastnameerror').text(" ");
+              } 
+            address=$('#address').val();
+              if(address==''){
+                $('#addresserror').text("Please give address.");
+                return false;
+              }else{
+                $('#addresserror').text(" ");
+              }        
+                   
+              address2=$('#address2').val();
+              // if(address2==''){
+              //   $('#address2error').text("Please give address2.");
+              //   return false;
+              // }else{
+              //   $('#address2error').text(" ");
+              // }       
+            country= $("#country").val();
+              if(country==''){
+                $('#countryerror').text("Please give country.");
+                return false;
+              }else{
+                $('#countryerror').text(" ");
+              }         
+              state= $("#state").val();
+              if(state==''){
+                $('#stateerror').text("Please give state.");
+                return false;
+              }else{
+                $('#stateerror').text(" ");
+              }   
+              zip= $("#zip").val();
+              if(zip==''){
+                $('#ziperror').text("Please give zip.");
+                return false;
+              }else{
+                $('#ziperror').text(" ");
+              } 
+              if(zip.length != 5)   {
+                $('#ziperror').text("Please give zip.");
+                return false;
+              }else{
+                $('#ziperror').text(" ");
+              }
+              phoneno= $("#phoneno").val();
+              if(phoneno==''){
+                $('#phonenoerror').text("Please give phoneno.");
+                return false;
+              }else{
+                $('#phonenoerror').text(" ");
+              }        
+              if(phoneno.length != 10)   {
+                $('#phonenoerror').text("Please give propper phoneno.");
+                return false;
+              }else{
+                $('#phonenoerror').text(" ");
+              }
          var settings1 = {
           "url": "http://localhost:5001/api/users/profile/",
           "type": "PUT",
@@ -318,7 +468,15 @@ body {
           "contentType": "application/json",
           "data": JSON.stringify({
                               "username":username,
-                              "_id":_id
+                              "_id":_id,
+                              "firstname":firstname,
+                              "lastname":lastname,
+                              "address":address,
+                              "address2":address2,
+                              "country":country,
+                              "state":state,
+                              "zip":zip,
+                              "phoneno":phoneno
                             }),
          };
          
@@ -326,6 +484,7 @@ body {
           //console.log(response);
           if(response.data!=""){
             $("#successmsg").text("Profile Update Successfully...");
+            $("#loader").hide(); 
             setTimeout(function() { 
               $("#successmsg").hide();               
               //window.location.href = "http://localhost/nodefrontend/profile.php";

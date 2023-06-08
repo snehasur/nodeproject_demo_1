@@ -12,27 +12,9 @@ const Addtocart = require("../models/addtocartModel");
 //@access private
 const getorders = async (req,res,next) => {  
 
-const orders =await Order.find().populate('User').populate('product');
+const orders =await Ordernew.find();
     
-// for (const val of orders) {
-//     const productall = await Product.findById(val.productid);
-//     const productall1 = JSON.parse(JSON.stringify(productall));
-//     const user=await User.find({_id:val.userid});
-//     //console.log(user);
-//     const useralldata=JSON.parse(JSON.stringify(user));
-//     let orderdata = {
-//       orderid:val._id,
-//       username:useralldata.username,
-//       name: productall1.name,
-//       price: productall1.price,
-//       description: productall1.description,
-//       image: productall1.image
-      
-//     }
-//    // //console.log('orderdata', orderdata)
-//     orderdataall.push(orderdata);
-//   }
- ////console.log("orderdataall", orders);   
+ 
  res.status(200).json({data:orders,message:"success",status:"success"});
 }
 
@@ -46,7 +28,7 @@ const getordersnew = asyncHandler (async (req,res,next)=>{
        // throw new Error("User don't have permission.");//not working
        res.end();
     }else{
-          const orders =await Order.find().count();
+          const orders =await Ordernew.find().count();
           //console.log(orders);
           res.setHeader('Content-Type', 'application/json');
           res.status(200).json({data:orders,message:"success"});
@@ -155,7 +137,7 @@ const getorderscount = asyncHandler (async (req,res,next)=>{ //not working
        // throw new Error("User don't have permission.");//not working
        res.end();
     }else{
-          const orders =await Order.find().count();
+          const orders =await Ordernew.find().count();
           //console.log(orders);
           res.setHeader('Content-Type', 'application/json');
           res.status(200).json({data:orders,message:"success"});
@@ -169,7 +151,10 @@ const getorderscount = asyncHandler (async (req,res,next)=>{ //not working
 //@access private
 const getordersFrontend = asyncHandler (async (req,res)=>{
    
-    const orders =await Order.find({User:req.user.id}).populate('User').populate('product');
+    //const orders =await Order.find({User:req.user.id}).populate('User').populate('product');
+    const orders =await Ordernew.find({userid:req.user.id});
+    console.log(req.user.id);
+    console.log(orders,"ooooooooooooooooooooo");
     //res.status(200).json({message:"Get all orders"});
     res.status(200).json({data:orders,message:"success"});
     res.end();
@@ -212,7 +197,7 @@ const createordernew = asyncHandler (async (req,res,next)=>{
 
 
     
-    const products =await Addtocart.find({User:userid});
+    const products =await Addtocart.find({User:userid,status:1});
     const cartproduct=products[0].product.split("-");
    // //console.log(cartproduct);
 
@@ -240,7 +225,10 @@ const createordernew = asyncHandler (async (req,res,next)=>{
       }
       cartdataall.push(cartdata);  
     }
+
+    console.log(userdata[0]._id,"userdata");  
         const order = await Ordernew.create({
+        userid:userdata[0]._id.toString(),
         User: userdata,
         checkoutdata: checkoutdata,
         paymentdata:paymentdata,
@@ -260,7 +248,6 @@ const createordernew = asyncHandler (async (req,res,next)=>{
              });
              
             
-    //res.status(200).json({message:"Create orders"});
     res.status(200).json({data:order,message:"success",status:"success"});
     res.end();
    

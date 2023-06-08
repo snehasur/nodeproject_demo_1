@@ -103,7 +103,7 @@ body {
         <li><a href="http://localhost/nodefrontend/admin/productlist.php">Product List</a></li>
         <li><a href="http://localhost/nodefrontend/admin/orders.php">Order List</a></li>
         <li><a href="http://localhost/nodefrontend/admin/userlist.php">User List</a></li>
-        <li><a href="http://localhost/nodefrontend/profile.php">My Account</a></li>
+        <!-- <li><a href="http://localhost/nodefrontend/profile.php">My Account</a></li> -->
         <li onclick="logout()"><a href="javascript:void(0);">Logout</a></li>
       </ul><br>
     </div>

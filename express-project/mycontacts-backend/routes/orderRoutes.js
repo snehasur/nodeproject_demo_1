@@ -30,17 +30,8 @@ router.route("/").get(getorders).post(createorder);
 router.route("/getorderscount").get(getordersnew);
 
 router.route("/:id").get(getorder).put(updateorder).delete(deleteorder);
-//router.route("/getorderscount").get(getorderscount);
 router.route("/getneworder").get(getneworder);
-// router.route('/getorderscount')
-//     .get(function (req, res, next) {
-//       console.log("jkjkjj");      
-//             res.setHeader('Content-Type', 'application/json');
-//             res.send(JSON.stringify({key:"fdvdcf"}));
-//             //res.status(200).json({data:products,message:"success"});
-//             res.end();
-//       //}
-//     });
+
 router.route("/createordernew").post(createordernew);
 router.route("/getorderrecent").post(getorderrecent);
 

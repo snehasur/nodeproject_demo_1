@@ -110,11 +110,12 @@
     <div class="col-sm-3 sidenav hidden-xs">
       <h2>Admin</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#section1">Dashboard</a></li>
+        <li ><a href="http://localhost/nodefrontend/admin/dashboard.php">Dashboard</a></li>
+        <li class=""><a href="http://localhost/nodefrontend/">Offer</a></li>
         <li><a href="http://localhost/nodefrontend/admin/productlist.php">Product List</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/orders.php">Order List</a></li>
+        <li class="active"><a href="http://localhost/nodefrontend/admin/orders.php">Order List</a></li>
         <li><a href="http://localhost/nodefrontend/admin/userlist.php">User List</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/profile.php">My Account</a></li>
+        <!-- <li><a href="http://localhost/nodefrontend/admin/profile.php">My Account</a></li> -->
         <li onclick="logout()"><a href="javascript:void(0);">Logout</a></li>
       </ul><br>
     </div>
@@ -154,6 +155,8 @@
 
 </div>
 </div>
+<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+
 <script>
 //   $(document).ready(function () {
 //     $('#example').DataTable();
@@ -178,6 +181,7 @@ var table = $('#example').DataTable();
   </script>
      <script>
          $(window).on('load', function () {  
+          $("#loader").show(); 
            var accessToken ="";
            accessToken=localStorage.getItem("accessToken");
            if(accessToken=="" || accessToken == null){
@@ -212,6 +216,7 @@ var table = $('#example').DataTable();
                   $('#tbody').append(data);
                   return data;
                   });
+                  $("#loader").hide(); 
                }else{
                   $("#errormsg").text("Something went wrong please try again after sometime....");
                }

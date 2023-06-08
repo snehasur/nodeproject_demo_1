@@ -194,10 +194,10 @@ body {
     <button type="submit"><a href="http://localhost/nodefrontend/register.php" >Register </a></button>
   </div> -->
   <div id="login">
-  <a class="active" href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="http://localhost/nodefrontend">Product</a>
-  <a href="javascript:void(0);">Orders</a>
+  <a href="http://localhost/nodefrontend">Home</a>
+  <a href="http://localhost/nodefrontend#about">About</a>
+  <a href="http://localhost/nodefrontend#productlisting">Product</a>
+  <a class="active" href="javascript:void(0);">Orders</a>
   <a href="http://localhost/nodefrontend/profile.php">My Account</a>
   <a href="javascript:void(0);" onclick="logout()">Logout</a>
   </div>
@@ -216,11 +216,11 @@ body {
   <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th>Sl no</th>
-                <th>Order Id</th>
-                <th>Customer Name</th>
-                <th>Product Name</th>
-                <th>Product Price</th>              
+              <th class="tg-0pky" rowspan="2">SL No</th>
+              <th class="tg-0pky" colspan="4" rowspan="2">Order ID</th>
+              <th class="tg-0pky" colspan="4" rowspan="2">Customer Details</th>
+              <th class="tg-0pky" rowspan="2">Product Name</th>
+              <th class="tg-0pky" rowspan="2">Product Price</th>         
             </tr>
         </thead>
         <tbody id="tbody">
@@ -228,11 +228,11 @@ body {
         </tbody>
         <tfoot>
             <tr>
-                <th>Sl no</th>
-                <th>Order Id</th>
-                <th>Customer Name</th>
-                <th>Product Name</th>
-                <th>Product Price</th>              
+              <th class="tg-0pky" rowspan="2">SL No</th>
+              <th class="tg-0pky" colspan="4" rowspan="2">Order ID</th>
+              <th class="tg-0pky" colspan="4" rowspan="2">Customer Details</th>
+              <th class="tg-0pky" rowspan="2">Product Name</th>
+              <th class="tg-0pky" rowspan="2">Product Price</th>              
             </tr>
         </tfoot>
     </table>
@@ -284,7 +284,7 @@ var table = $('#example').DataTable();
          
             $.ajax(settings).done(function (response) {
                if(response.data!=""){
-                  //console.log(response.data);
+                  console.log(response.data);
                   $.each(response.data, function(key, val) {
                     // table.row.add([
                     //     (key+1)
@@ -295,7 +295,29 @@ var table = $('#example').DataTable();
                     // ]).draw(false);
                 
                   var data;
-                  data +="<tr><td>"+(key+1)+"</td><td>"+val._id+".</td><td>"+val.User.username+".</td><td>"+val.product.name+"</td><td>"+val.product.price+"</td></tr>";
+                  var pl=val.products.length;
+                  console.log(val.products.length);
+                  // data +="<tr><td>"+(key+1)+"</td><td>"+val._id+"</td><td>"+val.User[0].username+"</td><td>"+val.checkoutdata[0].firstname+"</td><td>"+val._id+"<hr>"+val._id+"</td></tr>";
+                  data +=`<tr>
+                  <td>`+(key+1)+`</td>
+                  <td colspan="4" rowspan=`+pl+`>`+val._id+`</td>
+                  <td colspan="4" rowspan=`+pl+`>`+val.User[0].username+`</td>
+                  <td colspan="4">`+val.checkoutdata[0].firstname+`</td>`;
+                 
+                  
+                  $.each(val.products, function(key1, val1) {
+                   
+                      data +=`<td>`+val1.Pname+`</td><td>`+val1.Pprice+`</td></tr>`;
+                    if(pl>1){
+                      data +=` <tr>
+                      <td>`+val1.Pname+`</td>
+                      <td>`+val1.Pprice+`</td>
+                      </tr>`;
+                    }
+                    
+                  });
+                
+
                   $('#tbody').append(data);
                   return data;
                   });

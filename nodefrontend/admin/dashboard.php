@@ -100,10 +100,11 @@
       <h2>Admin</h2>
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="#section1">Dashboard</a></li>
+        <li class=""><a href="http://localhost/nodefrontend/">Offer</a></li>
         <li><a href="http://localhost/nodefrontend/admin/productlist.php">Product List</a></li>
         <li><a href="http://localhost/nodefrontend/admin/orders.php">Order List</a></li>
         <li><a href="http://localhost/nodefrontend/admin/userlist.php">User List</a></li>
-        <li><a href="http://localhost/nodefrontend/admin/profile.php">My Account</a></li>
+        <!-- <li><a href="http://localhost/nodefrontend/admin/profile.php">My Account</a></li> -->
         <li onclick="logout()"><a href="javascript:void(0);">Logout</a></li>
       </ul><br>
     </div>
@@ -135,16 +136,23 @@
 
   </div>
 </div>
+<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
 
 </body>
 <script>
 
  $(window).on('load', function () {
+  $("#loader").show(); 
    console.log("window loaded");
    var accessToken =localStorage.getItem("accessToken");
    if(accessToken=="" || accessToken == null){
     window.location.href = "http://localhost/nodefrontend/login.php";
-   }else{
+   }
+   else{
+   var role=localStorage.getItem("role");
+            if(role!=1){             
+              window.location.href = "http://localhost/nodefrontend";             
+            }
     var accessToken =localStorage.getItem("accessToken");
     var accessTokenBearer ="Bearer "+accessToken;
     //usercount
@@ -185,7 +193,7 @@
      
     });
     var settings2 = {
-      "url": "http://localhost:5001/api/orders/getorderscount", //not working
+      "url": "http://localhost:5001/api/orders/getorderscount",
       "method": "GET",
       "timeout": 0,//{"Authorization": accessToken},
       "headers": {
@@ -197,6 +205,7 @@
       console.log(response.data);
       if(response.data!=""){
         $("#orderscount").text(response.data);
+        $("#loader").hide(); 
       }else{
         $("#orderscount").text("0");
       }

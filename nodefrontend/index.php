@@ -138,9 +138,10 @@ body {
   <a class="active" href="#home">Home</a>
   <a href="#about">About</a>
   <a href="#productlisting">Product</a>
-  <a href="javascript:void(0);"><i class="fa fa-shopping-cart" aria-hidden="true" id="cartproductcount"></i></a>
+  <a href="javascript:void(0);"><i class="fa fa-shopping-cart" aria-hidden="true" id="cartproductcount">0</i></a>
   <a href="http://localhost/nodefrontend/orders.php">Orders</a>
   <a href="http://localhost/nodefrontend/profile.php">My Account</a>
+  <a href="http://localhost/nodefrontend/admin/dashboard.php" id="admin" style="display:none;">Admin</a>
   <a href="javascript:void(0);" onclick="logout()">Logout</a>
   </div>
   </div>
@@ -281,8 +282,11 @@ body {
 </div>
 </div>
 </div>
+<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+
 <script>
          $(window).on('load', function () {  
+          $("#loader").show(); 
           var accessToken ="";
            accessToken=localStorage.getItem("accessToken");
            if(accessToken=="" || accessToken == null){
@@ -295,11 +299,17 @@ body {
              //login
              $('#notlogin').hide();
              $('#login').show();
-             var accessToken =userid="";
+             var accessToken =userid=role="";
             accessToken=localStorage.getItem("accessToken");
           
             var accessTokenBearer ="Bearer "+accessToken;
             userid=localStorage.getItem("userid");
+            role=localStorage.getItem("role");
+            if(role==1){             
+              $('#admin').show();              
+            }else{
+              $('#admin').hide();
+            }
              var settings1 = {
               "url": "http://localhost:5001/api/cart/add-to-cart-count",
               "method": "POST",
@@ -315,7 +325,12 @@ body {
 
             $.ajax(settings1).done(function (response) {
               //console.log(response);
-              $("#cartproductcount").text(response.cartproductcount);
+              if(response){
+                $("#cartproductcount").text(response.cartproductcount);
+              }else{
+                $("#cartproductcount").text("0");
+              }
+              
             });
 
            }
@@ -342,6 +357,7 @@ body {
                   return data;
                   });
                   $('.productlist').append(data);
+                  $("#loader").hide(); 
                }else{
                   $("#errormsg").text("Something went wrong please try again after sometime....");
                }
@@ -357,6 +373,8 @@ body {
             window.location.href = "http://localhost/nodefrontend/login.php";
           }
           $(document).on("click","#addtocart",function() {
+            $("#loader").show(); 
+            document.getElementById("addtocart").disabled = true;
             var accessToken =userid=pid="";
             accessToken=localStorage.getItem("accessToken");
           
@@ -389,6 +407,8 @@ body {
                  // console.log(response);
                   
                   $("#cartproductcount").text(response.cartproductcount);
+                  $("#loader").hide(); 
+                  document.getElementById("addtocart").disabled = false;
 
                 });
                 }

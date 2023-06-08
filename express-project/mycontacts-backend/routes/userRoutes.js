@@ -10,8 +10,9 @@ router.post("/login",loginUser);
 router.get("/current",validateToken ,currentUser);
 router.get("/" ,validateToken ,getUsers);
 router.get("/getuserscount" ,validateToken ,getUserscount);
-router.get("/profile" ,validateToken ,getUserdetails);
+router.post("/profile" ,validateToken ,getUserdetails);
 router.put("/profile" ,validateToken ,updateUserdetails);
+
 
 
 module.exports = router;
