@@ -251,7 +251,6 @@ function logout() {
                 $.ajax(settings).done(function (response) {
                  
                   if(response.data){        
-                    //console.log(response.data[0]);
                     if(response.data[0].paymentdata[0].type=="cod")  {     
                       $(".prevdatapayment").text("Cash On Delivery");
                       
@@ -262,17 +261,14 @@ function logout() {
                        $("#address2").text(response.data[0].checkoutdata[0].address2);
                        $("#phno").text(response.data[0].checkoutdata[0].phoneno);
 
-                     //console.log(response.data[0].checkoutdata[0].firstname,'response.data[0].checkoutdata[0]');
 
                     var i=1;
-                  ////console.log(response.data);
                   $.each(response.data[0].products, function(key, val) {
                   var data;
                   var Tprice; 
                   
                   Tprice=val.Pprice*val.Pcount;
                   
-                  //data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='addtocart' data-id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php/?id="+val._id+"'>Product details</a></button></p></div>";
                   data +='<tr><input type="hidden" class="products" name="products['+i+']" value="'+val.Pname+'_'+val.Pprice+'_'+val.Pcount+'"><td class="p-4"><div class="media align-items-center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-40 ui-bordered mr-4" alt=""><div class="media-body">'+val.Pname+'</div></div></td><td class="text-right font-weight-semibold align-middle p-4">$'+val.Pprice+'</td><td class="align-middle p-4">'+val.Pcount+'</td><td class="text-right font-weight-semibold align-middle p-4">$'+Tprice+'</td><td class="text-center align-middle px-0"></td></tr>';
                   $('.productlist').append(data);
                   

@@ -216,23 +216,39 @@ body {
   <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-              <th class="tg-0pky" rowspan="2">SL No</th>
-              <th class="tg-0pky" colspan="4" rowspan="2">Order ID</th>
-              <th class="tg-0pky" colspan="4" rowspan="2">Customer Details</th>
-              <th class="tg-0pky" rowspan="2">Product Name</th>
-              <th class="tg-0pky" rowspan="2">Product Price</th>         
+              <th class="tg-0pky" >SL No</th>
+              <th class="tg-0pky" >Order ID</th>
+              <th class="tg-0pky" >User Name</th>
+              <th class="tg-0pky" >Email</th>
+              <th class="tg-0pky" >Name</th>
+              <th class="tg-0pky" >Address</th>
+              <th class="tg-0pky" >Phone No</th>
+              <th class="tg-0pky" >Payment Type</th>
+              <th class="tg-0pky" >Product Name</th>
+              <th class="tg-0pky" >Product Price</th>  
+              <th class="tg-0pky" >Product Decription</th>   
+              <th class="tg-0pky" >Total Price</th>        
+       
             </tr>
         </thead>
         <tbody id="tbody">
 
         </tbody>
         <tfoot>
-            <tr>
-              <th class="tg-0pky" rowspan="2">SL No</th>
-              <th class="tg-0pky" colspan="4" rowspan="2">Order ID</th>
-              <th class="tg-0pky" colspan="4" rowspan="2">Customer Details</th>
-              <th class="tg-0pky" rowspan="2">Product Name</th>
-              <th class="tg-0pky" rowspan="2">Product Price</th>              
+        <tr>
+              <th class="tg-0pky" >SL No</th>
+              <th class="tg-0pky" >Order ID</th>
+              <th class="tg-0pky" >User Name</th>
+              <th class="tg-0pky" >Email</th>
+              <th class="tg-0pky" >Name</th>
+              <th class="tg-0pky" >Address</th>
+              <th class="tg-0pky" >Phone No</th>
+              <th class="tg-0pky" >Payment Type</th>
+              <th class="tg-0pky" >Product Name</th>
+              <th class="tg-0pky" >Product Price</th>  
+              <th class="tg-0pky" >Product Decription</th>   
+              <th class="tg-0pky" >Total Price</th>        
+       
             </tr>
         </tfoot>
     </table>
@@ -284,39 +300,39 @@ var table = $('#example').DataTable();
          
             $.ajax(settings).done(function (response) {
                if(response.data!=""){
-                  console.log(response.data);
-                  $.each(response.data, function(key, val) {
-                    // table.row.add([
-                    //     (key+1)
-                    //      val._id,
-                    //      val.User.username,
-                    //      val.product.name,
-                    //      val.product.price
-                    // ]).draw(false);
-                
-                  var data;
-                  var pl=val.products.length;
-                  console.log(val.products.length);
-                  // data +="<tr><td>"+(key+1)+"</td><td>"+val._id+"</td><td>"+val.User[0].username+"</td><td>"+val.checkoutdata[0].firstname+"</td><td>"+val._id+"<hr>"+val._id+"</td></tr>";
-                  data +=`<tr>
-                  <td>`+(key+1)+`</td>
-                  <td colspan="4" rowspan=`+pl+`>`+val._id+`</td>
-                  <td colspan="4" rowspan=`+pl+`>`+val.User[0].username+`</td>
-                  <td colspan="4">`+val.checkoutdata[0].firstname+`</td>`;
-                 
                   
-                  $.each(val.products, function(key1, val1) {
-                   
-                      data +=`<td>`+val1.Pname+`</td><td>`+val1.Pprice+`</td></tr>`;
-                    if(pl>1){
+                  $.each(response.data, function(key, val) {
+                  var total=0;               
+                  var data;
+                  
+                  var pl=val.products.length;
+                  data +=`<tr>
+                  <td rowspan=`+pl+`>`+(key+1)+`</td>
+                  <td rowspan=`+pl+`>`+val._id+`</td>
+                  <td rowspan=`+pl+`>`+val.User[0].username+`</td>
+                  <td rowspan=`+pl+`>`+val.User[0].email+`</td>
+                  <td rowspan=`+pl+`>`+val.checkoutdata[0].firstname+ ` `+val.checkoutdata[0].lastname+`</td>
+                  <td rowspan=`+pl+`>`+val.checkoutdata[0].address+`,`+val.checkoutdata[0].address2+`,` +val.checkoutdata[0].country+`,`+val.checkoutdata[0].state+`,`+val.checkoutdata[0].zip+`</td>
+                  <td rowspan=`+pl+`>`+val.checkoutdata[0].phoneno+`</td>
+                  <td rowspan=`+pl+`>`+val.paymentdata[key].type+`</td>`;
+                 
+                  $.each(val.products, function(key1, val1) {                 
+                    total+=val1.Pprice;
+                    
+                    if(key1>0){
+                      
                       data +=` <tr>
                       <td>`+val1.Pname+`</td>
                       <td>`+val1.Pprice+`</td>
+                      <td>`+val1.Pdescription+`</td>
                       </tr>`;
+                    }else{
+                      data +=`<td>`+val1.Pname+`</td><td>`+val1.Pprice+`</td><td>`+val1.Pdescription+`</td></tr>`;
                     }
-                    
+                    data +=`<tr><td rowspan=`+pl+`>`+total+`</td></tr>`;
                   });
-                
+                  console.log(total);
+                  
 
                   $('#tbody').append(data);
                   return data;

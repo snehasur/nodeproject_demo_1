@@ -32,6 +32,17 @@
             padding: 8px;
 
         }
+        #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
     </style>
 </head>
 
@@ -276,8 +287,9 @@
         <a href="http://localhost/nodefrontend/payment.php" class="paymentbtn" id="paymentbtn"><button type="button" >Go to payment</button></a>
 
     </main>
-    <img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
-
+    <div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>
     <!-- Footer -->
     <footer id="footer">
         <p class="copyright">Made with
@@ -319,7 +331,6 @@
               accessToken=localStorage.getItem("accessToken");
               var accessTokenBearer ="Bearer "+accessToken;
               userid=localStorage.getItem("userid");
-            //   ////console.log(firstname+lastname+address+address2+country+state+zip);
                 var settings = {
                   "url": "http://localhost:5001/api/checkout/getcheckout",
                   "method": "POST",
@@ -334,10 +345,8 @@
                 };
 
                 $.ajax(settings).done(function (response) {
-                  //console.log(response.data,"add");
  
                   if(response.data!=""){
-                  ////console.log(response.data);
                   
                   var data="";
                   $.each(response.data, function(key, val) {
@@ -380,7 +389,6 @@
             }else{
             var firstname=lastname=address=address2=country=state=zip="";
             firstname=$('#firstname').val();
-             //alert(firstname);
               if(firstname==''){
                 $('#firstnameerror').text("Please give firstname.");
                 return false;
@@ -388,7 +396,6 @@
                 $('#firstnameerror').text(" ");
               }
               lastname=$('#lastname').val();
-             // //alert(name);
               if(lastname==''){
                 $('#lastnameerror').text("Please give lastname.");
                 return false;
@@ -450,7 +457,6 @@
               accessToken=localStorage.getItem("accessToken");
               var accessTokenBearer ="Bearer "+accessToken;
               userid=localStorage.getItem("userid");
-            //   ////console.log(firstname+lastname+address+address2+country+state+zip);
                 var settings = {
                   "url": "http://localhost:5001/api/checkout/checkout",
                   "method": "POST",
@@ -473,10 +479,8 @@
                 };
 
                 $.ajax(settings).done(function (response) {
-                  ////console.log(response);
  
                   if(response.data!=""){
-                  ////console.log(response.data);
                   
                  
                   
@@ -506,13 +510,11 @@
                 window.location.href = "http://localhost/nodefrontend/login.php";
             }else{
           var id=$(this).val();
-          ////console.log(id);
           var accessToken =userid="";
               accessToken=localStorage.getItem("accessToken");
               var accessTokenBearer ="Bearer "+accessToken;
               userid=localStorage.getItem("userid");
               
-            //   ////console.log(firstname+lastname+address+address2+country+state+zip);
                 var settings = {
                   "url": "http://localhost:5001/api/checkout/defaultcheckout",
                   "method": "POST",
@@ -528,10 +530,8 @@
                 };
 
                 $.ajax(settings).done(function (response) {
-                  ////console.log(response);
  
                   if(response.data!=""){
-                  ////console.log(response.data);
                  
 
                 }else{

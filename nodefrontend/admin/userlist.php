@@ -11,6 +11,17 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <style>
+             #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
          body{
          background-color: #eee; 
          }
@@ -182,8 +193,9 @@
 
 </div>
 </div>
-<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
-
+<div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>
 
 
 
@@ -364,7 +376,6 @@
          
             $.ajax(settings).done(function (response) {
                if(response.data!=""){
-                  console.log(response.data);
                   $.each(response.data, function(key, val) {
                   var data;
                   data +="<tr><td>"+(key+1)+"</td><td>"+val.username+".</td><td>"+val.email+".</td><td>123456789</td><td>"+val.createdAt+"</td></tr>";

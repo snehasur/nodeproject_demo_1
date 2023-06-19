@@ -4,6 +4,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
+  #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
   /* Navbar */
 * {box-sizing: border-box;}
 
@@ -529,8 +540,9 @@ section {
       </div>
    </div>
 </section>
-<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
-
+<div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
@@ -553,7 +565,6 @@ section {
             //product details
             var urlParams = new URLSearchParams(window.location.search);
             var id=urlParams.get('id');
-           // //console.log(id);
             var settings = {
               "url": "http://localhost:5001/api/products/productdetails/"+id,
               "method": "GET",
@@ -562,7 +573,6 @@ section {
             };
          
             $.ajax(settings).done(function (response) {
-             // //console.log(response.data.name);
               if(response.data!=""){
                 $("#name").text(response.data.name);
                 $("#description").text(response.data.description);
@@ -577,9 +587,7 @@ section {
               if(response.message!="" && response.status=="error"){
                 $("#errormsg").text(response.message);
               }
-              // else{
-              //   $("#errormsg").text("Something went wrong please try again after sometime....");
-              // }
+           
                    
                 
               });
@@ -603,7 +611,6 @@ section {
             };
 
             $.ajax(settings1).done(function (response) {
-              //console.log(response);
               $("#cartproductcount").text(response.cartproductcount);
             });
 
@@ -620,9 +627,7 @@ section {
           }
          
 
-        //  $(document).ready(function() {  
-               // $('#buynow').submit(function(){
-                    ////console.log("11111111111");
+      
 
                $(document).on("click","#buynow",function() {
                 $("#loader").show(); 
@@ -633,45 +638,13 @@ section {
                 var accessTokenBearer ="Bearer "+accessToken;
                 var pid=$(this).attr("data_id");
                 userid=localStorage.getItem("userid");
-                ////console.log(pid+"pid");
-                ////console.log(userid+"userid");
+                
                 if(accessToken=="" || accessToken == null){
                     window.location.href = "http://localhost/nodefrontend/login.php";
                 }else{    
                 
             
-                /*previous single buy*/ 
-                //   var settings1 = {
-                //     "url": "http://localhost:5001/api/orders/",
-                //     "method": "POST",
-                //     "timeout": 0,
-                //     "headers": {
-                //         "Authorization": accessTokenBearer
-                //     },
-                //     "dataType": "json",
-                //     "contentType": "application/json",
-                //     "data": JSON.stringify({
-                //               "productid":pid,
-                //               "userid":userid
-                             
-                //             }),
-                //   };
-               
-                //   $.ajax(settings1).done(function (response) {
-
-                //      if(response.data!=""){                        
-                //         $("#successmsg").text("Ordered Successfully...");
-                //         setTimeout(function() { 
-                //         $("#successmsg").hide();               
-                //        window.location.href = "http://localhost/nodefrontend/thank-you.php/?orderid="+response.data._id;
-                //         },
-                //         5000);
-                //      }else{
-                //         $("#errormsg").text("Something went wrong please try again after sometime....");
-                //      }        
                 
-                //   });
-                /*previous single buy*/ 
                 var settings = {
                   "url": "http://localhost:5001/api/cart/add-to-cart",
                   "method": "POST",
@@ -693,12 +666,12 @@ section {
 
 
             }
-            //return false;
+            
                 });
 
 
 
-        //   }); 
+        
         $(document).on("click","#cartproductcount",function() {
             var accessToken =userid="";
             accessToken=localStorage.getItem("accessToken");

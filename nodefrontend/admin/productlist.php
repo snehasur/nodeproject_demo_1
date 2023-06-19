@@ -6,12 +6,28 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-      <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-      <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <!-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+      <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       
       <style>
+         .delete{
+            cursor: pointer;
+
+         }
+             #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
          body{
          background-color: #eee; 
          }
@@ -183,8 +199,9 @@
 
   </div>
 </div>
-<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
-     
+<div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>     
       <!-- 		End of Container -->
       <!--  Developed By Yasser Mas -->
       <script>
@@ -363,10 +380,9 @@
          
             $.ajax(settings).done(function (response) {
                if(response.data!=""){
-                  console.log(response.data);
                   $.each(response.data, function(key, val) {
                   var data;
-                  data +="<tr><td>"+(key+1)+"</td><td>"+val.name+".</td><td>"+val.image+".</td><td>"+val.price+"</td><td><a href='http://localhost/nodefrontend/admin/product-edit.php?id="+val._id+"'>E<i class='fas fa-edit' data-attr='"+val._id+"' cl></i></a><i class='fas fa-trash delete' data_id='"+val._id+"' ></i></td></tr>";
+                  data +="<tr><td>"+(key+1)+"</td><td>"+val.name+".</td><td>"+val.image+".</td><td>"+val.price+"</td><td><a href='http://localhost/nodefrontend/admin/product-edit.php?id="+val._id+"'><i class='fas fa-edit' data-attr='"+val._id+"' cl></i></a><i class='fas fa-trash delete' data_id='"+val._id+"' ></i></td></tr>";
                   $('#tbody').append(data);
                   return data;
                   });
@@ -395,7 +411,6 @@
                
                   $.ajax(settings1).done(function (response) {
                      if(response.data!=""){
-                        console.log(response.data);
                         $("#successmsg").text("Product Delete Successfully...");
                         setTimeout(function() { 
                         $("#successmsg").hide();               

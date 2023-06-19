@@ -6,14 +6,12 @@ const Contact = require("../models/contactModel");
 const getContacts = asyncHandler (async (req,res)=>{
     const contacts =await Contact.find({user_id:req.user.id});
 
-    //res.status(200).json({message:"Get all contacts"});
     res.status(200).json({message:contacts});
 });
 //@desc Create new contact
 //@route POST /api/contacts
 //@access private
 const createtContact = asyncHandler (async (req,res)=>{
-    //console.log("The request body is",req.body);
     const {name,email,phone}=req.body;
     if(!name || !email || !phone){
         res.status(400);
@@ -25,7 +23,6 @@ const createtContact = asyncHandler (async (req,res)=>{
         phone,
         user_id:req.user.id
     });
-    //res.status(200).json({message:"Create contacts"});
     res.status(200).json(contact);
 });
 //@desc Get contact
@@ -39,12 +36,9 @@ const getContact = asyncHandler (async (req,res)=>{
     }
     if(contact.user_id.toString() !==req.user.id){
 
-        //console.log(contact.user_id.toString());
-        //console.log(req.user.id);
         req.status(403);
         throw new Error("User don't have permission to update other user contacts");
     }
-    //res.status(200).json({message:`Get contact for ${req.params.id}`});
     res.status(200).json(contact);
 });
 
@@ -67,7 +61,6 @@ const updateContact = asyncHandler ( async (req,res)=>{
         req.params.id,
         req.body,{new:true}
     );
-    //res.status(200).json({message:`Update contact for ${req.params.id}`});
     res.status(200).json(updateContact);
 
 });
@@ -87,7 +80,6 @@ const deleteContact = asyncHandler( async (req,res)=>{
         throw new Error("User don't have permission to update other user contacts");
     }
     await Contact.deleteOne({_id:req.params.id});
-    //res.status(200).json({message:`Delete contact for ${req.params.id}` });
     res.status(200).json(contact);
 });
 

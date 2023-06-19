@@ -6,6 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+    #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
     body{
     margin-top:20px;
     background:#eee;
@@ -84,8 +95,9 @@
           </div>
       </div>
   </div>
-  <img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
-
+  <div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>
   <script>
     $(window).on('load', function () {
       var accessToken =userid="";
@@ -96,11 +108,9 @@
             userid=localStorage.getItem("userid");
             
             if(accessToken=="" || accessToken == null){
-              ////alert("1");
                 window.location.href = "http://localhost/nodefrontend/login.php";
             }else{   
-             // //alert("3");
-            //console.log(userid+"userid");
+
 
 
                 var settings = {
@@ -116,16 +126,13 @@
                 };
 
                 $.ajax(settings).done(function (response) {
-                  //console.log(response);
                   var totalprice=0;
                   if(response.data!=""){
-                  //console.log(response.data);
                   $.each(response.data, function(key, val) {
                   var data;
                   var Tprice;
                   Tprice=val.Pprice*val.Pcount;
                   
-                  //data +="<div class='card'><img src='"+val.image+"' style='width:100%'><h1 id='name'>"+val.name+"</h1><p class='price'>"+val.price+"</p><p id='description'>"+val.description+"</p><p><button id='addtocart' data-id='"+val._id+"' >Add to Cart</button></p><p><button id='"+val._id+"'><a href='http://localhost/nodefrontend/product-details.php/?id="+val._id+"'>Product details</a></button></p></div>";
                   data +='<tr><td class="p-4"><div class="media align-items-center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-40 ui-bordered mr-4" alt=""><div class="media-body">'+val.Pname+'</div></div></td><td class="text-right font-weight-semibold align-middle p-4">$'+val.Pprice+'</td><td class="align-middle p-4">'+val.Pcount+'</td><td class="text-right font-weight-semibold align-middle p-4">$'+Tprice+'</td><td class="text-center align-middle px-0"><a href="javascript:void(0);" class="shop-tooltip close float-none text-danger removecartone" title="" data-original-title="Remove" pid="'+val.Pid+'" pprice="'+Tprice+'" cartid="'+val.cartid+'" userid="'+val.userid+'">×</a></td></tr>';
                   $('.productlist').append(data);
                   
@@ -161,7 +168,6 @@
             };
 
             $.ajax(settings1).done(function (response) {
-              //console.log(response);
               if(response.cartproductcount==0){               
                 $("#checkout").prop('disabled', true);
                 } else {
@@ -203,8 +209,7 @@
             }else{  
               pid=$(this).attr("pid");
               cartid=$(this).attr("cartid");
-              ////console.log(pid);
-             // //console.log(cartid);
+
               var settings = {
                 "url": "http://localhost:5001/api/cart/deleteone-add-to-cart",
                 "method": "POST",
@@ -219,8 +224,7 @@
               };
 
               $.ajax(settings).done(function (response) {
-                //console.log(response);
-                //console.log($(this));
+
                 
                 var oldprice=$('#totalprice').text();
                 var currentprice=$(_this).attr('pprice');

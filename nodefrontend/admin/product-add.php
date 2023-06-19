@@ -89,8 +89,20 @@
    .dropdown:hover .dropdown-content {
    display: block;
    }
+   /* nav */
+   #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
    </style>
-      <!-- nav -->
+      
 </head>
 <body>
 <div class="container-fluid">
@@ -164,7 +176,9 @@
   </div> <!-- form-group // -->
 </form>
 <br>
-               <span id="successmsg"></span>
+          <div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>     <span id="successmsg"></span>
                <span id="error"></span>
 </div><!-- panel-body // -->
 </section><!-- panel// -->
@@ -174,16 +188,13 @@
 </div>
   
 </div> <!-- container// -->
-<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
 
       <script>
          $(window).on('load', function () {
            var accessToken=userid ="";
            accessToken=localStorage.getItem("accessToken");
            userid =localStorage.getItem("userid");
-           console.log(userid);
            var accessTokenBearer ="Bearer "+accessToken;
-           console.log(accessTokenBearer);
            if(accessToken=="" || accessToken == null){
             window.location.href = "http://localhost/nodefrontend/login.php";
            }
@@ -218,7 +229,6 @@
                        $('#priceerror').text(" ");
                      }
                      
-                     //description=;
                      if($("textarea#description").val().length==0){
                        $('#descriptionerror').text("Please give description.");
                        return false;
@@ -233,11 +243,9 @@
           "headers": {
             "Authorization": accessTokenBearer
             },
-          //"processData": false,
           "dataType": "json",
           "mimeType": "multipart/form-data",
           "contentType": "application/json",
-          //"contentType": false,
           "data": JSON.stringify({
                               "name":name,
                               "price":price,
@@ -249,7 +257,6 @@
          };
          
          $.ajax(settings1).done(function (response) {
-          console.log(response);
           if(response.data!=""){
             $("#successmsg").text("Product Added Successfully...");
             setTimeout(function() { 
@@ -261,9 +268,7 @@
          if(response.message!="" && response.status=="error"){
                 $("#errormsg").text(response.message);
               }
-          // else{
-          //   $("#errormsg").text("Something went wrong please try again after sometime....");
-          // }
+          
          });
            });
          

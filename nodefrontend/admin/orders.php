@@ -37,6 +37,17 @@
     }
   </style>
   <style>
+        #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
    body {
    font-family: Arial, Helvetica, sans-serif;
    }
@@ -155,8 +166,9 @@
 
 </div>
 </div>
-<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
-
+<div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>
 <script>
 //   $(document).ready(function () {
 //     $('#example').DataTable();
@@ -201,7 +213,6 @@ var table = $('#example').DataTable();
          
             $.ajax(settings).done(function (response) {
                if(response.data!=""){
-                  console.log(response.data);
                   $.each(response.data, function(key, val) {
                     // table.row.add([
                     //     (key+1)

@@ -10,6 +10,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
+        #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 550px}
     
@@ -136,8 +147,9 @@
 
   </div>
 </div>
-<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
-
+<div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>
 </body>
 <script>
 
@@ -166,7 +178,6 @@
     };
 
     $.ajax(settings).done(function (response) {
-      console.log(response.data);     
       
       if(response.data!=""){
         $("#usercount").text(response.data);
@@ -184,7 +195,6 @@
     };
 
     $.ajax(settings1).done(function (response) {
-      console.log(response.data);
       if(response.data!=""){
         $("#productcount").text(response.data);
       }else{
@@ -202,7 +212,6 @@
     };
 
     $.ajax(settings2).done(function (response) {
-      console.log(response.data);
       if(response.data!=""){
         $("#orderscount").text(response.data);
         $("#loader").hide(); 

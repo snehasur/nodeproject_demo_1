@@ -143,7 +143,6 @@ button:hover {
                       "password":password 
                     }),
               success:function(result){
-                  //console.log(result.email);
                   $("#successmsg").text("User Login Successfully");
                   setTimeout(function() { $("#successmsg").hide(); }, 5000);
 
@@ -161,7 +160,6 @@ button:hover {
                   if(result.role==2){
                     //redirect for customer
                      window.location.href = "http://localhost/nodefrontend/";
-                     //history.back()
 
 
                   }
@@ -170,11 +168,9 @@ button:hover {
 
               },
               error: function(e) {
-                //console.log(e.status);
                 if(e.status==400){
 
                   $('#error').text("All fields are mandetory");
-                  //console.log("All fields are mandetory");
                   return false;              
                 }
                 else{

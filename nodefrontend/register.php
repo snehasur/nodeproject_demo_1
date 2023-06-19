@@ -183,7 +183,7 @@ button:hover {
                 if(e.status==400){
 
                   $('#error').text("All fields are mandetory");
-                  //console.log("All fields are mandetory");
+
                   return false;              
                 }
                 else{
@@ -192,7 +192,7 @@ button:hover {
                 if(e.status==404){
 
                   $('#error').text("User already registrated");
-                  //console.log("User already registrated");
+
                   return false;              
                   }
                   else{

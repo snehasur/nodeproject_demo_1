@@ -9,8 +9,20 @@
       <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-       <!-- nav -->
+       
    <style>
+    #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+     /* nav */
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 550px}
     
@@ -320,8 +332,9 @@ body {
     </div>
 
 </div>
-<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
-
+<div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>
       <script>
          $(window).on('load', function () {
            var accessToken =_id="";
@@ -349,7 +362,6 @@ body {
             };
          
             $.ajax(settings).done(function (response) {
-              //console.log(response.data[0]);
               if(response.data!=""){
                 $("#username").val(response.data[0].username);
                 $("#email").val(response.data[0].email);
@@ -367,9 +379,7 @@ body {
               if(response.message!="" && response.status=="error"){
                 $("#errormsg").text(response.message);
               }
-              // else{
-              //   $("#errormsg").text("Something went wrong please try again after sometime....");
-              // }
+             
                    
                 
               });
@@ -411,12 +421,7 @@ body {
               }        
                    
               address2=$('#address2').val();
-              // if(address2==''){
-              //   $('#address2error').text("Please give address2.");
-              //   return false;
-              // }else{
-              //   $('#address2error').text(" ");
-              // }       
+                 
             country= $("#country").val();
               if(country==''){
                 $('#countryerror').text("Please give country.");
@@ -481,22 +486,18 @@ body {
          };
          
          $.ajax(settings1).done(function (response) {
-          //console.log(response);
           if(response.data!=""){
             $("#successmsg").text("Profile Update Successfully...");
             $("#loader").hide(); 
             setTimeout(function() { 
               $("#successmsg").hide();               
-              //window.location.href = "http://localhost/nodefrontend/profile.php";
             },
             5000);
           }
          if(response.message!="" && response.status=="error"){
                 $("#errormsg").text(response.message);
               }
-          // else{
-          //   $("#errormsg").text("Something went wrong please try again after sometime....");
-          // }
+        
          });
            });
           });

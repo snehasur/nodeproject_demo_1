@@ -11,6 +11,17 @@
     .disable{
         pointer-events:none;
     }
+    #loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
   </style>
 </head>
 <body>
@@ -69,8 +80,9 @@
 </div>
 <button class="btn btn-primary btn-lg btn-block " id="payment" type="button">Payment Now</button>
 </form>
-<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
-
+<div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>
 <script>
         $(document).on("click","#payment",function() {
           $("#loader").show(); 
@@ -88,13 +100,11 @@
                 window.location.href = "http://localhost/nodefrontend/login.php";
             }else{
           var type=$('.paymenttype:checked').val();
-          //console.log(type);
           var accessToken =userid="";
               accessToken=localStorage.getItem("accessToken");
               var accessTokenBearer ="Bearer "+accessToken;
               userid=localStorage.getItem("userid");
               
-            //   //console.log(firstname+lastname+address+address2+country+state+zip);
                 var settings = {
                   "url": "http://localhost:5001/api/payment/add",
                   "method": "POST",
@@ -111,11 +121,9 @@
 
                 $.ajax(settings).done(function (response) {
                   
-                  //console.log(response);
  
                   if(response.data!=""){
-                  //console.log(response.data);
-                  //window.location.href = "http://localhost/nodefrontend/order.php";
+                 
                   var settings = {
                 "url": "http://localhost:5001/api/orders/createordernew",
                 "method": "POST",
@@ -130,7 +138,6 @@
 
               $.ajax(settings).done(function (response) { 
                  
-                //console.log(response.data._id);      
                 if(response.data!=""){
                     window.location.href = "http://localhost/nodefrontend/thank-you.php/?orderid="+response.data._id;
                 }

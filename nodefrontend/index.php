@@ -120,6 +120,17 @@ body {
     font-family: arial;
     margin: 0 10px;
 }
+#loader{
+  position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
@@ -282,7 +293,9 @@ body {
 </div>
 </div>
 </div>
-<img style="display:none;" id="loader" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+<div style="display:none;" id="loader">
+<img  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" width="200" height="200">
+</div>
 
 <script>
          $(window).on('load', function () {  
@@ -324,7 +337,6 @@ body {
             };
 
             $.ajax(settings1).done(function (response) {
-              //console.log(response);
               if(response){
                 $("#cartproductcount").text(response.cartproductcount);
               }else{
@@ -343,7 +355,6 @@ body {
          
             $.ajax(settings).done(function (response) {
                if(response.data!=""){
-                  //console.log(response.data);
                   var data="";
                   $.each(response.data, function(key, val) {
                   
@@ -385,8 +396,6 @@ body {
             if(accessToken=="" || accessToken == null){
                 window.location.href = "http://localhost/nodefrontend/login.php";
             }else{   
-              //console.log(pid+"pid");
-            //console.log(userid+"userid");
 
 
 
@@ -404,7 +413,6 @@ body {
                 };
 
                 $.ajax(settings).done(function (response) {
-                 // console.log(response);
                   
                   $("#cartproductcount").text(response.cartproductcount);
                   $("#loader").hide(); 
@@ -424,27 +432,9 @@ body {
             if(accessToken=="" || accessToken == null){
                 window.location.href = "http://localhost/nodefrontend/login.php";
             }else{   
-            //console.log(userid+"userid");
 
               window.location.href = "http://localhost/nodefrontend/add-to-cart.php";
 
-                // var settings = {
-                //   "url": "http://localhost:5001/api/cart/all-add-to-cart",
-                //   "method": "POST",
-                //   "timeout": 0,
-                //   "headers": {
-                //     "Content-Type": "application/json",
-                //     "Authorization": accessTokenBearer                },
-                //   "data": JSON.stringify({
-                //             "userid":userid
-                //   }),
-                // };
-
-                // $.ajax(settings).done(function (response) {
-                //   //console.log(response);
-                  
-
-                // });
                 }
           });
       </script>

@@ -18,14 +18,12 @@ const data =await Checkout.find({User:userid});
 //@route POST /api/checkout/checkout
 //@access private
 const create = asyncHandler (async (req,res,next)=>{
-    //console.log("The request body is",req.body);
     var status;
     const {userid,firstname,lastname,address,address2,country,state,zip,phoneno}=req.body;
     if(!userid || !firstname || !lastname || !address  || !country || !state || !zip || ! phoneno){
         res.status(400).json({message:"All fields are mandetory",status:"error"});
         throw new Error("All fields are mandetory")
     }else{
-       // //console.log("r");
      //   const hasuser =await Checkout.find({User:userid});
     // if(hasuser.length <= 0){
     //     status=1;
@@ -39,7 +37,6 @@ const create = asyncHandler (async (req,res,next)=>{
           new: true
         });
    // }
-    ////console.log(hasuser,'hasuser');
     const checkout = await Checkout.create({
         User: userid,
         firstname: firstname,
@@ -52,7 +49,6 @@ const create = asyncHandler (async (req,res,next)=>{
         phoneno:phoneno,
         status:1
     });
-    //console.log(checkout);
     res.status(200).json({data:checkout,message:"success",status:"success"});
     res.end();
     }
@@ -65,7 +61,6 @@ const create = asyncHandler (async (req,res,next)=>{
 //@route POST /api/checkout/defaultcheckout
 //@access private
 const defaultcheckout = asyncHandler (async (req,res,next)=>{
-    //console.log("The request body is",req.body);
     var status;
     const {id,userid}=req.body;
     if(!id || !userid){
@@ -82,7 +77,6 @@ const defaultcheckout = asyncHandler (async (req,res,next)=>{
           new: true
         });
 
-       //console.log(updatedata,"updatedata");
         const filter1 = { _id: id};
         const update1 = { status: 1 };
         
@@ -91,7 +85,6 @@ const defaultcheckout = asyncHandler (async (req,res,next)=>{
           new: true
         });
   
-    //console.log(updatedata1);
     res.status(200).json({data:updatedata1,message:"success",status:"success"});
     res.end();
     }
@@ -102,7 +95,6 @@ const defaultcheckout = asyncHandler (async (req,res,next)=>{
 //@route POST /api/checkout/defaultcheckout
 //@access private
 const getdefaultcheckout = asyncHandler (async (req,res,next)=>{
-    //console.log("The request body is",req.body);
     const {id,userid}=req.body;
     if(!userid){
         res.status(400).json({message:"All fields are mandetory",status:"error"});
@@ -111,7 +103,6 @@ const getdefaultcheckout = asyncHandler (async (req,res,next)=>{
         const data =await Checkout.find({User:userid,status:1});
 
       
-    //console.log(data);
     res.status(200).json({data:data,message:"success",status:"success"});
     res.end();
     }

@@ -9,7 +9,6 @@ const addtocartproduct = asyncHandler (async (req,res)=>{
     const {userid,productid}=req.body;
 
     const hasuser =await Addtocart.find({User:userid,status:1});
-    ////console.log(hasuser);
     if(hasuser.length <= 0){
 
         const products = await Addtocart.create({
@@ -18,18 +17,15 @@ const addtocartproduct = asyncHandler (async (req,res)=>{
             status:1
         });
         const cartproductcount=products.product.split("-").length;    
-        console.log(cartproductcount); 
         res.status(200).json({data:products,cartproductcount:cartproductcount,message:"success",status:"success"});
         res.end();
     }else{
         const prevproduct=hasuser[0].product;
-       // //console.log(prevproduct,'prevproduct');
         if(prevproduct!=""){
            var newproduct= prevproduct.concat("-",productid );
         }else{
           var newproduct= productid;
         }
-        ////console.log(newproduct,'newproduct');
         const filter = { User: userid,status:1};
         const update = { product: newproduct };
         
@@ -37,9 +33,7 @@ const addtocartproduct = asyncHandler (async (req,res)=>{
         const products = await Addtocart.findOneAndUpdate(filter, update, {
           new: true
         });
-        ////console.log(products.product);
         const cartproductcount=products.product.split("-").length;    
-        console.log(cartproductcount);   
         res.status(200).json({data:products,cartproductcount:cartproductcount,message:"success",status:"success"});
         res.end();
       
@@ -57,12 +51,10 @@ const addtocartProducts = asyncHandler (async (req,res)=>{
 
     const products =await Addtocart.find({User:userid,status:1});
     const cartproduct=products[0].product.split("-");
-    //console.log(cartproduct,'cartproduct');
 
 
     const counts = {};
     cartproduct.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
-   // //console.log(counts);
 
 
 
@@ -70,7 +62,6 @@ const addtocartProducts = asyncHandler (async (req,res)=>{
 
 
     for (const [key, value] of Object.entries(counts)) {
-     // //console.log(key, value);
       const productall = await Product.findById(key);
       cartdata ={
         cartid:products[0]._id.toString(),
@@ -85,7 +76,6 @@ const addtocartProducts = asyncHandler (async (req,res)=>{
       cartdataall.push(cartdata);  
     }
 
-    ////console.log(cartdataall,'cartdataall');  
 
     res.status(200).json({data:cartdataall});
 });
@@ -97,14 +87,12 @@ const addtocartproductcount = asyncHandler (async (req,res)=>{
         const {userid}=req.body;
         var cartproductcount=0
         const products =await Addtocart.find({User:userid,status:1}); 
-        //console.log("products[0].product",products[0].product); 
         if(products){
           cartproductcount=products[0].product.split("-").length;   
         }else{
           cartproductcount=0;
         }
          
-        //console.log(cartproductcount,"cartcount");   
         res.status(200).json({cartproductcount:cartproductcount,message:"success",status:"success"});
         res.end();
        
@@ -117,24 +105,19 @@ const addtocartproductcount = asyncHandler (async (req,res)=>{
 //@access privte
 const deleteonefromcartProducts = asyncHandler (async (req,res)=>{
   const {cartid,pid}=req.body;
-  ////console.log(pid,'pid');
   var cartdataall= [];
   const products =await Addtocart.findById(cartid);  
-  ////console.log(products.product,'oldproduct');
 
 
   const cartproduct=products.product.split("-");
-  ////console.log(cartproduct,'split oldproduct');
 
 
   const counts = {};
   cartproduct.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
- // //console.log(counts);
 
  
  var updatedcart= delete counts[pid]; 
  var newkey=[];
- ////console.log(counts,'after delete');
 
 var str = "";
 
@@ -148,14 +131,12 @@ var str = "";
  }
  var updatedcartproduct=str.substring(0, str.length-1);
 // var updatedcartproducts = updatedcartproduct[0].substring(1);
-// //console.log(updatedcartproduct[0],'delete -');
 
  const filter = { _id: cartid};
  const update = { product: updatedcartproduct };
  const cart = await Addtocart.findOneAndUpdate(filter, update, {
         new: true
       });
- //console.log(updatedcartproduct,'-delete');
      
   res.status(200).json({data:cart,message:"success",status:"success"});
   res.end();

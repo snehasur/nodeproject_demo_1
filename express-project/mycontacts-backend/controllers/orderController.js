@@ -22,14 +22,10 @@ const orders =await Ordernew.find();
 ///get order count
 const getordersnew = asyncHandler (async (req,res,next)=>{       
     if(req.user.role!==1){
-        //console.log("User don't have permission.");
-        // res.status(403);
         res.status(403).json({message:"User don't have permission to update other user orders.",status:"error"});
-       // throw new Error("User don't have permission.");//not working
        res.end();
     }else{
           const orders =await Ordernew.find().count();
-          //console.log(orders);
           res.setHeader('Content-Type', 'application/json');
           res.status(200).json({data:orders,message:"success"});
           res.end();
@@ -40,7 +36,6 @@ const getordersnew = asyncHandler (async (req,res,next)=>{
 //@route POST /api/orders
 //@access private
 const createorder = asyncHandler (async (req,res,next)=>{
-    //console.log("The request body is",req.body);
     const {userid,productid}=req.body;
     // if(!name || !price || !description){
     //     res.status(400).json({message:"All fields are mandetory",status:"error"});
@@ -50,7 +45,6 @@ const createorder = asyncHandler (async (req,res,next)=>{
         User: userid,
         product: productid
     });
-    //console.log(order);
     //res.status(200).json({message:"Create orders"});
     res.status(200).json({data:order,message:"success",status:"success"});
     res.end();
@@ -66,11 +60,6 @@ const getorder = asyncHandler (async (req,res)=>{
         throw new Error("order not found");
     }
     if(order.user_id.toString() !==req.user.id){
-
-        //console.log(order.user_id.toString());
-        //console.log(req.user.id);
-        //console.log("User don't have permission to update other user orders");
-        // res.status(403);
         res.status(403).json({message:"User don't have permission.",status:"error"});
         throw new Error("User don't have permission to update other user orders");//not working
     }else{
@@ -84,7 +73,6 @@ const getorder = asyncHandler (async (req,res)=>{
 //@route Put /api/orders/:id
 //@access private
 const updateorder = asyncHandler ( async (req,res)=>{
-    //console.log(req.body);
     const order = await order.findById(req.params.id);
     if(!order){
         res.status(404).json({message:"order not found",status:"error"});
@@ -92,8 +80,6 @@ const updateorder = asyncHandler ( async (req,res)=>{
     }
 
     if(order.user_id.toString() !==req.user.id){
-        // res.status(403);
-        //console.log("User don't have permission to update other user orders");
         res.status(403).json({message:"User don't have permission.",status:"error"});
         throw new Error("User don't have permission to update other user orders");//not working
     }
@@ -117,11 +103,9 @@ const deleteorder = asyncHandler( async (req,res)=>{
     }
     if(order.user_id.toString() !==req.user.id){
         res.status(403).json({message:"User don't have permission to update other user orders.",status:"error"});
-        //console.log("User don't have permission to update other user orders");
         throw new Error("User don't have permission to update other user orders");
     }
     await order.deleteOne({_id:req.params.id});
-    //res.status(200).json({message:`Delete order for ${req.params.id}` });
     res.status(200).json({data:order,message:"success"});
 });
 
@@ -129,16 +113,11 @@ const deleteorder = asyncHandler( async (req,res)=>{
 //@route Get /api/orders/getordercount
 //@access private
 const getorderscount = asyncHandler (async (req,res,next)=>{ //not working
-    //console.log("jkjkjj");
     if(req.user.role!==1){
-        //console.log("User don't have permission.");
-        // res.status(403);
         res.status(403).json({message:"User don't have permission to update other user orders.",status:"error"});
-       // throw new Error("User don't have permission.");//not working
        res.end();
     }else{
           const orders =await Ordernew.find().count();
-          //console.log(orders);
           res.setHeader('Content-Type', 'application/json');
           res.status(200).json({data:orders,message:"success"});
           res.end();
@@ -151,11 +130,7 @@ const getorderscount = asyncHandler (async (req,res,next)=>{ //not working
 //@access private
 const getordersFrontend = asyncHandler (async (req,res)=>{
    
-    //const orders =await Order.find({User:req.user.id}).populate('User').populate('product');
     const orders =await Ordernew.find({userid:req.user.id});
-    console.log(req.user.id);
-    console.log(orders,"ooooooooooooooooooooo");
-    //res.status(200).json({message:"Get all orders"});
     res.status(200).json({data:orders,message:"success"});
     res.end();
 });
@@ -164,7 +139,6 @@ const getordersFrontend = asyncHandler (async (req,res)=>{
 //@route Get /api/orders/orderdetails/:id
 //@access public
 const getorderdetailsFrontend = asyncHandler (async (req,res)=>{
-    //console.log(req.params.id);
     const order = await Order.findById(req.params.id);
     if(!order){
         res.status(404);
@@ -173,7 +147,6 @@ const getorderdetailsFrontend = asyncHandler (async (req,res)=>{
     res.status(200).json({data:order,message:"success"});
 });
 const getneworder = (req,res)=>{
-    //console.log("jhjhhj");
     
 };
 // new //////////
@@ -181,7 +154,6 @@ const getneworder = (req,res)=>{
 //@route POST /api/orders/createordernew
 //@access private
 const createordernew = asyncHandler (async (req,res,next)=>{
-    //console.log("The request body is",req.body);
     const {userid}=req.body;
     var cartdataall = [];
     if(!userid){
@@ -199,12 +171,10 @@ const createordernew = asyncHandler (async (req,res,next)=>{
     
     const products =await Addtocart.find({User:userid,status:1});
     const cartproduct=products[0].product.split("-");
-   // //console.log(cartproduct);
 
 
     const counts = {};
     cartproduct.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
-    //console.log('userdata',userdata);
 
 
 
@@ -212,7 +182,6 @@ const createordernew = asyncHandler (async (req,res,next)=>{
 
 
     for (const [key, value] of Object.entries(counts)) {
-      ////console.log(key, value);
       const productall = await Product.findById(key);
       cartdata ={
         userid:products[0].User,
@@ -226,7 +195,6 @@ const createordernew = asyncHandler (async (req,res,next)=>{
       cartdataall.push(cartdata);  
     }
 
-    console.log(userdata[0]._id,"userdata");  
         const order = await Ordernew.create({
         userid:userdata[0]._id.toString(),
         User: userdata,
@@ -254,7 +222,6 @@ const createordernew = asyncHandler (async (req,res,next)=>{
 });
 const getorderrecent = asyncHandler (async (req,res,next)=>{
     const {orderid}=req.body;
-    ////console.log('id', orderid);
     const orders =await Ordernew.find({_id:orderid});    
     res.status(200).json({data:orders,message:"success",status:"success"});
     res.end();

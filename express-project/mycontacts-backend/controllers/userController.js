@@ -23,14 +23,12 @@ const registerUser = asyncHandler (async (req,res)=>{
     }
     //Hash password
     const hashedPassword =  await bcrypt.hash(password, 10);
-    //console.log("Hash password",hashedPassword);
     const user = await User.create({
         username,
         email,
         password:hashedPassword,
         role:2
     });
-    //console.log(`User created ${user}`);
     if(user){
         res.status(201).json({_id:user.id,email:user.email});
     }else{
@@ -84,10 +82,7 @@ const currentUser = asyncHandler (async (req,res)=>{
 //@access private
 const getUsers = asyncHandler (async (req,res)=>{
     
-    //console.log(req.user.role);
     if(req.user.role!==1){
-        //console.log("User don't have permission.");
-        //res.status(403);
         res.status(403).json({message:"User don't have permission to update other user products.",status:"error"});
         throw new Error("User don't have permission.");//not working
     }
@@ -98,11 +93,8 @@ const getUsers = asyncHandler (async (req,res)=>{
 //@route Get /api/getuserscount
 //@access private
 const getUserscount = asyncHandler (async (req,res)=>{
-    //console.log(req.user.role);
     if(req.user.role!==1){
-        //console.log("User don't have permission.");
         res.status(403).json({message:"User don't have permission to update other user products.",status:"error"});
-        //res.status(403);
         throw new Error("User don't have permission.");//not working
     }else{
         const users =await User.find({role:2}).count();  
@@ -129,7 +121,6 @@ const getUserdetails= asyncHandler (async (req,res)=>{
 const updateUserdetails= asyncHandler (async (req,res)=>{
     const {_id,firstname,lastname,address,address2,country,state,zip,phoneno}=req.body;
 
-    //console.log(req.user.id);
     const updateUserdetails =await User.findByIdAndUpdate(
         req.user.id,
         req.body,{new:true}
@@ -151,8 +142,7 @@ const updateUserdetails= asyncHandler (async (req,res)=>{
     const updatedata = await Checkout.findOneAndUpdate(filter, update, {
         new: true
     });
-    console.log(filter,"filter");
-    console.log(update,"update");
+
     res.status(200).json({data:updateUserdetails,message:"success",status:"success"});
 
 });

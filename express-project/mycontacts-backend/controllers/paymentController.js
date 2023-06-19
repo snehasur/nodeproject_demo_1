@@ -6,37 +6,21 @@ const Payment = require("../models/paymentModel");
 //@route POST /api/payment/add
 //@access private
 const create = asyncHandler (async (req,res,next)=>{
-    //console.log("The request body is",req.body);
     var status;
     const {userid,type}=req.body;
     if(!userid || !type){
         res.status(400).json({message:"All fields are mandetory",status:"error"});
         throw new Error("All fields are mandetory")
-    }else{
-        //const hasuser =await Payment.find({User:userid,status:0});
-        //if(hasuser.length <= 0){
+    }else{      
     
             const payment = await Payment.create({
                 User: userid,
                 type: type,
                 status:1
             });
-            //console.log(payment);
             res.status(200).json({data:payment,message:"success",status:"success"});
             res.end();
-        // }else{
-
-
-        // const filter = { User: userid};
-        // const update = { type: type ,status:1};      
        
-        // const payment = await Payment.findOneAndUpdate(filter, update, {
-        //   new: true
-        // });
-        // //console.log(payment);
-        //     res.status(200).json({data:payment,message:"update success",status:"success"});
-        //     res.end();
-    //}
     
 }
 });
@@ -44,7 +28,6 @@ const create = asyncHandler (async (req,res,next)=>{
 //@route POST /api/payment/get
 //@access private
 const get = asyncHandler (async (req,res,next)=>{
-    //console.log("The request body is",req.body);
     var status;
     const {userid}=req.body;
     if(!userid){
