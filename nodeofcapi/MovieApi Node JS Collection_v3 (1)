@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "06095b4d-17ac-43b5-beef-afe4d3999040",
+		"name": "FitActive PlannerApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "25019839"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email_reseller",
+							"value": "hayley.lowry1980@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "t40GMVee^RY@",
+							"type": "text"
+						},
+						{
+							"key": "domain",
+							"value": "fitactiveplan.com",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "test"
+						},
+						{
+							"key": "lastname",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "testcodeclouds3@yopmail.com",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "+11111111111",
+							"type": "text"
+						}
+					]
+				},
+				"url": "https://api.revsubfunnels.com/api/reseller/create-client"
+			},
+			"response": []
+		},
+		{
+			"name": "https://api.revsubfunnels.com/api/reseller/cancel-client",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "326|4amdNl81JBP5tMM4hwPk9D5QaTosAl7vu5s1CKjV"
+					}
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "testcodeclouds4@yopmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": "https://api.revsubfunnels.com/api/reseller/cancel-client"
+			},
+			"response": []
+		}
+	]
+}

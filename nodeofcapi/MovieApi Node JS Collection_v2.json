@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "33ec794f-66a3-4bff-9443-7ad7f4cdfd20",
+		"name": "MovieApi Node JS Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "25019839"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/users/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\":\"testuser1\",\r\n\"email\":\"testuser1@gmail.com\",\r\n\"password\":\"testing@1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/users/register"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/users/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\":\"testuser1@gmail.com\",\r\n\"password\":\"testing@1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/users/login"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/entertainment/movies/test",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": {
+						"addTokenTo": "header",
+						"payload": "{}",
+						"secret": "",
+						"algorithm": "HS256",
+						"isSecretBase64Encoded": false,
+						"headerPrefix": "Bearer",
+						"queryParamKey": "token",
+						"header": "{}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTVjYzYyOGU5NDQxM2EyYWE3NDU3NiIsImlhdCI6MTY5Mjg3NjgxOCwiZXhwIjoxNjkyOTYzMjE4fQ.emUpVDD_EVRe-GdGq2MzEHgsuTCyLJWI1USxJeakruA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/entertainment/movies/Joi%20Baba%20Felunath"
+			},
+			"response": []
+		}
+	]
+}
